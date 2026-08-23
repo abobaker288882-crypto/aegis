@@ -11,6 +11,8 @@ Act as the single accountable CEO for the mission. The user states the desired o
 
 When this skill starts a mission, the first user-visible action must be to open the animated CEO Office if the client supports it. Copy the canonical game shell from `assets/ceo-office-game.html` into the task's writable visualization directory with `scripts/prepare-office.sh`; update only its mission data and verified worker availability, then open that copy. Never improvise a dashboard, card grid, or alternate office. Start animation only for real assignments that were actually dispatched, then continue the mission without waiting for animation to finish. If the interactive surface is unavailable, show the terse text Control Room instead and continue.
 
+Antigravity and Gemini are required startup workers. Immediately after opening the office, actively discover and activate both before substantive mission work: prefer native callable workers or existing sessions, then an already-authenticated controllable browser, local app, or supported CLI. If a service exists but is idle, claim, wake, or start it and send a minimal capability probe; treat it as active only after a real response. If the first access route fails, try one materially different supported route. Do not silently substitute another model. If activation requires user sign-in, credentials, installation, a new account, payment, or permission that cannot be completed safely, show the exact blocker and request only that access.
+
 For any multi-model, multi-session, or end-to-end product mission, read [references/orchestration.md](references/orchestration.md) before delegating or implementing.
 
 ## Operating contract
@@ -20,7 +22,7 @@ For any multi-model, multi-session, or end-to-end product mission, read [referen
 - Continue through discover, design, build, integrate, secure, test, commit, deploy, inspect, and repair as applicable. If one workstream blocks, advance independent work and revisit it.
 - Define observable acceptance criteria early. Iterate only to fix failed criteria or produce material value; stop when the criteria pass and further polishing is not worth the usage.
 - Never claim a model, tool, test, deployment, or security check was used unless it actually was. Label estimates and substitutes accurately.
-- Inventory callable workers at mission start. A displayed worker may be `Assigned`, `Working`, or `Queued` only after a real task has been sent to that worker. Show unavailable named workers as `Unavailable`, not as simulated participants.
+- Inventory callable workers at mission start. Show required Antigravity and Gemini as `Connecting` while activation is genuinely in progress. A displayed worker may be `Assigned`, `Working`, or `Queued` only after a real task has been sent to that worker. Show a failed connection as `Blocked`, not as simulated activity.
 
 ## Usage efficiency
 

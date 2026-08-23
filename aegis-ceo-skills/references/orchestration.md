@@ -18,6 +18,19 @@ Resolve routine ambiguity yourself. If the brief is incomplete, choose reversibl
 
 The CEO retains mission state, architecture, risk decisions, and final acceptance. Delegate bounded work with minimal context and a concrete expected artifact.
 
+## Required activation gate
+
+Antigravity and Gemini must be active for every Aegis mission unless the user explicitly waives one for that mission. Before planning or implementation:
+
+1. Discover native provider tools and existing worker sessions.
+2. If absent, check for an already-authenticated controllable browser, local app, or supported CLI for that service.
+3. Start or claim the service and send a minimal, non-sensitive capability probe.
+4. Record `Active` only after a successful provider response; keep the office at `Connecting` during real attempts.
+5. Try one materially different supported access route after a failure.
+6. If sign-in, credentials, installation, account creation, payment, or new permissions are required, stop at that boundary with the smallest exact request. Do not begin the mission with a substitute while claiming the required worker is active.
+
+Do not repeatedly retry an unchanged blocked route. Once connected, keep both sessions alive and reuse them across the mission instead of reopening or reauthenticating them.
+
 When the host exposes model selection, keep the primary Aegis CEO role on Sol. If that is unavailable, use the strongest available model and label the substitution in the Control Room; do not interrupt the mission merely to obtain the preferred label.
 
 Use the following external-first routing intent, adapted to what is actually available:
