@@ -2,6 +2,10 @@
 
 Use this route only when `/Applications/Antigravity.app` is installed and no native Antigravity connector or supported CLI is available. Control it with Computer Use through the app name `Antigravity`; if name resolution fails, retry with bundle identifier `com.google.antigravity`.
 
+## Connection boundary
+
+Antigravity Desktop 2.9.1 exposes an `antigravity://` deep-link handler and loopback services, but its bundled app contains no supported command for submitting chat prompts. The deep link may open or focus the app; it is not proof of model access. Do not call undocumented localhost services or reverse-engineer their authorization. Use the verified Computer Use flow below until Antigravity exposes a documented connector or CLI, then prefer that supported route after a harmless response probe.
+
 ## Start or reuse
 
 1. Read a fresh accessibility state. Prefer an existing conversation dedicated to the current Aegis mission; otherwise activate the stable `New Conversation` control.
