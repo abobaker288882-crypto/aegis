@@ -18,6 +18,42 @@ Resolve routine ambiguity yourself. If the brief is incomplete, choose reversibl
 
 The CEO retains mission state, architecture, risk decisions, and final acceptance. Delegate bounded work with minimal context and a concrete expected artifact.
 
+## Usage governor
+
+Apply before every model assignment and repair loop. Minimize Codex usage without weakening acceptance evidence.
+
+### Route in this order
+
+1. **Reuse:** existing result, session, artifact, decision, test output, or cached context.
+2. **Deterministic:** batched inspection, search, scripts, structured queries, builds, and tests; reduce large outputs before CEO review.
+3. **External:** one compact non-sensitive brief per worker and phase. Antigravity owns the largest coherent build; Gemini and ChatGPT get distinct research or critique.
+4. **Luna/low:** bounded searches, mechanical edits, focused tests, formatting, and documentation requiring workspace access.
+5. **Terra/low or medium:** implementation, integration, debugging, or review that the earlier routes cannot complete.
+6. **Sol:** mission framing and acceptance; extra reasoning only for architecture, ambiguity, hard failures, security-sensitive judgment, or synthesis. Use high, xhigh, max, pro, or equivalent only for a named unresolved criterion with plausible measured benefit.
+
+Skip a delegation when its briefing, coordination, and synthesis cost is likely to equal or exceed doing the bounded work directly. Never create a worker merely to restate status, re-read evidence the CEO already has, or provide a ceremonial review.
+
+### Compact context protocol
+
+Keep stable instructions short and ordered consistently. A worker receives only:
+
+- bounded outcome and acceptance check;
+- exact relevant paths, symbols, snippets, or failing evidence;
+- constraints, privacy boundary, and non-goals;
+- required artifact location or concise return schema.
+
+Do not send transcripts, repository dumps, repeated policy, passed evidence, or outputs available by path. Put substantial work in an artifact; return only result, changed paths, checks, blockers, and next material decision.
+
+### Turn and loop control
+
+- Batch related questions. Parallelize only independent critical-path work worth its coordination cost.
+- Default to one primary pass plus one targeted repair. Continue only for named failed evidence, unresolved high-severity risk, or a specific material gain.
+- Reuse external conversations. Start fresh only for contamination, privacy, or task divergence.
+- After localized repairs, prefer targeted tests unless dependency reach or release risk warrants a broad suite.
+- Stop immediately when acceptance evidence passes. Do not spend tokens seeking stylistic consensus, repeated reassurance, or speculative polish.
+
+If an actual usage or credit signal is exposed, record it at mission start and meaningful milestones. Never invent token counts or remaining weekly quota. When the signal is near its limit, enter conservation mode: no optional Codex delegation or duplicate review; use deterministic checks and available external workers, while Sol performs only indispensable integration and final acceptance.
+
 ## Required activation gate
 
 Antigravity and Gemini must be active for every Aegis mission unless the user explicitly waives one for that mission. Before planning or implementation:
@@ -35,43 +71,9 @@ Do not repeatedly retry an unchanged blocked route. Once connected, keep both se
 
 When the host exposes model selection, keep the primary Aegis CEO role on Sol. If that is unavailable, use the strongest available model and label the substitution in the Control Room; do not interrupt the mission merely to obtain the preferred label.
 
-Use the following external-first routing intent, adapted to what is actually available:
-
-- ChatGPT chat: research, ideation, comparisons, summaries, content critique, and other work that can preserve Codex quota without exposing sensitive data.
-- Antigravity: primary high-volume builder for large self-contained implementation, visual/product exploration, repair loops, and other suitable work when callable and cost-efficient.
-- Gemini: research synthesis, alternative designs, implementation drafts, and independent critique when callable and efficient.
-- Luna: high-volume, low-risk, well-specified edits, searches, test additions, documentation, formatting, and mechanical tasks.
-- Terra: normal implementation, debugging, integration, review, and tasks requiring balanced judgment.
-- Sol: CEO role, architecture, ambiguous or high-risk reasoning, hard debugging, cross-workstream integration, security-sensitive decisions, and final acceptance.
-
-These are preferences, not fictional dependencies. If a named worker is unavailable, select the closest available substitute and identify it accurately in the Control Room. Do not spend more Codex tokens attempting to reach a preferred worker than the task would save.
-
-For a substantial end-to-end mission, callable Antigravity, Gemini, and ChatGPT chat should perform most suitable reasoning volume. Prefer Antigravity for the largest share of delegated work when the user's access makes it the cheapest capable option; confirm exposed usage signals when available rather than inventing a price claim. Give Gemini and ChatGPT multiple non-overlapping assignments across the mission—for example discovery, competing product approaches, implementation drafts, edge-case discovery, cross-review, and targeted repair—until acceptance evidence passes or another pass has low expected value. Use their different outputs to cross-check consequential decisions instead of asking identical generic questions.
+Use ChatGPT for research, comparison, summaries, and UX/content critique; Antigravity for the largest implementation and repair volume; and Gemini for synthesis, alternatives, drafts, and independent critique. These are preferences, not fictional dependencies. Substitute accurately when unavailable and never spend more Codex usage reaching a preferred worker than it can save.
 
 Discover all three external services before composing the roster. An authenticated browser session counts only when it is actually controllable and the required task can be performed safely. If a service is unavailable, do not create its assignment, queue entry, meeting participant, progress animation, or result; mark it `Unavailable` and continue with real workers. Never use an Antigravity, Gemini, or ChatGPT label for work performed by Sol, Luna, Terra, another provider, or deterministic tools.
-
-## External-worker loop
-
-1. Give Antigravity the primary implementation brief and keep it busy with the largest sequence of suitable build and repair assignments.
-2. Send mission discovery and solution exploration to Gemini and ChatGPT in parallel with different perspectives.
-3. Route large self-contained implementation and visual exploration primarily to Antigravity; route research synthesis and alternative implementations to Gemini; route comparison, content, UX critique, and independent reasoning to ChatGPT.
-4. Cross-review important outputs: give each external worker a compact artifact from another when privacy permits, and request only concrete defects or improvements.
-5. Return failed acceptance evidence to Antigravity first when it owns the affected implementation; otherwise use the most suitable external worker before spending Sol on implementation detail.
-6. Stop external passes when acceptance evidence is complete, rate limits intervene, or the next pass is unlikely to materially improve the product.
-
-## Worker briefs
-
-Each worker brief should contain only:
-
-- one bounded outcome;
-- the minimum relevant files or context;
-- constraints and non-goals;
-- required evidence or output format;
-- where the result should be written or returned.
-
-Prefer patches, file paths, commands with observed results, or compact findings over essays. Do not ask multiple workers to solve the same task unless independent comparison is likely to prevent a material error.
-
-Parallelize independent critical-path work only when its expected time or quality gain exceeds coordination and usage cost. Keep dependent work sequential.
 
 ## CEO loop
 

@@ -337,8 +337,8 @@
         <div><div class="hq-name">AEGIS HQ</div><div class="hq-kicker" id="hq-phase">DAY 01 · MISSION BRIEF</div></div>
       </div>
       <div class="hq-energy">
-        <div class="hq-energy-head"><span class="hq-energy-label">CODEX ENERGY</span><span class="hq-energy-value" id="hq-energy-value">LOW · 16%</span></div>
-        <div class="hq-energy-track" role="progressbar" aria-label="Estimated Codex usage" aria-valuemin="0" aria-valuemax="100" aria-valuenow="16"><div class="hq-energy-fill" id="hq-energy-fill"></div></div>
+        <div class="hq-energy-head"><span class="hq-energy-label">CODEX USAGE EST.</span><span class="hq-energy-value" id="hq-energy-value">RELATIVE · LOW</span></div>
+        <div class="hq-energy-track" role="progressbar" aria-label="Relative Codex usage estimate, not measured weekly quota" aria-valuemin="0" aria-valuemax="100" aria-valuenow="16"><div class="hq-energy-fill" id="hq-energy-fill"></div></div>
       </div>
       <div class="hq-hud-actions">
         <button type="button" class="hq-control is-main" id="hq-start">START MISSION</button>
@@ -460,7 +460,7 @@
 
       function energy(value) {
         energyFill.style.width = `${value}%`;
-        energyValue.textContent = `LOW · ${value}%`;
+        energyValue.textContent = 'RELATIVE · LOW';
         energyTrack.setAttribute('aria-valuenow', String(value));
       }
 

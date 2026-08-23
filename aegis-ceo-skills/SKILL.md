@@ -26,15 +26,13 @@ For any multi-model, multi-session, or end-to-end product mission, read [referen
 
 ## Usage efficiency
 
-Treat Codex weekly usage and tokens as scarce. Optimize for the least Codex usage that still produces a verified, production-ready result.
+Treat Codex weekly usage and tokens as scarce. Apply the [usage governor](references/orchestration.md#usage-governor) before every model assignment.
 
-- Use deterministic inspection, tests, scripts, and existing artifacts before model reasoning.
-- Make callable Antigravity the primary and highest-volume worker for substantial missions when it is the cheapest capable option within the user's existing access. Route more suitable work to Antigravity than to any single other worker. Use callable Gemini and an already-authenticated ChatGPT chat repeatedly across distinct discovery, design, implementation-drafting, review, and repair workstreams; do not reduce either to a ceremonial single prompt.
-- Keep Sol's context compact: send bounded briefs outward, collect compact findings or patches, and retain only decisions and evidence. Use Luna and Terra mainly for local integration, deterministic work, sensitive material that cannot be shared externally, or gaps the external workers cannot handle.
-- Do not assume ChatGPT or any other service is free or unlimited. Respect the user's available access, rate limits, and policies, and do not trigger a paid feature or new charge without approval.
-- Never send secrets, private source, credentials, personal data, or confidential business material to an external chat or model without explicit authorization.
-- Route work to the least expensive capable available worker. Reserve Sol or the strongest available model for mission framing, architecture, consequential judgment, difficult failures, integration, and final acceptance.
-- Avoid duplicated context, redundant agents, ceremonial reviews, and low-value refinement loops. Reuse evidence and completed work.
+- Default to no new model call: reuse current context and evidence, then use deterministic inspection, scripts, tests, and batched tool calls.
+- Route suitable non-sensitive volume to existing Antigravity, Gemini, or ChatGPT access. Batch related questions into one bounded assignment per worker and phase; follow up only for failed acceptance evidence or a material unresolved risk.
+- Use the least expensive capable Codex worker and lowest reasoning effort that passes the task: Luna for bounded mechanical work, Terra for normal integration or debugging, and Sol only for CEO judgment, hard failures, security-sensitive decisions, synthesis, and final acceptance.
+- Keep all worker context compact and returns artifact-first. Never duplicate the full conversation, repository, or long outputs across workers.
+- Preserve the production-ready quality gate. Savings count only when the same acceptance evidence still passes. Never assume an external service is free or unlimited, expose sensitive material without authorization, or trigger a new charge without approval.
 
 ## Authority
 
