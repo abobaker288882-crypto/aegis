@@ -15,6 +15,7 @@
       --hq-blue: light-dark(#2268bd, #63a9ff);
       --hq-green: light-dark(#16784d, #56da9d);
       --hq-purple: light-dark(#7049ad, #bd99ff);
+      --hq-orange: light-dark(#b45b16, #ffad66);
       --hq-red: light-dark(#b63c48, #ff7984);
       --hq-panel: light-dark(#17202b, #0d151f);
       --hq-panel-ink: light-dark(#f7fbff, #eef6ff);
@@ -98,7 +99,7 @@
     #aegis-office-game .hq-control:disabled { cursor: default; opacity: .5; }
 
     #aegis-office-game .hq-map {
-      aspect-ratio: 16 / 10;
+      aspect-ratio: 16 / 10.5;
       background-color: var(--hq-ground);
       background-image:
         linear-gradient(45deg, var(--hq-tile-a) 25%, transparent 25%),
@@ -107,7 +108,7 @@
         linear-gradient(-45deg, transparent 75%, var(--hq-tile-b) 75%);
       background-position: 0 0, 0 12px, 12px -12px, -12px 0;
       background-size: 24px 24px;
-      min-height: 540px;
+      min-height: 590px;
       overflow: hidden;
       position: relative;
     }
@@ -132,13 +133,14 @@
       width: 36px;
     }
 
-    #aegis-office-game .hq-room[data-room="ceo"] { height: 23%; left: 38%; top: 4%; width: 24%; }
-    #aegis-office-game .hq-room[data-room="research"] { height: 26%; left: 3%; top: 7%; width: 25%; }
-    #aegis-office-game .hq-room[data-room="product"] { height: 26%; right: 3%; top: 7%; width: 25%; }
-    #aegis-office-game .hq-room[data-room="meeting"] { height: 29%; left: 34%; top: 35%; width: 32%; }
-    #aegis-office-game .hq-room[data-room="backend"] { bottom: 4%; height: 25%; left: 3%; width: 25%; }
-    #aegis-office-game .hq-room[data-room="qa"] { bottom: 4%; height: 25%; right: 3%; width: 25%; }
-    #aegis-office-game .hq-room[data-room="launch"] { bottom: 4%; height: 20%; left: 38%; width: 24%; }
+    #aegis-office-game .hq-room[data-room="ceo"] { height: 21%; left: 3%; top: 3%; width: 20%; }
+    #aegis-office-game .hq-room[data-room="antigravity"] { height: 23%; left: 28%; top: 3%; width: 25%; }
+    #aegis-office-game .hq-room[data-room="research"] { height: 23%; right: 3%; top: 3%; width: 38%; }
+    #aegis-office-game .hq-room[data-room="product"] { height: 23%; left: 3%; top: 31%; width: 24%; }
+    #aegis-office-game .hq-room[data-room="meeting"] { height: 27%; left: 34%; top: 29%; width: 32%; }
+    #aegis-office-game .hq-room[data-room="backend"] { height: 23%; right: 3%; top: 31%; width: 24%; }
+    #aegis-office-game .hq-room[data-room="qa"] { height: 18%; left: 10%; top: 61%; width: 25%; }
+    #aegis-office-game .hq-room[data-room="launch"] { height: 18%; right: 10%; top: 61%; width: 25%; }
 
     #aegis-office-game .hq-room-name { font-size: 10px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; }
     #aegis-office-game .hq-room-model { margin-top: 2px; }
@@ -172,20 +174,20 @@
       background: transparent;
       border: 0;
       cursor: pointer;
-      height: 58px;
+      height: 76px;
       left: 0;
       padding: 0;
       position: absolute;
       top: 0;
       transform: translate(0, 0);
       transition: transform .72s cubic-bezier(.28, .72, .35, 1);
-      width: 70px;
+      width: 110px;
       z-index: 10;
     }
 
     #aegis-office-game .hq-character {
       height: 34px;
-      left: 19px;
+      left: 39px;
       position: absolute;
       top: 0;
       width: 30px;
@@ -206,8 +208,9 @@
     #aegis-office-game .hq-leg { background: var(--hq-ink); bottom: 0; height: 7px; position: absolute; width: 6px; }
     #aegis-office-game .hq-leg.is-left { left: 7px; }
     #aegis-office-game .hq-leg.is-right { right: 7px; }
-    #aegis-office-game .hq-sprite-name { background: var(--hq-panel); bottom: 7px; color: var(--hq-panel-ink); font-size: 9px; left: 50%; max-width: 70px; overflow: hidden; padding: 2px 4px; position: absolute; text-overflow: ellipsis; transform: translateX(-50%); white-space: nowrap; }
-    #aegis-office-game .hq-sprite-state { bottom: -5px; color: var(--hq-ink); left: 50%; position: absolute; transform: translateX(-50%); white-space: nowrap; }
+    #aegis-office-game .hq-sprite-name { background: var(--hq-panel); bottom: 25px; color: var(--hq-panel-ink); font-size: 9px; left: 50%; max-width: 104px; overflow: hidden; padding: 2px 5px; position: absolute; text-overflow: ellipsis; transform: translateX(-50%); white-space: nowrap; }
+    #aegis-office-game .hq-sprite-state { bottom: 13px; color: var(--hq-ink); left: 50%; position: absolute; transform: translateX(-50%); white-space: nowrap; }
+    #aegis-office-game .hq-sprite-task { background: color-mix(in srgb, var(--hq-panel) 88%, transparent); bottom: -5px; color: var(--hq-panel-ink); font-size: 9px; left: 50%; max-width: 110px; overflow: hidden; padding: 2px 5px; position: absolute; text-overflow: ellipsis; transform: translateX(-50%); white-space: nowrap; }
     #aegis-office-game .hq-sprite.is-selected .hq-character { filter: drop-shadow(0 0 4px var(--hq-gold)); }
     #aegis-office-game .hq-sprite.is-walking .hq-character { animation: hq-walk .22s steps(2, end) infinite; }
     #aegis-office-game .hq-sprite.is-talking .hq-character { animation: hq-talk .32s steps(2, end) 4; }
@@ -243,7 +246,7 @@
       height: 20px;
       justify-content: center;
       position: absolute;
-      right: 1px;
+      right: 20px;
       top: 12px;
       width: 22px;
     }
@@ -259,7 +262,7 @@
       gap: 12px;
       grid-template-columns: auto minmax(0, 1fr) auto;
       left: 0;
-      padding: 10px 12px;
+      padding: 8px 12px;
       position: absolute;
       right: 0;
       z-index: 30;
@@ -276,13 +279,13 @@
       background: color-mix(in srgb, var(--hq-panel) 92%, transparent);
       border: 2px solid color-mix(in srgb, var(--hq-panel-ink) 18%, transparent);
       color: var(--hq-panel-ink);
-      left: 10px;
+      left: 38%;
       max-height: 92px;
       overflow: hidden;
       padding: 7px 9px;
       position: absolute;
-      top: 10px;
-      width: min(240px, 34%);
+      top: 58%;
+      width: 24%;
       z-index: 25;
     }
 
@@ -298,15 +301,16 @@
     @media (max-width: 680px) {
       #aegis-office-game .hq-hud { grid-template-columns: 1fr auto; }
       #aegis-office-game .hq-energy { grid-column: 1 / -1; grid-row: 2; }
-      #aegis-office-game .hq-map { aspect-ratio: auto; min-height: 760px; }
-      #aegis-office-game .hq-room[data-room="ceo"] { height: 15%; left: 36%; top: 3%; width: 28%; }
-      #aegis-office-game .hq-room[data-room="research"] { height: 17%; left: 4%; top: 22%; width: 42%; }
-      #aegis-office-game .hq-room[data-room="product"] { height: 17%; right: 4%; top: 22%; width: 42%; }
-      #aegis-office-game .hq-room[data-room="meeting"] { height: 18%; left: 22%; top: 43%; width: 56%; }
-      #aegis-office-game .hq-room[data-room="backend"] { bottom: 19%; height: 15%; left: 4%; width: 42%; }
-      #aegis-office-game .hq-room[data-room="qa"] { bottom: 19%; height: 15%; right: 4%; width: 42%; }
-      #aegis-office-game .hq-room[data-room="launch"] { bottom: 2%; height: 12%; left: 31%; width: 38%; }
-      #aegis-office-game .hq-log { width: 45%; }
+      #aegis-office-game .hq-map { aspect-ratio: auto; min-height: 900px; }
+      #aegis-office-game .hq-room[data-room="ceo"] { height: 13%; left: 4%; top: 2%; width: 42%; }
+      #aegis-office-game .hq-room[data-room="antigravity"] { height: 13%; right: 4%; top: 2%; width: 42%; }
+      #aegis-office-game .hq-room[data-room="research"] { height: 14%; left: 4%; top: 18%; width: 92%; }
+      #aegis-office-game .hq-room[data-room="product"] { height: 14%; left: 4%; top: 35%; width: 42%; }
+      #aegis-office-game .hq-room[data-room="backend"] { height: 14%; right: 4%; top: 35%; width: 42%; }
+      #aegis-office-game .hq-room[data-room="meeting"] { height: 15%; left: 22%; top: 52%; width: 56%; }
+      #aegis-office-game .hq-room[data-room="qa"] { height: 12%; left: 4%; top: 70%; width: 42%; }
+      #aegis-office-game .hq-room[data-room="launch"] { height: 12%; right: 4%; top: 70%; width: 42%; }
+      #aegis-office-game .hq-log { left: 29%; top: 83%; width: 42%; }
       #aegis-office-game .hq-dialog { grid-template-columns: auto minmax(0, 1fr); }
       #aegis-office-game .hq-action-row { grid-column: 1 / -1; }
     }
@@ -346,6 +350,7 @@
       <div class="hq-log" aria-live="polite"><div class="hq-log-title">MISSION LOG</div><div id="hq-log-lines"><div class="hq-log-line"><span class="hq-log-time">00:00</span><span>CEO accepted the mission.</span></div></div></div>
 
       <section class="hq-room" data-room="ceo"><div class="hq-room-name">CEO Office</div><div class="hq-room-model">Sol · Command</div><div class="hq-room-object"><i data-lucide="crown" aria-hidden="true"></i></div><div class="hq-room-progress"><span></span></div></section>
+      <section class="hq-room" data-room="antigravity"><div class="hq-room-name">Antigravity Foundry</div><div class="hq-room-model">Primary high-volume builder</div><div class="hq-room-object"><i data-lucide="orbit" aria-hidden="true"></i></div><div class="hq-room-progress"><span></span></div></section>
       <section class="hq-room" data-room="research"><div class="hq-room-name">External AI Lab</div><div class="hq-room-model">Gemini + ChatGPT · verify connections</div><div class="hq-room-object"><i data-lucide="telescope" aria-hidden="true"></i></div><div class="hq-room-progress"><span></span></div></section>
       <section class="hq-room" data-room="product"><div class="hq-room-name">Product Studio</div><div class="hq-room-model">Luna</div><div class="hq-room-object"><i data-lucide="panels-top-left" aria-hidden="true"></i></div><div class="hq-room-progress"><span></span></div></section>
       <section class="hq-room" data-room="meeting"><div class="hq-room-name">War Room</div><div class="hq-room-model">Assignments & review</div><div class="hq-meeting-table"></div></section>
@@ -353,12 +358,13 @@
       <section class="hq-room" data-room="qa"><div class="hq-room-name">QA Arena</div><div class="hq-room-model">Terra + tools</div><div class="hq-room-object"><i data-lucide="bug-off" aria-hidden="true"></i></div><div class="hq-room-progress"><span></span></div></section>
       <section class="hq-room" data-room="launch"><div class="hq-room-name">Launch Pad</div><div class="hq-room-model">Deploy & verify</div><div class="hq-launch-pad"></div></section>
 
-      <button type="button" class="hq-sprite" data-agent="ceo" aria-label="Sol CEO" style="--sprite-color: var(--hq-gold)"><span class="hq-bubble">Mission accepted.</span><span class="hq-character"><span class="hq-hair"></span><span class="hq-head"></span><span class="hq-body"></span><span class="hq-leg is-left"></span><span class="hq-leg is-right"></span></span><span class="hq-sprite-name">SOL CEO</span><span class="hq-sprite-state">Command</span><span class="hq-packet">✓</span></button>
-      <button type="button" class="hq-sprite" data-agent="research" aria-label="Gemini worker unavailable" style="--sprite-color: var(--hq-purple)"><span class="hq-bubble">Connect a real Gemini worker.</span><span class="hq-character"><span class="hq-hair"></span><span class="hq-head"></span><span class="hq-body"></span><span class="hq-leg is-left"></span><span class="hq-leg is-right"></span></span><span class="hq-sprite-name">GEMINI</span><span class="hq-sprite-state">Unavailable</span><span class="hq-packet">R</span></button>
-      <button type="button" class="hq-sprite" data-agent="chatgpt" aria-label="ChatGPT worker unavailable" style="--sprite-color: var(--hq-green)"><span class="hq-bubble">Connect an authenticated ChatGPT chat.</span><span class="hq-character"><span class="hq-hair"></span><span class="hq-head"></span><span class="hq-body"></span><span class="hq-leg is-left"></span><span class="hq-leg is-right"></span></span><span class="hq-sprite-name">CHATGPT</span><span class="hq-sprite-state">Unavailable</span><span class="hq-packet">C</span></button>
-      <button type="button" class="hq-sprite" data-agent="product" aria-label="Product worker" style="--sprite-color: var(--hq-blue)"><span class="hq-bubble">Ready to build.</span><span class="hq-character"><span class="hq-hair"></span><span class="hq-head"></span><span class="hq-body"></span><span class="hq-leg is-left"></span><span class="hq-leg is-right"></span></span><span class="hq-sprite-name">LUNA</span><span class="hq-sprite-state">Idle</span><span class="hq-packet">UI</span></button>
-      <button type="button" class="hq-sprite" data-agent="backend" aria-label="Backend worker" style="--sprite-color: var(--hq-green)"><span class="hq-bubble">Ready to engineer.</span><span class="hq-character"><span class="hq-hair"></span><span class="hq-head"></span><span class="hq-body"></span><span class="hq-leg is-left"></span><span class="hq-leg is-right"></span></span><span class="hq-sprite-name">TERRA</span><span class="hq-sprite-state">Idle</span><span class="hq-packet">API</span></button>
-      <button type="button" class="hq-sprite" data-agent="qa" aria-label="Verification worker" style="--sprite-color: var(--hq-red)"><span class="hq-bubble">Ready to verify.</span><span class="hq-character"><span class="hq-hair"></span><span class="hq-head"></span><span class="hq-body"></span><span class="hq-leg is-left"></span><span class="hq-leg is-right"></span></span><span class="hq-sprite-name">QA</span><span class="hq-sprite-state">Idle</span><span class="hq-packet">OK</span></button>
+      <button type="button" class="hq-sprite" data-agent="ceo" aria-label="Sol CEO" style="--sprite-color: var(--hq-gold)"><span class="hq-bubble">Mission accepted.</span><span class="hq-character"><span class="hq-hair"></span><span class="hq-head"></span><span class="hq-body"></span><span class="hq-leg is-left"></span><span class="hq-leg is-right"></span></span><span class="hq-sprite-name">SOL CEO</span><span class="hq-sprite-state">Command</span><span class="hq-sprite-task">Directing mission</span><span class="hq-packet">✓</span></button>
+      <button type="button" class="hq-sprite" data-agent="antigravity" aria-label="Antigravity worker unavailable" style="--sprite-color: var(--hq-orange)"><span class="hq-bubble">Connect Antigravity for primary building.</span><span class="hq-character"><span class="hq-hair"></span><span class="hq-head"></span><span class="hq-body"></span><span class="hq-leg is-left"></span><span class="hq-leg is-right"></span></span><span class="hq-sprite-name">ANTIGRAVITY</span><span class="hq-sprite-state">Unavailable</span><span class="hq-sprite-task">Awaiting connection</span><span class="hq-packet">AG</span></button>
+      <button type="button" class="hq-sprite" data-agent="research" aria-label="Gemini worker unavailable" style="--sprite-color: var(--hq-purple)"><span class="hq-bubble">Connect a real Gemini worker.</span><span class="hq-character"><span class="hq-hair"></span><span class="hq-head"></span><span class="hq-body"></span><span class="hq-leg is-left"></span><span class="hq-leg is-right"></span></span><span class="hq-sprite-name">GEMINI</span><span class="hq-sprite-state">Unavailable</span><span class="hq-sprite-task">Awaiting connection</span><span class="hq-packet">R</span></button>
+      <button type="button" class="hq-sprite" data-agent="chatgpt" aria-label="ChatGPT worker unavailable" style="--sprite-color: var(--hq-green)"><span class="hq-bubble">Connect an authenticated ChatGPT chat.</span><span class="hq-character"><span class="hq-hair"></span><span class="hq-head"></span><span class="hq-body"></span><span class="hq-leg is-left"></span><span class="hq-leg is-right"></span></span><span class="hq-sprite-name">CHATGPT</span><span class="hq-sprite-state">Unavailable</span><span class="hq-sprite-task">Awaiting connection</span><span class="hq-packet">C</span></button>
+      <button type="button" class="hq-sprite" data-agent="product" aria-label="Product worker" style="--sprite-color: var(--hq-blue)"><span class="hq-bubble">Ready to build.</span><span class="hq-character"><span class="hq-hair"></span><span class="hq-head"></span><span class="hq-body"></span><span class="hq-leg is-left"></span><span class="hq-leg is-right"></span></span><span class="hq-sprite-name">LUNA</span><span class="hq-sprite-state">Idle</span><span class="hq-sprite-task">Waiting for brief</span><span class="hq-packet">UI</span></button>
+      <button type="button" class="hq-sprite" data-agent="backend" aria-label="Backend worker" style="--sprite-color: var(--hq-green)"><span class="hq-bubble">Ready to engineer.</span><span class="hq-character"><span class="hq-hair"></span><span class="hq-head"></span><span class="hq-body"></span><span class="hq-leg is-left"></span><span class="hq-leg is-right"></span></span><span class="hq-sprite-name">TERRA</span><span class="hq-sprite-state">Idle</span><span class="hq-sprite-task">Waiting for brief</span><span class="hq-packet">API</span></button>
+      <button type="button" class="hq-sprite" data-agent="qa" aria-label="Verification worker" style="--sprite-color: var(--hq-red)"><span class="hq-bubble">Ready to verify.</span><span class="hq-character"><span class="hq-hair"></span><span class="hq-head"></span><span class="hq-body"></span><span class="hq-leg is-left"></span><span class="hq-leg is-right"></span></span><span class="hq-sprite-name">QA</span><span class="hq-sprite-state">Idle</span><span class="hq-sprite-task">Waiting for evidence</span><span class="hq-packet">OK</span></button>
 
       <div class="hq-screen-flash" id="hq-flash"></div>
 
@@ -390,9 +396,10 @@
       const flash = root.querySelector('#hq-flash');
       const agents = Object.fromEntries([...root.querySelectorAll('.hq-sprite')].map(el => [el.dataset.agent, el]));
       const rooms = Object.fromEntries([...root.querySelectorAll('.hq-room')].map(el => [el.dataset.room, el]));
-      const home = { ceo: 'ceo', research: 'research', chatgpt: 'research', product: 'product', backend: 'backend', qa: 'qa' };
-      const names = { ceo: 'SOL CEO', research: 'GEMINI', chatgpt: 'CHATGPT', product: 'LUNA', backend: 'TERRA', qa: 'QA' };
+      const home = { ceo: 'ceo', antigravity: 'antigravity', research: 'research', chatgpt: 'research', product: 'product', backend: 'backend', qa: 'qa' };
+      const names = { ceo: 'SOL CEO', antigravity: 'ANTIGRAVITY', research: 'GEMINI', chatgpt: 'CHATGPT', product: 'LUNA', backend: 'TERRA', qa: 'QA' };
       const assignments = {
+        antigravity: 'Own the largest implementation workstream and iterate on failed evidence.',
         research: 'Find the strongest product approach and key risks.',
         chatgpt: 'Research alternatives, challenge assumptions, and critique the user experience.',
         product: 'Build the complete frontend and interaction states.',
@@ -401,7 +408,7 @@
       };
       // Enable external workers only after real tasks have been dispatched.
       // Never simulate Gemini, Antigravity, or ChatGPT activity.
-      const workerAvailability = { ceo: true, research: false, chatgpt: false, product: true, backend: true, qa: true };
+      const workerAvailability = { ceo: true, antigravity: false, research: false, chatgpt: false, product: true, backend: true, qa: true };
       let running = false;
       let paused = false;
       let selected = 'ceo';
@@ -412,11 +419,11 @@
         const room = rooms[roomName];
         const mapRect = map.getBoundingClientRect();
         const rect = room.getBoundingClientRect();
-        const index = ['ceo', 'research', 'chatgpt', 'product', 'backend', 'qa'].indexOf(agentName);
-        const offsets = gathering ? [[0,-18],[-52,8],[52,8],[-48,42],[0,48],[48,42]][Math.max(index, 0)] : agentName === 'chatgpt' ? [32, 10] : agentName === 'research' ? [-32, 10] : [0, 6];
+        const index = ['ceo', 'antigravity', 'research', 'chatgpt', 'product', 'backend', 'qa'].indexOf(agentName);
+        const offsets = gathering ? [[0,-20],[-56,4],[56,4],[-72,38],[-24,46],[24,46],[72,38]][Math.max(index, 0)] : agentName === 'chatgpt' ? [42, 8] : agentName === 'research' ? [-42, 8] : [0, 5];
         return {
-          x: rect.left - mapRect.left + rect.width / 2 - 35 + offsets[0],
-          y: rect.top - mapRect.top + rect.height / 2 - 29 + offsets[1]
+          x: rect.left - mapRect.left + rect.width / 2 - 55 + offsets[0],
+          y: rect.top - mapRect.top + rect.height / 2 - 38 + offsets[1]
         };
       }
 
@@ -440,6 +447,10 @@
 
       function state(agentName, text) {
         agents[agentName].querySelector('.hq-sprite-state').textContent = text;
+      }
+
+      function task(agentName, text) {
+        agents[agentName].querySelector('.hq-sprite-task').textContent = text;
       }
 
       function progress(roomName, value, complete = false) {
@@ -492,7 +503,12 @@
         pauseButton.textContent = 'PAUSE';
         phase.textContent = 'DAY 01 · MISSION BRIEF';
         energy(16);
-        Object.keys(home).forEach(name => { move(name, home[name]); state(name, !workerAvailability[name] ? 'Unavailable' : name === 'ceo' ? 'Command' : 'Idle'); agents[name].classList.remove('has-packet'); });
+        Object.keys(home).forEach(name => {
+          move(name, home[name]);
+          state(name, !workerAvailability[name] ? 'Unavailable' : name === 'ceo' ? 'Command' : 'Idle');
+          task(name, !workerAvailability[name] ? 'Awaiting connection' : name === 'ceo' ? 'Directing mission' : 'Waiting for brief');
+          agents[name].classList.remove('has-packet');
+        });
         Object.keys(rooms).forEach(name => { rooms[name].classList.remove('is-review', 'is-complete'); const bar = rooms[name].querySelector('.hq-room-progress span'); if (bar) bar.style.width = '0%'; });
         dialogCopy.textContent = 'I have the mission. Start when ready; I will assign the team and review every submission.';
       }
@@ -506,20 +522,26 @@
         addLog('CEO called the executive meeting.');
         Object.keys(agents).filter(name => workerAvailability[name]).forEach(name => move(name, 'meeting', true));
         const researchLead = workerAvailability.research ? 'research' : workerAvailability.chatgpt ? 'chatgpt' : null;
+        const primaryLead = workerAvailability.antigravity ? 'antigravity' : researchLead;
 
         schedule(850, () => talk('ceo', 'Team: build the full product. Quality must pass; Codex use stays low.', 1200));
-        schedule(2100, () => { if (workerAvailability.research) { talk('research', assignments.research); state('research', 'Assigned'); } });
-        schedule(2550, () => { if (workerAvailability.chatgpt) { talk('chatgpt', assignments.chatgpt); state('chatgpt', 'Assigned'); } });
-        schedule(3000, () => { talk('product', assignments.product); state('product', 'Assigned'); });
-        schedule(3900, () => { talk('backend', assignments.backend); state('backend', 'Assigned'); });
-        schedule(4800, () => { talk('qa', assignments.qa); state('qa', 'Assigned'); });
+        schedule(1650, () => { if (workerAvailability.antigravity) { talk('antigravity', assignments.antigravity); state('antigravity', 'Assigned'); task('antigravity', 'Primary implementation'); } });
+        schedule(2100, () => { if (workerAvailability.research) { talk('research', assignments.research); state('research', 'Assigned'); task('research', 'Architecture + risk research'); } });
+        schedule(2550, () => { if (workerAvailability.chatgpt) { talk('chatgpt', assignments.chatgpt); state('chatgpt', 'Assigned'); task('chatgpt', 'Research + UX critique'); } });
+        schedule(3000, () => { talk('product', assignments.product); state('product', 'Assigned'); task('product', 'Frontend + interactions'); });
+        schedule(3900, () => { talk('backend', assignments.backend); state('backend', 'Assigned'); task('backend', 'Backend + integrations'); });
+        schedule(4800, () => { talk('qa', assignments.qa); state('qa', 'Assigned'); task('qa', 'Acceptance + security'); });
 
         schedule(5900, () => {
           phase.textContent = 'DAY 01 · WORKSTREAMS ACTIVE';
           addLog(`CEO dispatched ${Object.values(workerAvailability).filter(Boolean).length - 1} workstreams.`);
           Object.keys(home).filter(name => workerAvailability[name]).forEach(name => move(name, home[name]));
-          ['research', 'chatgpt', 'product', 'backend'].filter(name => workerAvailability[name]).forEach(name => state(name, 'Working'));
+          ['antigravity', 'research', 'chatgpt', 'product', 'backend'].filter(name => workerAvailability[name]).forEach(name => state(name, 'Working'));
+          if (workerAvailability.antigravity) { task('antigravity', 'Building primary workstream'); progress('antigravity', 34); }
+          if (workerAvailability.research) task('research', 'Exploring architecture + risks');
+          if (workerAvailability.chatgpt) task('chatgpt', 'Comparing approaches + UX');
           state('qa', 'Preparing');
+          task('qa', 'Preparing verification');
           energy(22);
           if (workerAvailability.research || workerAvailability.chatgpt) progress('research', 28);
           progress('product', 24);
@@ -529,33 +551,35 @@
         });
 
         schedule(7600, () => {
-          if (!researchLead) return;
-          progress('research', 100, true);
           progress('product', 68);
           progress('backend', 74);
           progress('qa', 35);
-          agents[researchLead].classList.add('has-packet');
-          state(researchLead, 'Report ready');
-          move(researchLead, 'ceo');
+          if (!primaryLead) return;
+          progress(primaryLead === 'antigravity' ? 'antigravity' : 'research', 100, true);
+          agents[primaryLead].classList.add('has-packet');
+          state(primaryLead, 'Submission ready');
+          task(primaryLead, 'Returning work to CEO');
+          move(primaryLead, 'ceo');
           rooms.ceo.classList.add('is-review');
-          talk(researchLead, 'External research complete. Best path, alternatives, and risks are documented.');
-          addLog(`${names[researchLead]} returned research to CEO.`);
+          talk(primaryLead, primaryLead === 'antigravity' ? 'Primary build is ready. Implementation evidence and remaining risks are attached.' : 'External research complete. Best path, alternatives, and risks are documented.');
+          addLog(`${names[primaryLead]} returned work to CEO.`);
         });
 
         schedule(9000, () => {
-          if (!researchLead) return;
-          agents[researchLead].classList.remove('has-packet');
-          move(researchLead, 'research');
+          if (!primaryLead) return;
+          agents[primaryLead].classList.remove('has-packet');
+          move(primaryLead, home[primaryLead]);
           rooms.ceo.classList.remove('is-review');
-          ['research', 'chatgpt'].filter(name => workerAvailability[name]).forEach(name => state(name, 'Approved'));
-          talk('ceo', 'Research approved. Integrate the findings.');
-          addLog('CEO approved research.');
+          ['antigravity', 'research', 'chatgpt'].filter(name => workerAvailability[name]).forEach(name => { state(name, 'Approved'); task(name, 'Approved · awaiting next pass'); });
+          talk('ceo', 'External work approved. Integrate the findings and implementation.');
+          addLog('CEO approved external work.');
         });
 
         schedule(10300, () => {
           progress('product', 100);
           agents.product.classList.add('has-packet');
           state('product', 'Build ready');
+          task('product', 'Returning frontend to CEO');
           move('product', 'ceo');
           rooms.ceo.classList.add('is-review');
           talk('product', 'Frontend complete and ready for CEO review.');
@@ -565,6 +589,7 @@
         schedule(11600, () => {
           talk('ceo', 'One material gap: finish the error and mobile states. One revision pass.');
           state('product', 'Revision');
+          task('product', 'Fixing mobile + error states');
           agents.product.classList.remove('has-packet');
           move('product', 'product');
           progress('product', 78);
@@ -577,6 +602,8 @@
           progress('product', 100, true);
           state('backend', 'Approved');
           state('product', 'Approved');
+          task('backend', 'Integrated and approved');
+          task('product', 'Revision complete');
           agents.product.classList.add('has-packet');
           move('product', 'ceo');
           talk('product', 'Revision complete. Mobile and failure states now pass.');
@@ -588,6 +615,7 @@
           move('product', 'product');
           progress('qa', 76);
           state('qa', 'Verifying');
+          task('qa', 'Running critical journeys');
           talk('ceo', 'Approved. Integrate frontend and backend; QA owns the final gate.');
           addLog('CEO approved integration.');
           energy(29);
@@ -597,6 +625,7 @@
           progress('qa', 100, true);
           agents.qa.classList.add('has-packet');
           state('qa', 'Evidence ready');
+          task('qa', 'Returning acceptance evidence');
           move('qa', 'ceo');
           talk('qa', 'Security and critical journeys pass. Release is ready.');
           addLog('QA delivered acceptance evidence.');
@@ -615,7 +644,8 @@
           phase.textContent = 'MISSION COMPLETE · LIVE';
           rooms.launch.classList.add('is-complete');
           state('ceo', 'Shipped');
-          Object.keys(agents).filter(name => name !== 'ceo' && workerAvailability[name]).forEach(name => state(name, 'Complete'));
+          task('ceo', 'Mission complete');
+          Object.keys(agents).filter(name => name !== 'ceo' && workerAvailability[name]).forEach(name => { state(name, 'Complete'); task(name, 'Workstream complete'); });
           talk('ceo', 'Product is live, verified, and complete. Mission closed.');
           addLog('Production verified. Mission complete.');
           energy(31);

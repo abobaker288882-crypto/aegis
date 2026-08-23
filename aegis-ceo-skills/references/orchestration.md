@@ -23,24 +23,26 @@ When the host exposes model selection, keep the primary Aegis CEO role on Sol. I
 Use the following external-first routing intent, adapted to what is actually available:
 
 - ChatGPT chat: research, ideation, comparisons, summaries, content critique, and other work that can preserve Codex quota without exposing sensitive data.
-- Antigravity/Gemini or another capable external worker: large self-contained implementation, research synthesis, visual/product exploration, or an independent critique when accessible and efficient.
+- Antigravity: primary high-volume builder for large self-contained implementation, visual/product exploration, repair loops, and other suitable work when callable and cost-efficient.
+- Gemini: research synthesis, alternative designs, implementation drafts, and independent critique when callable and efficient.
 - Luna: high-volume, low-risk, well-specified edits, searches, test additions, documentation, formatting, and mechanical tasks.
 - Terra: normal implementation, debugging, integration, review, and tasks requiring balanced judgment.
 - Sol: CEO role, architecture, ambiguous or high-risk reasoning, hard debugging, cross-workstream integration, security-sensitive decisions, and final acceptance.
 
 These are preferences, not fictional dependencies. If a named worker is unavailable, select the closest available substitute and identify it accurately in the Control Room. Do not spend more Codex tokens attempting to reach a preferred worker than the task would save.
 
-For a substantial end-to-end mission, callable Gemini/Antigravity and ChatGPT chat should perform most suitable reasoning volume. Give each multiple non-overlapping assignments across the mission—for example discovery, competing product approaches, implementation drafts, edge-case discovery, cross-review, and targeted repair—until acceptance evidence passes or another pass has low expected value. Use their different outputs to cross-check consequential decisions instead of asking both identical generic questions.
+For a substantial end-to-end mission, callable Antigravity, Gemini, and ChatGPT chat should perform most suitable reasoning volume. Prefer Antigravity for the largest share of delegated work when the user's access makes it the cheapest capable option; confirm exposed usage signals when available rather than inventing a price claim. Give Gemini and ChatGPT multiple non-overlapping assignments across the mission—for example discovery, competing product approaches, implementation drafts, edge-case discovery, cross-review, and targeted repair—until acceptance evidence passes or another pass has low expected value. Use their different outputs to cross-check consequential decisions instead of asking identical generic questions.
 
-Discover both services before composing the roster. An authenticated browser session counts only when it is actually controllable and the required task can be performed safely. If either service is unavailable, do not create its assignment, queue entry, meeting participant, progress animation, or result; mark it `Unavailable` and continue with real workers. Never use a Gemini or ChatGPT label for work performed by Sol, Luna, Terra, another provider, or deterministic tools.
+Discover all three external services before composing the roster. An authenticated browser session counts only when it is actually controllable and the required task can be performed safely. If a service is unavailable, do not create its assignment, queue entry, meeting participant, progress animation, or result; mark it `Unavailable` and continue with real workers. Never use an Antigravity, Gemini, or ChatGPT label for work performed by Sol, Luna, Terra, another provider, or deterministic tools.
 
 ## External-worker loop
 
-1. Send mission discovery and solution exploration to Gemini and ChatGPT in parallel with different perspectives.
-2. Route large self-contained implementation or visual exploration to Gemini/Antigravity; route research, comparison, content, UX critique, and independent reasoning to ChatGPT.
-3. Cross-review important outputs: give each external worker a compact artifact from the other when privacy permits, and request only concrete defects or improvements.
-4. Return failed acceptance evidence as targeted repair briefs to the most suitable external worker before spending Sol on implementation detail.
-5. Stop external passes when acceptance evidence is complete, rate limits intervene, or the next pass is unlikely to materially improve the product.
+1. Give Antigravity the primary implementation brief and keep it busy with the largest sequence of suitable build and repair assignments.
+2. Send mission discovery and solution exploration to Gemini and ChatGPT in parallel with different perspectives.
+3. Route large self-contained implementation and visual exploration primarily to Antigravity; route research synthesis and alternative implementations to Gemini; route comparison, content, UX critique, and independent reasoning to ChatGPT.
+4. Cross-review important outputs: give each external worker a compact artifact from another when privacy permits, and request only concrete defects or improvements.
+5. Return failed acceptance evidence to Antigravity first when it owns the affected implementation; otherwise use the most suitable external worker before spending Sol on implementation detail.
+6. Stop external passes when acceptance evidence is complete, rate limits intervene, or the next pass is unlikely to materially improve the product.
 
 ## Worker briefs
 

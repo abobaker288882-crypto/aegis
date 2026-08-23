@@ -11,8 +11,9 @@ Opening the office is the mission's first user-visible action. Use only the cano
 Show:
 
 - the Sol CEO as a character in a dedicated office and at the meeting table during assignment or review;
+- a separate Antigravity Foundry and character, visually distinct from Gemini, showing its primary implementation role;
 - one visible desk or room per active worker, labeled with its actual model or system;
-- each worker's bounded assignment, state, latest meaningful result, and relative or actual usage;
+- a persistent one-line subtitle under every worker showing exactly what it is doing now, alongside its state, latest meaningful result, and relative or actual usage;
 - a meeting room where characters gather while the CEO frames the mission and dispatches work;
 - a CEO review surface where returned work is approved, revised, integrated, or rejected;
 - a compact decision feed, mission progress, blocker state, and deployment state.
@@ -31,9 +32,9 @@ Animate only meaningful transitions:
 
 Honor reduced-motion preferences. Animation must never imply that work occurred before evidence arrives.
 
-Populate the roster from callable workers discovered in the current mission. Show Gemini/Antigravity and ChatGPT as separate characters so their assignments and results remain auditable. A named worker that is not callable may appear only as `Unavailable`; it must not walk into the meeting, receive an assignment, show progress, or return a result. Show either external worker as active only after a real task has been dispatched to that service.
+Populate the roster from callable workers discovered in the current mission. Show Antigravity, Gemini, and ChatGPT as separate characters so their assignments and results remain auditable. A named worker that is not callable may appear only as `Unavailable`; it must not walk into the meeting, receive an assignment, show progress, or return a result. Show an external worker as active only after a real task has been dispatched to that service.
 
-Use a readable management-game aesthetic rather than a conventional analytics dashboard: a dominant office map, stable rooms, small character sprites, mission dialogue, and a compact HUD. Keep operational data accurate and subordinate to the office scene.
+Use a readable management-game aesthetic rather than a conventional analytics dashboard: a dominant office map positioned toward the top of the surface, stable rooms, small character sprites, mission dialogue, and a compact HUD. Keep the lower edge visually quiet so the dialogue bar never obscures rooms, characters, or subtitles. Keep operational data accurate and subordinate to the office scene.
 
 ## Interaction
 
