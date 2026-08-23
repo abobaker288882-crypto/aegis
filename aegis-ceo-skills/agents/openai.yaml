@@ -1,0 +1,6 @@
+interface:
+  display_name: "Aegis CEO Skills"
+  short_description: "Autonomous, usage-efficient product delivery"
+  default_prompt: "Use $aegis-ceo-skills to take this idea through verified production with minimum Codex usage: [describe the outcome]."
+policy:
+  allow_implicit_invocation: true
