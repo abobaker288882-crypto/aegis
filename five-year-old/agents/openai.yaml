@@ -1,0 +1,4 @@
+interface:
+  display_name: "Five-Year-Old"
+  short_description: "Tell me simply, then finish the whole task"
+  default_prompt: "Use $five-year-old to complete this task end to end with simple progress updates: [describe the outcome]."
