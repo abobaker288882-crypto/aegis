@@ -6,7 +6,7 @@ Read this reference when the active client supports an interactive visualization
 
 Open one top-down game-style Control Room when the mission begins. It should feel like a small management game, with rooms, worker characters, visible assignment handoffs, and movement between meetings, desks, the CEO office, verification, and launch. The visual is the user's window into Aegis; it must reflect real orchestration state rather than decorative or invented activity.
 
-Opening the office is the mission's first user-visible action. Reuse the existing office shell and run movement, speech, and ambient effects locally in the client. Do not spend model turns generating animation frames or repeatedly rebuilding identical markup. The CEO may begin real mission work as soon as the office is visible; never wait for a decorative sequence to finish.
+Opening the office is the mission's first user-visible action. Use only the canonical shell at `../assets/ceo-office-game.html`, copied with `../scripts/prepare-office.sh`; never replace it with a dashboard or card grid. Run movement, speech, and ambient effects locally in the client. Do not spend model turns generating animation frames or repeatedly rebuilding identical markup. The CEO may begin real mission work as soon as the office is visible; never wait for a decorative sequence to finish.
 
 Show:
 
@@ -30,6 +30,8 @@ Animate only meaningful transitions:
 7. The mission closes only after acceptance evidence passes.
 
 Honor reduced-motion preferences. Animation must never imply that work occurred before evidence arrives.
+
+Populate the roster from callable workers discovered in the current mission. A named worker that is not callable may appear only as `Unavailable`; it must not walk into the meeting, receive an assignment, show progress, or return a result. In particular, show Gemini as active only after a real Gemini/Antigravity task has been dispatched.
 
 Use a readable management-game aesthetic rather than a conventional analytics dashboard: a dominant office map, stable rooms, small character sprites, mission dialogue, and a compact HUD. Keep operational data accurate and subordinate to the office scene.
 

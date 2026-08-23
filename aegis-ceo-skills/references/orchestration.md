@@ -30,6 +30,8 @@ Use the following routing intent, adapted to what is actually available:
 
 These are preferences, not fictional dependencies. If a named worker is unavailable, select the closest available substitute and identify it accurately in the Control Room. Do not spend more tokens attempting to reach a preferred worker than the task would save.
 
+For an end-to-end mission, give Gemini/Antigravity one material, bounded workstream when a callable Gemini/Antigravity worker is actually available and doing so is compatible with cost, privacy, and the critical path. Discover availability before composing the roster. If it is unavailable, do not create a Gemini assignment, queue entry, meeting participant, progress animation, or result; mark it `Unavailable` and use the closest real worker. Never use a Gemini label for work performed by Sol, Luna, Terra, ChatGPT, a browser, or deterministic tools.
+
 ## Worker briefs
 
 Each worker brief should contain only:
