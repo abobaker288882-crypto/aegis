@@ -22,12 +22,14 @@ The CEO retains mission state, architecture, risk decisions, and final acceptanc
 
 Antigravity and Gemini must be active for every Aegis mission unless the user explicitly waives one for that mission. Before planning or implementation:
 
-1. Discover native provider tools and existing worker sessions.
-2. If absent, check for an already-authenticated controllable browser, local app, or supported CLI for that service.
-3. Start or claim the service and send a minimal, non-sensitive capability probe.
-4. Record `Active` only after a successful provider response; keep the office at `Connecting` during real attempts.
-5. Try one materially different supported access route after a failure.
-6. If sign-in, credentials, installation, account creation, payment, or new permissions are required, stop at that boundary with the smallest exact request. Do not begin the mission with a substitute while claiming the required worker is active.
+1. Discover native provider tools and reusable existing worker sessions.
+2. If absent, discover a documented provider CLI or existing local command and use it through the integrated terminal. Do not guess command names or flags; inspect installed commands, built-in help, or authoritative provider documentation. A command that only launches an app is not a callable worker.
+3. If there is no supported CLI, use an existing recorded Computer Use workflow for the installed desktop app. Target stable app, window, and control labels rather than screen coordinates; keep prompts free of secrets. If no recording exists, request the smallest one-time setup: have the user demonstrate opening the app, starting or selecting a session, sending a harmless probe, and returning to the response.
+4. If neither local route works, check for an already-authenticated controllable browser session.
+5. Start or claim the service and send a minimal, non-sensitive capability probe.
+6. Record `Active` only after a successful provider response; keep the office at `Connecting` during real attempts.
+7. Try one materially different supported access route after a failure.
+8. If workflow recording, sign-in, credentials, installation, account creation, payment, or new permissions are required, stop at that boundary with the smallest exact request. Do not begin the mission with a substitute while claiming the required worker is active.
 
 Do not repeatedly retry an unchanged blocked route. Once connected, keep both sessions alive and reuse them across the mission instead of reopening or reauthenticating them.
 
