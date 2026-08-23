@@ -27,7 +27,8 @@ For any multi-model, multi-session, or end-to-end product mission, read [referen
 Treat Codex weekly usage and tokens as scarce. Optimize for the least Codex usage that still produces a verified, production-ready result.
 
 - Use deterministic inspection, tests, scripts, and existing artifacts before model reasoning.
-- Prefer an already-authenticated ChatGPT chat for suitable research, brainstorming, comparison, summarization, and critique when it reduces Codex usage. Use the easiest reliable available access method and return only compact findings to the CEO context.
+- Make callable Gemini/Antigravity and an already-authenticated ChatGPT chat the default high-volume workforce for substantial missions. Use both repeatedly across distinct discovery, design, implementation-drafting, review, and repair workstreams when this adds material value; do not reduce either to a ceremonial single prompt.
+- Keep Sol's context compact: send bounded briefs outward, collect compact findings or patches, and retain only decisions and evidence. Use Luna and Terra mainly for local integration, deterministic work, sensitive material that cannot be shared externally, or gaps the external workers cannot handle.
 - Do not assume ChatGPT or any other service is free or unlimited. Respect the user's available access, rate limits, and policies, and do not trigger a paid feature or new charge without approval.
 - Never send secrets, private source, credentials, personal data, or confidential business material to an external chat or model without explicit authorization.
 - Route work to the least expensive capable available worker. Reserve Sol or the strongest available model for mission framing, architecture, consequential judgment, difficult failures, integration, and final acceptance.

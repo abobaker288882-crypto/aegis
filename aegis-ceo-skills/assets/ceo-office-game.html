@@ -346,7 +346,7 @@
       <div class="hq-log" aria-live="polite"><div class="hq-log-title">MISSION LOG</div><div id="hq-log-lines"><div class="hq-log-line"><span class="hq-log-time">00:00</span><span>CEO accepted the mission.</span></div></div></div>
 
       <section class="hq-room" data-room="ceo"><div class="hq-room-name">CEO Office</div><div class="hq-room-model">Sol · Command</div><div class="hq-room-object"><i data-lucide="crown" aria-hidden="true"></i></div><div class="hq-room-progress"><span></span></div></section>
-      <section class="hq-room" data-room="research"><div class="hq-room-name">Research Lab</div><div class="hq-room-model">Gemini · verify connection</div><div class="hq-room-object"><i data-lucide="telescope" aria-hidden="true"></i></div><div class="hq-room-progress"><span></span></div></section>
+      <section class="hq-room" data-room="research"><div class="hq-room-name">External AI Lab</div><div class="hq-room-model">Gemini + ChatGPT · verify connections</div><div class="hq-room-object"><i data-lucide="telescope" aria-hidden="true"></i></div><div class="hq-room-progress"><span></span></div></section>
       <section class="hq-room" data-room="product"><div class="hq-room-name">Product Studio</div><div class="hq-room-model">Luna</div><div class="hq-room-object"><i data-lucide="panels-top-left" aria-hidden="true"></i></div><div class="hq-room-progress"><span></span></div></section>
       <section class="hq-room" data-room="meeting"><div class="hq-room-name">War Room</div><div class="hq-room-model">Assignments & review</div><div class="hq-meeting-table"></div></section>
       <section class="hq-room" data-room="backend"><div class="hq-room-name">Engineering Lab</div><div class="hq-room-model">Terra</div><div class="hq-room-object"><i data-lucide="database-zap" aria-hidden="true"></i></div><div class="hq-room-progress"><span></span></div></section>
@@ -355,6 +355,7 @@
 
       <button type="button" class="hq-sprite" data-agent="ceo" aria-label="Sol CEO" style="--sprite-color: var(--hq-gold)"><span class="hq-bubble">Mission accepted.</span><span class="hq-character"><span class="hq-hair"></span><span class="hq-head"></span><span class="hq-body"></span><span class="hq-leg is-left"></span><span class="hq-leg is-right"></span></span><span class="hq-sprite-name">SOL CEO</span><span class="hq-sprite-state">Command</span><span class="hq-packet">✓</span></button>
       <button type="button" class="hq-sprite" data-agent="research" aria-label="Gemini worker unavailable" style="--sprite-color: var(--hq-purple)"><span class="hq-bubble">Connect a real Gemini worker.</span><span class="hq-character"><span class="hq-hair"></span><span class="hq-head"></span><span class="hq-body"></span><span class="hq-leg is-left"></span><span class="hq-leg is-right"></span></span><span class="hq-sprite-name">GEMINI</span><span class="hq-sprite-state">Unavailable</span><span class="hq-packet">R</span></button>
+      <button type="button" class="hq-sprite" data-agent="chatgpt" aria-label="ChatGPT worker unavailable" style="--sprite-color: var(--hq-green)"><span class="hq-bubble">Connect an authenticated ChatGPT chat.</span><span class="hq-character"><span class="hq-hair"></span><span class="hq-head"></span><span class="hq-body"></span><span class="hq-leg is-left"></span><span class="hq-leg is-right"></span></span><span class="hq-sprite-name">CHATGPT</span><span class="hq-sprite-state">Unavailable</span><span class="hq-packet">C</span></button>
       <button type="button" class="hq-sprite" data-agent="product" aria-label="Product worker" style="--sprite-color: var(--hq-blue)"><span class="hq-bubble">Ready to build.</span><span class="hq-character"><span class="hq-hair"></span><span class="hq-head"></span><span class="hq-body"></span><span class="hq-leg is-left"></span><span class="hq-leg is-right"></span></span><span class="hq-sprite-name">LUNA</span><span class="hq-sprite-state">Idle</span><span class="hq-packet">UI</span></button>
       <button type="button" class="hq-sprite" data-agent="backend" aria-label="Backend worker" style="--sprite-color: var(--hq-green)"><span class="hq-bubble">Ready to engineer.</span><span class="hq-character"><span class="hq-hair"></span><span class="hq-head"></span><span class="hq-body"></span><span class="hq-leg is-left"></span><span class="hq-leg is-right"></span></span><span class="hq-sprite-name">TERRA</span><span class="hq-sprite-state">Idle</span><span class="hq-packet">API</span></button>
       <button type="button" class="hq-sprite" data-agent="qa" aria-label="Verification worker" style="--sprite-color: var(--hq-red)"><span class="hq-bubble">Ready to verify.</span><span class="hq-character"><span class="hq-hair"></span><span class="hq-head"></span><span class="hq-body"></span><span class="hq-leg is-left"></span><span class="hq-leg is-right"></span></span><span class="hq-sprite-name">QA</span><span class="hq-sprite-state">Idle</span><span class="hq-packet">OK</span></button>
@@ -389,17 +390,18 @@
       const flash = root.querySelector('#hq-flash');
       const agents = Object.fromEntries([...root.querySelectorAll('.hq-sprite')].map(el => [el.dataset.agent, el]));
       const rooms = Object.fromEntries([...root.querySelectorAll('.hq-room')].map(el => [el.dataset.room, el]));
-      const home = { ceo: 'ceo', research: 'research', product: 'product', backend: 'backend', qa: 'qa' };
-      const names = { ceo: 'SOL CEO', research: 'GEMINI', product: 'LUNA', backend: 'TERRA', qa: 'QA' };
+      const home = { ceo: 'ceo', research: 'research', chatgpt: 'research', product: 'product', backend: 'backend', qa: 'qa' };
+      const names = { ceo: 'SOL CEO', research: 'GEMINI', chatgpt: 'CHATGPT', product: 'LUNA', backend: 'TERRA', qa: 'QA' };
       const assignments = {
         research: 'Find the strongest product approach and key risks.',
+        chatgpt: 'Research alternatives, challenge assumptions, and critique the user experience.',
         product: 'Build the complete frontend and interaction states.',
         backend: 'Build backend, data, integrations, and migrations.',
         qa: 'Verify security, failure states, and live user journeys.'
       };
-      // Set research to true only after dispatching work to a real
-      // Gemini/Antigravity worker. Never simulate an unavailable model.
-      const workerAvailability = { ceo: true, research: false, product: true, backend: true, qa: true };
+      // Enable external workers only after real tasks have been dispatched.
+      // Never simulate Gemini, Antigravity, or ChatGPT activity.
+      const workerAvailability = { ceo: true, research: false, chatgpt: false, product: true, backend: true, qa: true };
       let running = false;
       let paused = false;
       let selected = 'ceo';
@@ -410,8 +412,8 @@
         const room = rooms[roomName];
         const mapRect = map.getBoundingClientRect();
         const rect = room.getBoundingClientRect();
-        const index = ['ceo', 'research', 'product', 'backend', 'qa'].indexOf(agentName);
-        const offsets = gathering ? [[0,-18],[-46,12],[46,12],[-30,42],[30,42]][Math.max(index, 0)] : [0, 6];
+        const index = ['ceo', 'research', 'chatgpt', 'product', 'backend', 'qa'].indexOf(agentName);
+        const offsets = gathering ? [[0,-18],[-52,8],[52,8],[-48,42],[0,48],[48,42]][Math.max(index, 0)] : agentName === 'chatgpt' ? [32, 10] : agentName === 'research' ? [-32, 10] : [0, 6];
         return {
           x: rect.left - mapRect.left + rect.width / 2 - 35 + offsets[0],
           y: rect.top - mapRect.top + rect.height / 2 - 29 + offsets[1]
@@ -503,9 +505,11 @@
         phase.textContent = 'DAY 01 · EXECUTIVE MEETING';
         addLog('CEO called the executive meeting.');
         Object.keys(agents).filter(name => workerAvailability[name]).forEach(name => move(name, 'meeting', true));
+        const researchLead = workerAvailability.research ? 'research' : workerAvailability.chatgpt ? 'chatgpt' : null;
 
         schedule(850, () => talk('ceo', 'Team: build the full product. Quality must pass; Codex use stays low.', 1200));
         schedule(2100, () => { if (workerAvailability.research) { talk('research', assignments.research); state('research', 'Assigned'); } });
+        schedule(2550, () => { if (workerAvailability.chatgpt) { talk('chatgpt', assignments.chatgpt); state('chatgpt', 'Assigned'); } });
         schedule(3000, () => { talk('product', assignments.product); state('product', 'Assigned'); });
         schedule(3900, () => { talk('backend', assignments.backend); state('backend', 'Assigned'); });
         schedule(4800, () => { talk('qa', assignments.qa); state('qa', 'Assigned'); });
@@ -514,10 +518,10 @@
           phase.textContent = 'DAY 01 · WORKSTREAMS ACTIVE';
           addLog(`CEO dispatched ${Object.values(workerAvailability).filter(Boolean).length - 1} workstreams.`);
           Object.keys(home).filter(name => workerAvailability[name]).forEach(name => move(name, home[name]));
-          ['research', 'product', 'backend'].filter(name => workerAvailability[name]).forEach(name => state(name, 'Working'));
+          ['research', 'chatgpt', 'product', 'backend'].filter(name => workerAvailability[name]).forEach(name => state(name, 'Working'));
           state('qa', 'Preparing');
           energy(22);
-          if (workerAvailability.research) progress('research', 28);
+          if (workerAvailability.research || workerAvailability.chatgpt) progress('research', 28);
           progress('product', 24);
           progress('backend', 22);
           progress('qa', 12);
@@ -525,25 +529,25 @@
         });
 
         schedule(7600, () => {
-          if (!workerAvailability.research) return;
+          if (!researchLead) return;
           progress('research', 100, true);
           progress('product', 68);
           progress('backend', 74);
           progress('qa', 35);
-          agents.research.classList.add('has-packet');
-          state('research', 'Report ready');
-          move('research', 'ceo');
+          agents[researchLead].classList.add('has-packet');
+          state(researchLead, 'Report ready');
+          move(researchLead, 'ceo');
           rooms.ceo.classList.add('is-review');
-          talk('research', 'Research complete. Best path and risks are documented.');
-          addLog('Research returned to CEO.');
+          talk(researchLead, 'External research complete. Best path, alternatives, and risks are documented.');
+          addLog(`${names[researchLead]} returned research to CEO.`);
         });
 
         schedule(9000, () => {
-          if (!workerAvailability.research) return;
-          agents.research.classList.remove('has-packet');
-          move('research', 'research');
+          if (!researchLead) return;
+          agents[researchLead].classList.remove('has-packet');
+          move(researchLead, 'research');
           rooms.ceo.classList.remove('is-review');
-          state('research', 'Approved');
+          ['research', 'chatgpt'].filter(name => workerAvailability[name]).forEach(name => state(name, 'Approved'));
           talk('ceo', 'Research approved. Integrate the findings.');
           addLog('CEO approved research.');
         });

@@ -31,7 +31,7 @@ Animate only meaningful transitions:
 
 Honor reduced-motion preferences. Animation must never imply that work occurred before evidence arrives.
 
-Populate the roster from callable workers discovered in the current mission. A named worker that is not callable may appear only as `Unavailable`; it must not walk into the meeting, receive an assignment, show progress, or return a result. In particular, show Gemini as active only after a real Gemini/Antigravity task has been dispatched.
+Populate the roster from callable workers discovered in the current mission. Show Gemini/Antigravity and ChatGPT as separate characters so their assignments and results remain auditable. A named worker that is not callable may appear only as `Unavailable`; it must not walk into the meeting, receive an assignment, show progress, or return a result. Show either external worker as active only after a real task has been dispatched to that service.
 
 Use a readable management-game aesthetic rather than a conventional analytics dashboard: a dominant office map, stable rooms, small character sprites, mission dialogue, and a compact HUD. Keep operational data accurate and subordinate to the office scene.
 
