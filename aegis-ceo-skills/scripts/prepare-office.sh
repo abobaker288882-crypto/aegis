@@ -12,8 +12,8 @@ case "$1" in
 esac
 
 script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
-source_file="$script_dir/../assets/ceo-office-game.html"
-destination="$1/aegis-ceo-office-game.html"
+source_file="$script_dir/../assets/ceo-mission-graph.html"
+destination="$1/aegis-ceo-mission-graph.html"
 
 test -f "$source_file"
 mkdir -p -- "$1"

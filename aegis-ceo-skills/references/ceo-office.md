@@ -1,55 +1,17 @@
-# Aegis CEO Office
+# Aegis CEO Mission Graph
 
 Read this reference when the active client supports an interactive visualization.
 
 ## Purpose
 
-Open one top-down game-style Control Room when the mission begins. It should feel like a small management game, with rooms, worker characters, visible assignment handoffs, and movement between meetings, desks, the CEO office, verification, and launch. The visual is the user's window into Aegis; it must reflect real orchestration state rather than decorative or invented activity.
+Open one simple mission graph when Aegis begins. Use only the canonical fragment at `../assets/ceo-mission-graph.html`, copied with `../scripts/prepare-office.sh`. The graph is a reliable status surface, not a simulation: Sol CEO appears at the top, callable workers below, and the delivery pipeline ends in Integrate, Verify, and Ship.
 
-Opening the office is the mission's first user-visible action. Use only the canonical shell at `../assets/ceo-office-game.html`, copied with `../scripts/prepare-office.sh`; never replace it with a dashboard or card grid. Run movement, speech, and ambient effects locally in the client. Do not spend model turns generating animation frames or repeatedly rebuilding identical markup. The CEO may begin real mission work as soon as the office is visible; never wait for a decorative sequence to finish.
-
-Show:
-
-- the Sol CEO as a character in a dedicated office and at the meeting table during assignment or review;
-- a separate Antigravity Foundry and character, visually distinct from Gemini, showing its primary implementation role;
-- one visible desk or room per active worker, labeled with its actual model or system;
-- a persistent one-line subtitle under every worker showing exactly what it is doing now, alongside its state, latest meaningful result, and relative or actual usage;
-- a meeting room where characters gather while the CEO frames the mission and dispatches work;
-- a CEO review surface where returned work is approved, revised, integrated, or rejected;
-- a compact decision feed, mission progress, blocker state, and deployment state.
-
-## State sequence
-
-Animate only meaningful transitions:
-
-1. CEO frames the mission and acceptance criteria.
-2. Worker characters walk into the meeting and receive assignments through short dialogue bubbles.
-3. Workers walk to their rooms and begin work, with restrained progress and state effects.
-4. A worker carries a visible submission back to the CEO office.
-5. The CEO approves it, requests a targeted revision, or reassigns it.
-6. Approved work enters integration, verification, deployment, and live-check states.
-7. The mission closes only after acceptance evidence passes.
-
-Honor reduced-motion preferences. Animation must never imply that work occurred before evidence arrives.
-
-Populate the roster from callable workers discovered in the current mission. Show Antigravity, Gemini, and ChatGPT as separate characters so their assignments and results remain auditable. A named worker that is not callable may appear only as `Unavailable`; it must not walk into the meeting, receive an assignment, show progress, or return a result. Show an external worker as active only after a real task has been dispatched to that service.
-
-Use a readable management-game aesthetic rather than a conventional analytics dashboard: a dominant office map positioned toward the top of the surface, stable rooms, small character sprites, mission dialogue, and a compact HUD. Keep the lower edge visually quiet so the dialogue bar never obscures rooms, characters, or subtitles. Keep operational data accurate and subordinate to the office scene.
-
-## Interaction
-
-- Selecting a worker shows the complete current assignment and latest result.
-- Approve continues the mission with that result.
-- More work asks the CEO to identify one material gap and issue one efficient revision pass.
-- Pause stops new assignments while preserving current work and state.
-- Consequential approval displays the exact money or high-risk decision required.
-
-Use host follow-up actions when available so controls steer the main Aegis task. Keep presentation-only selections local.
+Show each worker's actual model or system, state, one-line current assignment, latest meaningful result, and exposed usage or a clearly labeled relative estimate. Antigravity, Gemini, and ChatGPT remain separate nodes so their real assignments are auditable. A worker may show `Active`, `Assigned`, or `Working` only after the corresponding service actually responded or received work. Otherwise show `Connecting`, `Blocked`, or `Unavailable`.
 
 ## Updating
 
-Update the office at mission start and at meaningful state transitions. Preserve stable room positions and model identities so movement is easy to follow. Do not rebuild or narrate the panel for every command. If actual token or weekly-usage data is unavailable, show a clearly labeled relative estimate such as low, medium, or high.
+Update the copied graph only at mission start and meaningful transitions. Keep node positions stable. Selecting a node must reveal its full bounded assignment and latest result. The graph's `window.AegisMissionGraph.setState(...)` method can update phase, usage, workers, pipeline, and the decision feed when the host can call it; otherwise update the copied fragment's initial labels before opening or reopening it.
 
-Treat the office as one low-overhead status surface: client-side animation itself requires no model response, while creating the surface, interpreting new evidence, or publishing a state update may consume model/tool usage. Batch updates at meaningful milestones and reuse the same surface to minimize overhead.
+Do not animate, simulate progress, invent usage, or replay a fake mission. Do not spend model turns redrawing the graph. Batch state updates and continue substantive work immediately after the graph is visible.
 
-If the visualization surface is unavailable, keep the same state model in a terse text Control Room. Never delay the mission merely to render the office.
+If the visualization surface is unavailable, use the same state in a terse text Control Room. Never delay the mission to render status.

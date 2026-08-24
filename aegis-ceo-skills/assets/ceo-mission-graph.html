@@ -1,0 +1,109 @@
+<div id="aegis-mission-graph">
+  <style>
+    #aegis-mission-graph {
+      color-scheme: light dark;
+      --background: Canvas;
+      --foreground: CanvasText;
+      --card: Canvas;
+      --border: color-mix(in srgb, CanvasText 20%, transparent);
+      --muted: color-mix(in srgb, CanvasText 9%, Canvas);
+      --muted-foreground: GrayText;
+      --accent: color-mix(in srgb, Highlight 14%, Canvas);
+      --ring: Highlight;
+      --destructive: LinkText;
+      --viz-series-1: Highlight;
+      --viz-series-2: LinkText;
+      --viz-series-3: AccentColor;
+      color: var(--foreground);
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      width: 100%;
+    }
+    #aegis-mission-graph * { box-sizing: border-box; }
+    #aegis-mission-graph .amg-shell { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    #aegis-mission-graph .amg-head { align-items: center; background: color-mix(in srgb, var(--card) 82%, transparent); border-bottom: 1px solid var(--border); display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr) minmax(180px, .7fr); padding: 14px 16px; }
+    #aegis-mission-graph .amg-title { font-size: 16px; font-weight: 500; }
+    #aegis-mission-graph .amg-phase, #aegis-mission-graph .amg-usage-head, #aegis-mission-graph .amg-model, #aegis-mission-graph .amg-subtitle, #aegis-mission-graph .amg-detail-label, #aegis-mission-graph .amg-feed { color: var(--muted-foreground); font-size: 12px; }
+    #aegis-mission-graph .amg-phase { margin-top: 3px; }
+    #aegis-mission-graph .amg-usage-head { display: flex; justify-content: space-between; }
+    #aegis-mission-graph .amg-track { background: var(--muted); height: 6px; margin-top: 7px; overflow: hidden; }
+    #aegis-mission-graph .amg-fill { background: var(--viz-series-1); height: 100%; width: 12%; }
+    #aegis-mission-graph .amg-graph { padding: 18px 16px 14px; }
+    #aegis-mission-graph .amg-level { display: flex; justify-content: center; }
+    #aegis-mission-graph .amg-connector-v { background: var(--border); height: 22px; margin: 0 auto; width: 1px; }
+    #aegis-mission-graph .amg-workers { display: grid; gap: 10px; grid-template-columns: repeat(3, minmax(0, 1fr)); position: relative; width: 100%; }
+    #aegis-mission-graph .amg-workers::before { background: var(--border); content: ""; height: 1px; left: 8.33%; position: absolute; right: 8.33%; top: -12px; }
+    #aegis-mission-graph .amg-node { background: color-mix(in srgb, var(--card) 76%, transparent); border: 1px solid var(--border); border-radius: 9px; color: var(--foreground); cursor: pointer; display: block; font: inherit; min-height: 96px; padding: 11px 12px; position: relative; text-align: left; width: 100%; }
+    #aegis-mission-graph .amg-workers .amg-node::before { background: var(--border); content: ""; height: 12px; left: 50%; position: absolute; top: -13px; width: 1px; }
+    #aegis-mission-graph .amg-node:hover { background: color-mix(in srgb, var(--accent) 72%, transparent); }
+    #aegis-mission-graph .amg-node.is-selected { border-color: var(--ring); box-shadow: 0 0 0 2px color-mix(in srgb, var(--ring) 30%, transparent); }
+    #aegis-mission-graph .amg-node[data-state="Active"], #aegis-mission-graph .amg-node[data-state="Working"] { border-left: 4px solid var(--viz-series-2); }
+    #aegis-mission-graph .amg-node[data-state="Blocked"], #aegis-mission-graph .amg-node[data-state="Unavailable"] { border-left: 4px solid var(--destructive); }
+    #aegis-mission-graph .amg-node[data-state="Complete"] { border-left: 4px solid var(--viz-series-3); }
+    #aegis-mission-graph .amg-node-head { align-items: center; display: flex; gap: 8px; justify-content: space-between; }
+    #aegis-mission-graph .amg-name { font-size: 13px; font-weight: 500; }
+    #aegis-mission-graph .amg-state { background: var(--muted); border-radius: 999px; color: var(--muted-foreground); font-size: 11px; padding: 2px 7px; white-space: nowrap; }
+    #aegis-mission-graph .amg-model { margin-top: 7px; }
+    #aegis-mission-graph .amg-subtitle { color: var(--foreground); margin-top: 5px; }
+    #aegis-mission-graph .amg-ceo { max-width: 330px; }
+    #aegis-mission-graph .amg-ceo .amg-node { min-height: 86px; }
+    #aegis-mission-graph .amg-pipeline { align-items: center; display: grid; gap: 24px; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0 auto; max-width: 680px; }
+    #aegis-mission-graph .amg-stage { border: 1px solid var(--border); border-radius: 8px; min-height: 54px; padding: 9px 10px; position: relative; text-align: center; }
+    #aegis-mission-graph .amg-stage + .amg-stage::before { color: var(--muted-foreground); content: "→"; left: -19px; position: absolute; top: 15px; }
+    #aegis-mission-graph .amg-stage-name { font-size: 12px; font-weight: 500; }
+    #aegis-mission-graph .amg-stage-state { color: var(--muted-foreground); font-size: 11px; margin-top: 4px; }
+    #aegis-mission-graph .amg-detail { background: color-mix(in srgb, var(--card) 70%, transparent); border-top: 1px solid var(--border); display: grid; gap: 12px; grid-template-columns: minmax(140px, .7fr) minmax(0, 1.3fr); padding: 13px 16px; }
+    #aegis-mission-graph .amg-detail-value { font-size: 13px; margin-top: 3px; }
+    #aegis-mission-graph .amg-feed { border-top: 1px solid var(--border); padding: 10px 16px 12px; }
+    #aegis-mission-graph .amg-feed strong { color: var(--foreground); font-weight: 500; }
+    @media (max-width: 680px) { #aegis-mission-graph .amg-workers { grid-template-columns: repeat(2, minmax(0, 1fr)); } #aegis-mission-graph .amg-workers::before, #aegis-mission-graph .amg-workers .amg-node::before { display: none; } }
+    @media (max-width: 440px) { #aegis-mission-graph .amg-head, #aegis-mission-graph .amg-detail { grid-template-columns: 1fr; } #aegis-mission-graph .amg-workers, #aegis-mission-graph .amg-pipeline { grid-template-columns: 1fr; } #aegis-mission-graph .amg-pipeline { gap: 16px; } #aegis-mission-graph .amg-stage + .amg-stage::before { content: "↓"; left: 50%; top: -17px; } }
+  </style>
+
+  <section class="amg-shell" aria-label="Aegis CEO mission graph">
+    <header class="amg-head">
+      <div><div class="amg-title">Aegis Mission Graph</div><div class="amg-phase" id="amg-phase">Startup · verifying workers</div></div>
+      <div><div class="amg-usage-head"><span>Codex usage estimate</span><span id="amg-usage-label">Relative · low</span></div><div class="amg-track" role="progressbar" aria-label="Relative Codex usage estimate, not measured weekly quota" aria-valuemin="0" aria-valuemax="100" aria-valuenow="12"><div class="amg-fill" id="amg-usage-fill"></div></div></div>
+    </header>
+
+    <div class="amg-graph">
+      <div class="amg-level"><div class="amg-ceo"><button type="button" class="amg-node is-selected" data-worker="ceo" data-state="Ready"><span class="amg-node-head"><span class="amg-name">Sol CEO</span><span class="amg-state">Ready</span></span><span class="amg-model">Mission decisions · final acceptance</span><span class="amg-subtitle">Framing mission and worker assignments</span></button></div></div>
+      <div class="amg-connector-v" aria-hidden="true"></div>
+      <div class="amg-workers" aria-label="Mission workers">
+        <button type="button" class="amg-node" data-worker="antigravity" data-state="Connecting"><span class="amg-node-head"><span class="amg-name">Antigravity</span><span class="amg-state">Connecting</span></span><span class="amg-model">Official agy CLI</span><span class="amg-subtitle">Verifying terminal worker</span></button>
+        <button type="button" class="amg-node" data-worker="gemini" data-state="Connecting"><span class="amg-node-head"><span class="amg-name">Gemini</span><span class="amg-state">Connecting</span></span><span class="amg-model">Model verified at mission start</span><span class="amg-subtitle">Awaiting capability probe</span></button>
+        <button type="button" class="amg-node" data-worker="chatgpt" data-state="Unavailable"><span class="amg-node-head"><span class="amg-name">ChatGPT</span><span class="amg-state">Unavailable</span></span><span class="amg-model">Authenticated chat when controllable</span><span class="amg-subtitle">No assignment dispatched</span></button>
+        <button type="button" class="amg-node" data-worker="luna" data-state="Ready"><span class="amg-node-head"><span class="amg-name">Luna</span><span class="amg-state">Ready</span></span><span class="amg-model">Low-cost bounded Codex work</span><span class="amg-subtitle">Waiting for a scoped task</span></button>
+        <button type="button" class="amg-node" data-worker="terra" data-state="Ready"><span class="amg-node-head"><span class="amg-name">Terra</span><span class="amg-state">Ready</span></span><span class="amg-model">Integration and debugging</span><span class="amg-subtitle">Waiting for a scoped task</span></button>
+        <button type="button" class="amg-node" data-worker="qa" data-state="Ready"><span class="amg-node-head"><span class="amg-name">Verification</span><span class="amg-state">Ready</span></span><span class="amg-model">Tests · security · live checks</span><span class="amg-subtitle">Waiting for acceptance evidence</span></button>
+      </div>
+      <div class="amg-connector-v" aria-hidden="true"></div>
+      <div class="amg-pipeline" aria-label="Delivery pipeline">
+        <div class="amg-stage"><div class="amg-stage-name">Integrate</div><div class="amg-stage-state" data-stage="integrate">Waiting</div></div>
+        <div class="amg-stage"><div class="amg-stage-name">Verify</div><div class="amg-stage-state" data-stage="verify">Waiting</div></div>
+        <div class="amg-stage"><div class="amg-stage-name">Ship</div><div class="amg-stage-state" data-stage="ship">Waiting</div></div>
+      </div>
+    </div>
+
+    <section class="amg-detail" aria-live="polite"><div><div class="amg-detail-label">Selected worker</div><div class="amg-detail-value" id="amg-selected">Sol CEO · Ready</div></div><div><div class="amg-detail-label">Current assignment / latest result</div><div class="amg-detail-value" id="amg-detail">Own the mission, route work efficiently, and accept only verified results.</div></div></section>
+    <div class="amg-feed"><strong>Decision feed:</strong> <span id="amg-feed">Verify real workers before dispatching assignments.</span></div>
+  </section>
+
+  <script>
+    (() => {
+      const root = document.getElementById('aegis-mission-graph');
+      if (!root) return;
+      const details = { ceo: 'Own the mission, route work efficiently, and accept only verified results.', antigravity: 'Primary high-volume implementation worker. Activate only after a real agy response.', gemini: 'Research, synthesis, alternatives, and critique through a verified Gemini model.', chatgpt: 'Research and UX critique only when an authenticated controllable session exists.', luna: 'Bounded searches, mechanical edits, focused tests, and documentation.', terra: 'Implementation, integration, debugging, and review when cheaper routes are insufficient.', qa: 'Deterministic tests, security checks, deployment verification, and acceptance evidence.' };
+      const selected = root.querySelector('#amg-selected');
+      const detail = root.querySelector('#amg-detail');
+      const phase = root.querySelector('#amg-phase');
+      const usageLabel = root.querySelector('#amg-usage-label');
+      const usageFill = root.querySelector('#amg-usage-fill');
+      const usageTrack = root.querySelector('.amg-track');
+      const feed = root.querySelector('#amg-feed');
+      const nodes = [...root.querySelectorAll('.amg-node[data-worker]')];
+      function choose(node) { nodes.forEach(item => item.classList.toggle('is-selected', item === node)); const name = node.querySelector('.amg-name').textContent; const state = node.querySelector('.amg-state').textContent; const subtitle = node.querySelector('.amg-subtitle').textContent; selected.textContent = `${name} · ${state}`; detail.textContent = `${subtitle}. ${details[node.dataset.worker] || ''}`; }
+      nodes.forEach(node => node.addEventListener('click', () => choose(node)));
+      window.AegisMissionGraph = { setState(next = {}) { if (next.phase) phase.textContent = next.phase; if (next.feed) feed.textContent = next.feed; if (next.usage) { const value = Math.max(0, Math.min(100, Number(next.usage.value) || 0)); usageLabel.textContent = next.usage.label || 'Relative estimate'; usageFill.style.width = `${value}%`; usageTrack.setAttribute('aria-valuenow', String(value)); } Object.entries(next.workers || {}).forEach(([id, worker]) => { const node = root.querySelector(`[data-worker="${id}"]`); if (!node) return; if (worker.state) { node.dataset.state = worker.state; node.querySelector('.amg-state').textContent = worker.state; } if (worker.model) node.querySelector('.amg-model').textContent = worker.model; if (worker.subtitle) node.querySelector('.amg-subtitle').textContent = worker.subtitle; if (worker.detail) details[id] = worker.detail; if (node.classList.contains('is-selected')) choose(node); }); Object.entries(next.pipeline || {}).forEach(([id, value]) => { const stage = root.querySelector(`[data-stage="${id}"]`); if (stage) stage.textContent = value; }); } };
+    })();
+  </script>
+</div>

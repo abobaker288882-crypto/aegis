@@ -63,7 +63,7 @@ Antigravity and Gemini must be active for every Aegis mission unless the user ex
 3. If there is no supported CLI, use an existing recorded Computer Use workflow for the installed desktop app. For Antigravity on macOS, read [antigravity-desktop.md](antigravity-desktop.md). Target stable app, window, and control labels rather than screen coordinates; keep prompts free of secrets. If no recording exists, request the smallest one-time setup: have the user demonstrate opening the app, starting or selecting a session, sending a harmless probe, and returning to the response.
 4. If neither local route works, check for an already-authenticated controllable browser session.
 5. Start or claim the service and send a minimal, non-sensitive capability probe.
-6. Record `Active` only after a successful provider response; keep the office at `Connecting` during real attempts.
+6. Record `Active` only after a successful provider response; keep the mission graph at `Connecting` during real attempts.
 7. Try one materially different supported access route after a failure.
 8. If workflow recording, sign-in, credentials, installation, account creation, payment, or new permissions are required, stop at that boundary with the smallest exact request. Do not begin the mission with a substitute while claiming the required worker is active.
 
@@ -73,7 +73,7 @@ When the host exposes model selection, keep the primary Aegis CEO role on Sol. I
 
 Use ChatGPT for research, comparison, summaries, and UX/content critique; Antigravity for the largest implementation and repair volume; and Gemini for synthesis, alternatives, drafts, and independent critique. These are preferences, not fictional dependencies. Substitute accurately when unavailable and never spend more Codex usage reaching a preferred worker than it can save.
 
-Discover all three external services before composing the roster. An authenticated browser session counts only when it is actually controllable and the required task can be performed safely. If a service is unavailable, do not create its assignment, queue entry, meeting participant, progress animation, or result; mark it `Unavailable` and continue with real workers. Never use an Antigravity, Gemini, or ChatGPT label for work performed by Sol, Luna, Terra, another provider, or deterministic tools.
+Discover all three external services before composing the roster. An authenticated browser session counts only when it is actually controllable and the required task can be performed safely. If a service is unavailable, do not create its assignment, queue entry, active state, or result; mark it `Unavailable` and continue with real workers. Never use an Antigravity, Gemini, or ChatGPT label for work performed by Sol, Luna, Terra, another provider, or deterministic tools.
 
 ## CEO loop
 

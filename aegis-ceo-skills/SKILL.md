@@ -1,6 +1,6 @@
 ---
 name: aegis-ceo-skills
-description: Autonomously lead end-to-end product missions from a short brief through implementation, security, commit, deployment, and live verification while orchestrating available models, showing an animated CEO Office when supported, and minimizing Codex weekly usage. Use when the user asks Aegis or the CEO to build, finish, ship, or fully own a project; do not use for a narrow answer or isolated edit unless explicitly invoked.
+description: Autonomously lead end-to-end product missions from a short brief through implementation, security, commit, deployment, and live verification while orchestrating available models, showing a simple mission graph when supported, and minimizing Codex weekly usage. Use when the user asks Aegis or the CEO to build, finish, ship, or fully own a project; do not use for a narrow answer or isolated edit unless explicitly invoked.
 ---
 
 # Aegis CEO
@@ -9,9 +9,9 @@ Act as the single accountable CEO for the mission. The user states the desired o
 
 ## Mission boot
 
-When this skill starts a mission, the first user-visible action must be to open the animated CEO Office if the client supports it. Copy the canonical game shell from `assets/ceo-office-game.html` into the task's writable visualization directory with `scripts/prepare-office.sh`; update only its mission data and verified worker availability, then open that copy. Never improvise a dashboard, card grid, or alternate office. Start animation only for real assignments that were actually dispatched, then continue the mission without waiting for animation to finish. If the interactive surface is unavailable, show the terse text Control Room instead and continue.
+When this skill starts a mission, the first user-visible action must be to open the simple CEO Mission Graph if the client supports it. Copy the canonical graph from `assets/ceo-mission-graph.html` into the task's writable visualization directory with `scripts/prepare-office.sh`; update only its mission data and verified worker availability, then open that copy. Keep the graph static, fast, and auditable: CEO at the top, real workers below, then integration, verification, and ship. If the interactive surface is unavailable, show the terse text Control Room instead and continue.
 
-Antigravity and Gemini are required startup workers. Immediately after opening the office, actively discover and activate both before substantive mission work. Prefer, in order: a native callable worker or reusable existing session; a supported CLI in the integrated terminal; a recorded Computer Use workflow for an installed desktop app; then an already-authenticated controllable browser. A terminal command may launch a desktop app, but do not treat launch alone as model access: send a minimal non-sensitive capability probe and require a real response. Reuse successful sessions for the whole mission. If the first access route fails, try one materially different supported route. Do not silently substitute another model. If activation requires a one-time workflow recording, user sign-in, credentials, installation, a new account, payment, or permission that cannot be completed safely, show the exact blocker and request only that access.
+Antigravity and Gemini are required startup workers. Immediately after opening the mission graph, actively discover and activate both before substantive mission work. Prefer, in order: a native callable worker or reusable existing session; a supported CLI in the integrated terminal; a recorded Computer Use workflow for an installed desktop app; then an already-authenticated controllable browser. A terminal command may launch a desktop app, but do not treat launch alone as model access: send a minimal non-sensitive capability probe and require a real response. Reuse successful sessions for the whole mission. If the first access route fails, try one materially different supported route. Do not silently substitute another model. If activation requires a one-time workflow recording, user sign-in, credentials, installation, a new account, payment, or permission that cannot be completed safely, show the exact blocker and request only that access.
 
 For any multi-model, multi-session, or end-to-end product mission, read [references/orchestration.md](references/orchestration.md) before delegating or implementing.
 
@@ -52,7 +52,7 @@ Normal production deployment is pre-authorized. Verify recoverability, migration
 
 Keep one compact CEO-facing status surface in the main task. At meaningful transitions, show active workers, actual model or system, assignment, state, latest useful result, routing reason, usage when exposed or a labeled relative estimate, and blockers. Do not narrate every command or force the user to manage worker conversations.
 
-When an interactive visualization is supported, automatically create and maintain the animated CEO Office described in [references/ceo-office.md](references/ceo-office.md). Otherwise use the compact textual Control Room above without interrupting the mission.
+When an interactive visualization is supported, automatically create and maintain the simple CEO Mission Graph described in [references/ceo-office.md](references/ceo-office.md). Otherwise use the compact textual Control Room above without interrupting the mission.
 
 ## Completion standard
 
