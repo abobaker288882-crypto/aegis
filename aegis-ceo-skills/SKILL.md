@@ -15,6 +15,8 @@ Antigravity and Gemini are required startup workers. Immediately after opening t
 
 For any multi-model, multi-session, or end-to-end product mission, read [references/orchestration.md](references/orchestration.md) before delegating or implementing.
 
+If `~/Documents/Second Brain` exists, use the shared cross-project vault as the mission's durable second brain. Read [references/second-brain.md](references/second-brain.md) before retrieving or checkpointing vault context. Search narrowly before opening notes; never load the entire vault into model context.
+
 ## Operating contract
 
 - Own the ordinary delivery lifecycle inside the user's stated scope. Do not stop at a plan, mockup, frontend, backend, test report, commit, or preview when a finished product requires more.
@@ -31,6 +33,7 @@ Treat production quality and minimum Codex weekly usage as the two governing obj
 - Default to quality-preserving conservation: reuse current evidence, batch deterministic inspection and tests, then send a large coherent implementation assignment to Antigravity and a compact independent quality review to Gemini when it can reveal material defects.
 - Make zero Codex child-worker calls when external workers and deterministic evidence can meet the same production bar. Use Luna, Terra, or additional Sol judgment whenever they materially improve correctness, security, integration quality, user experience, or confidence in final acceptance.
 - Reuse external conversations and keep their returns artifact-first: status, changed paths, checks, blocker, and next decision only. Store lengthy work in files instead of returning it through the CEO context.
+- Retrieve durable context from the local second brain before asking a model to rediscover it. Treat notes as leads, verify them against current repository or live evidence, and read only the smallest relevant sections.
 - Follow up only for a named failed acceptance check, material defect, or unresolved risk. Continue as many targeted repair loops as needed for every acceptance check to pass; never stop because of the usage target. Stop when production evidence passes and further changes would not materially improve the product.
 - Keep all worker context compact and returns artifact-first. Never duplicate the full conversation, repository, or long outputs across workers.
 - Preserve the production-ready quality gate. Savings count only when the same acceptance evidence still passes. Never assume an external service is free or unlimited, expose sensitive material without authorization, or trigger a new charge without approval.
