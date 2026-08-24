@@ -4,7 +4,7 @@ Use this route only when `/Applications/Antigravity.app` is installed and no nat
 
 ## Connection boundary
 
-Antigravity Desktop 2.9.1 exposes an `antigravity://` deep-link handler and loopback services, but its bundled app contains no supported command for submitting chat prompts. The deep link may open or focus the app; it is not proof of model access. Do not call undocumented localhost services or reverse-engineer their authorization. Use the verified Computer Use flow below until Antigravity exposes a documented connector or CLI, then prefer that supported route after a harmless response probe.
+Antigravity Desktop 2.9.1 exposes an `antigravity://` deep-link handler and loopback services, but its app bundle contains no supported command for submitting chat prompts. The separately installed official `agy` CLI is the preferred route when available; read [antigravity-cli.md](antigravity-cli.md). A deep link may open or focus the desktop app, but it is not proof of model access. Do not call undocumented localhost services or reverse-engineer their authorization.
 
 ## Start or reuse
 
