@@ -10,7 +10,7 @@ Show each worker's actual model or system, state, one-line current assignment, l
 
 ## Updating
 
-Update the copied graph only at mission start and meaningful transitions. Keep node positions stable. Selecting a node must reveal its full bounded assignment and latest result. The graph's `window.AegisMissionGraph.setState(...)` method can update phase, usage, workers, pipeline, and the decision feed when the host can call it; otherwise update the copied fragment's initial labels before opening or reopening it.
+Open the copied graph once at mission start. Keep node positions stable. Selecting a node must reveal its full bounded assignment and latest result. The graph's `window.AegisMissionGraph.setState(...)` method can update phase, usage, workers, pipeline, and the decision feed when the host can call it without another model turn. Otherwise leave the graph unchanged during ordinary work and reopen it only for a material blocker or the final verified state.
 
 Do not animate, simulate progress, invent usage, or replay a fake mission. Do not spend model turns redrawing the graph. Batch state updates and continue substantive work immediately after the graph is visible.
 

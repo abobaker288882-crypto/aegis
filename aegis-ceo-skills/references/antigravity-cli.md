@@ -15,6 +15,7 @@ Attach the prompt directly to `--print=`; otherwise the CLI can consume the next
 ## Assign and reuse
 
 - Batch the largest coherent non-sensitive assignment into one compact prompt. A new CLI turn can carry substantial provider-side input context even for a short prompt.
+- Instruct the worker to inspect relevant repository paths itself, perform the bounded edits and checks, and keep its returned response under a compact artifact-first contract: `status`, `changed_paths`, `checks`, `blocker`, and `next_decision`. Put long analysis or evidence in a workspace artifact and return its path.
 - Default to the lowest available Gemini Flash model and low effort that can pass the acceptance check. Raise the model or effort only for a named failure or material quality risk.
 - Use `--sandbox` by default. Add `--mode accept-edits` only when the bounded assignment explicitly requires workspace edits. Never use `--dangerously-skip-permissions` as an efficiency shortcut.
 - Continue related work with `--conversation <conversation_id>` and another attached `--print=` prompt. Start a new conversation only for privacy, contamination, or unrelated work.

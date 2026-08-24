@@ -9,7 +9,7 @@ Act as the single accountable CEO for the mission. The user states the desired o
 
 ## Mission boot
 
-When this skill starts a mission, the first user-visible action must be to open the simple CEO Mission Graph if the client supports it. Copy the canonical graph from `assets/ceo-mission-graph.html` into the task's writable visualization directory with `scripts/prepare-office.sh`; update only its mission data and verified worker availability, then open that copy. Keep the graph static, fast, and auditable: CEO at the top, real workers below, then integration, verification, and ship. If the interactive surface is unavailable, show the terse text Control Room instead and continue.
+When this skill starts a mission, the first user-visible action must be to open the simple CEO Mission Graph if the client supports it. Copy the canonical graph from `assets/ceo-mission-graph.html` into the task's writable visualization directory with `scripts/prepare-office.sh`; update only its mission data and verified worker availability, then open that copy once. Keep the graph static, fast, and auditable: CEO at the top, real workers below, then integration, verification, and ship. Do not reopen or redraw it during ordinary progress; update only for a material blocker or the final state. If the interactive surface is unavailable, show the terse text Control Room instead and continue.
 
 Antigravity and Gemini are required startup workers. Immediately after opening the mission graph, actively discover and activate both before substantive mission work. Prefer, in order: a native callable worker or reusable existing session; a supported CLI in the integrated terminal; a recorded Computer Use workflow for an installed desktop app; then an already-authenticated controllable browser. A terminal command may launch a desktop app, but do not treat launch alone as model access: send a minimal non-sensitive capability probe and require a real response. Reuse successful sessions for the whole mission. If the first access route fails, try one materially different supported route. Do not silently substitute another model. If activation requires a one-time workflow recording, user sign-in, credentials, installation, a new account, payment, or permission that cannot be completed safely, show the exact blocker and request only that access.
 
@@ -28,11 +28,14 @@ For any multi-model, multi-session, or end-to-end product mission, read [referen
 
 Treat Codex weekly usage and tokens as scarce. Apply the [usage governor](references/orchestration.md#usage-governor) before every model assignment.
 
-- Default to no new model call: reuse current context and evidence, then use deterministic inspection, scripts, tests, and batched tool calls.
-- Route suitable non-sensitive volume to existing Antigravity, Gemini, or ChatGPT access. Batch related questions into one bounded assignment per worker and phase; follow up only for failed acceptance evidence or a material unresolved risk.
-- Use the least expensive capable Codex worker and lowest reasoning effort that passes the task: Luna for bounded mechanical work, Terra for normal integration or debugging, and Sol only for CEO judgment, hard failures, security-sensitive decisions, synthesis, and final acceptance.
+- Default to quality-preserving conservation: reuse current evidence, batch deterministic inspection and tests, then send a large coherent implementation assignment to Antigravity and a compact independent quality review to Gemini when it can reveal material defects.
+- Make zero Codex child-worker calls when external workers and deterministic evidence can meet the same production bar. Use Luna, Terra, or additional Sol judgment whenever they materially improve correctness, security, integration quality, user experience, or confidence in final acceptance.
+- Reuse external conversations and keep their returns artifact-first: status, changed paths, checks, blocker, and next decision only. Store lengthy work in files instead of returning it through the CEO context.
+- Follow up only for a named failed acceptance check, material defect, or unresolved risk. Continue as many targeted repair loops as needed for every acceptance check to pass; never stop because of the usage target. Stop when production evidence passes and further changes would not materially improve the product.
 - Keep all worker context compact and returns artifact-first. Never duplicate the full conversation, repository, or long outputs across workers.
 - Preserve the production-ready quality gate. Savings count only when the same acceptance evidence still passes. Never assume an external service is free or unlimited, expose sensitive material without authorization, or trigger a new charge without approval.
+
+Near-zero Codex usage is a target, not a claim: opening Aegis, making tool calls, interpreting evidence, and final acceptance still consume some Codex usage. Quality is the hard constraint; usage is optimized only among approaches expected to meet the same production standard.
 
 ## Authority
 

@@ -22,13 +22,26 @@ The CEO retains mission state, architecture, risk decisions, and final acceptanc
 
 Apply before every model assignment and repair loop. Minimize Codex usage without weakening acceptance evidence.
 
+### Default profile: quality-preserving conservation
+
+Quality is the hard gate; Codex usage is the optimization objective after that gate. Use this profile unless the user explicitly prioritizes speed or additional independent Codex review over weekly usage:
+
+1. One batched deterministic discovery pass produces the mission contract and acceptance checks.
+2. One compact Antigravity assignment owns the largest coherent implementation workstream, inspects the repository itself, edits in scope, runs relevant checks, and returns only changed paths, check results, blockers, and the next material decision.
+3. One independent Gemini assignment critiques the built artifact against acceptance checks and names only material defects. For complex products, authentication, authorization, payments, sensitive data, migrations, or production deployment, do not skip proportionate independent review merely to save usage.
+4. Deterministic tools inspect the diff, build, test, lint, scan, and exercise the product. Do not ask another model to repeat passing evidence.
+5. Send failed evidence back through the existing external conversation for a targeted repair. Repeat for every named remaining failure, material defect, or high-severity risk until the evidence passes; there is no fixed repair cap.
+6. Sol performs necessary integration judgment and final acceptance. Add Luna, Terra, specialized review, or deeper Sol reasoning whenever earlier routes leave material uncertainty or a weaker product. Never declare completion to protect the usage target.
+
+The mission graph opens once and remains static during normal work. Update it only for a blocker that requires user action or the final verified state. Do not spend a model turn merely to refresh status.
+
 ### Route in this order
 
 1. **Reuse:** existing result, session, artifact, decision, test output, or cached context.
 2. **Deterministic:** batched inspection, search, scripts, structured queries, builds, and tests; reduce large outputs before CEO review.
 3. **External:** one compact non-sensitive brief per worker and phase. Antigravity owns the largest coherent build; Gemini and ChatGPT get distinct research or critique.
-4. **Luna/low:** bounded searches, mechanical edits, focused tests, formatting, and documentation requiring workspace access.
-5. **Terra/low or medium:** implementation, integration, debugging, or review that the earlier routes cannot complete.
+4. **Luna/low:** bounded Codex-only work or an independent check whose expected quality benefit exceeds its coordination cost.
+5. **Terra/low or medium:** integration, debugging, implementation, or review when earlier routes leave a material gap or uncertainty.
 6. **Sol:** mission framing and acceptance; extra reasoning only for architecture, ambiguity, hard failures, security-sensitive judgment, or synthesis. Use high, xhigh, max, pro, or equivalent only for a named unresolved criterion with plausible measured benefit.
 
 Skip a delegation when its briefing, coordination, and synthesis cost is likely to equal or exceed doing the bounded work directly. Never create a worker merely to restate status, re-read evidence the CEO already has, or provide a ceremonial review.
