@@ -1,0 +1,6 @@
+interface:
+  display_name: "Usage Optimizer"
+  short_description: "Spend less Codex usage without losing quality"
+  default_prompt: "Use $usage-optimizer to find the lowest-usage way to complete this request well."
+policy:
+  allow_implicit_invocation: true
