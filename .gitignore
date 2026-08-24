@@ -1,0 +1,6 @@
+# tooling and local state
+.pnpm-store/
+.DS_Store
+
+# nested independent repository (has its own history; see README)
+/aegis-ceo-office-site/
