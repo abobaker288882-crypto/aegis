@@ -5,10 +5,13 @@ Use the shared Obsidian vault at `~/Documents/Second Brain` when it exists. It s
 ## Retrieve with minimum context
 
 1. Read `System/Current Context.md` once at mission boot.
-2. Extract a few distinctive terms from the mission and search the vault with `rg -l` or `rg -n`.
-3. Open only the smallest matching project notes or linked decision sections. Do not enumerate and read every note.
-4. Prefer current repository, test, deployment, and live-system evidence when notes disagree or may be stale.
-5. If no relevant note exists, continue without manufacturing background.
+2. Search `10 Projects/Project Graph.md` and its linked project nodes to locate every relevant real source path, including related project copies.
+3. Extract a few distinctive terms from the mission and search those source paths directly with `rg -l` or `rg -n`.
+4. Open only the smallest matching source files, project notes, or linked decision sections. Do not enumerate and read every note or repository file.
+5. Prefer current repository, test, deployment, and live-system evidence when notes disagree or may be stale.
+6. If no relevant note exists, continue without manufacturing background.
+
+The project graph is a routing index and does not restrict access to the actual source. When projects have been added, moved, or removed, refresh it with the installed `second-brain-context/scripts/build_project_graph.py` before routing work.
 
 Do not add an embedding service or knowledge-graph backend unless the user asks for one and its measured retrieval benefit justifies its setup, cost, and background work.
 
