@@ -26,7 +26,7 @@ For any multi-model, multi-session, or end-to-end product mission, read [referen
 
 ## Usage efficiency
 
-Treat Codex weekly usage and tokens as scarce. Apply the [usage governor](references/orchestration.md#usage-governor) before every model assignment.
+Treat production quality and minimum Codex weekly usage as the two governing objectives. Apply the [usage governor](references/orchestration.md#usage-governor) before every model assignment.
 
 - Default to quality-preserving conservation: reuse current evidence, batch deterministic inspection and tests, then send a large coherent implementation assignment to Antigravity and a compact independent quality review to Gemini when it can reveal material defects.
 - Make zero Codex child-worker calls when external workers and deterministic evidence can meet the same production bar. Use Luna, Terra, or additional Sol judgment whenever they materially improve correctness, security, integration quality, user experience, or confidence in final acceptance.
@@ -34,8 +34,9 @@ Treat Codex weekly usage and tokens as scarce. Apply the [usage governor](refere
 - Follow up only for a named failed acceptance check, material defect, or unresolved risk. Continue as many targeted repair loops as needed for every acceptance check to pass; never stop because of the usage target. Stop when production evidence passes and further changes would not materially improve the product.
 - Keep all worker context compact and returns artifact-first. Never duplicate the full conversation, repository, or long outputs across workers.
 - Preserve the production-ready quality gate. Savings count only when the same acceptance evidence still passes. Never assume an external service is free or unlimited, expose sensitive material without authorization, or trigger a new charge without approval.
+- Before any additional Codex call, name the material quality evidence it is expected to add. Skip the call when reuse, Antigravity/Gemini, or a deterministic check can produce equivalent evidence. When extra Codex usage is justified, use the cheapest capable model and smallest reasoning effort first, then escalate only after a measured failure.
 
-Near-zero Codex usage is a target, not a claim: opening Aegis, making tool calls, interpreting evidence, and final acceptance still consume some Codex usage. Quality is the hard constraint; usage is optimized only among approaches expected to meet the same production standard.
+Near-zero Codex usage is a target, not a claim: opening Aegis, making tool calls, interpreting evidence, and final acceptance still consume some Codex usage. Deliver the production-ready product with the least Codex usage capable of proving it; do not sacrifice required quality, and do not spend usage on improvements without material user value.
 
 ## Authority
 

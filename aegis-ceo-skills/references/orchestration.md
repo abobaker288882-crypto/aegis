@@ -22,9 +22,9 @@ The CEO retains mission state, architecture, risk decisions, and final acceptanc
 
 Apply before every model assignment and repair loop. Minimize Codex usage without weakening acceptance evidence.
 
-### Default profile: quality-preserving conservation
+### Default profile: dual-objective efficiency
 
-Quality is the hard gate; Codex usage is the optimization objective after that gate. Use this profile unless the user explicitly prioritizes speed or additional independent Codex review over weekly usage:
+The two objectives are production-ready quality and the least possible Codex weekly usage. Optimize them together: preserve every required acceptance check while refusing calls that do not add material evidence or user value. Use this profile unless the user explicitly changes the tradeoff:
 
 1. One batched deterministic discovery pass produces the mission contract and acceptance checks.
 2. One compact Antigravity assignment owns the largest coherent implementation workstream, inspects the repository itself, edits in scope, runs relevant checks, and returns only changed paths, check results, blockers, and the next material decision.
@@ -34,6 +34,8 @@ Quality is the hard gate; Codex usage is the optimization objective after that g
 6. Sol performs necessary integration judgment and final acceptance. Add Luna, Terra, specialized review, or deeper Sol reasoning whenever earlier routes leave material uncertainty or a weaker product. Never declare completion to protect the usage target.
 
 The mission graph opens once and remains static during normal work. Update it only for a blocker that requires user action or the final verified state. Do not spend a model turn merely to refresh status.
+
+Before every Codex assignment, state internally which unmet acceptance check, unresolved risk, or integration decision the call will address. If no concrete item exists, skip it. If equivalent evidence can come from reuse, deterministic tools, or an authenticated external worker, use that route. Start with the cheapest capable Codex model and lowest reasoning effort; escalate only when observed evidence fails. Once all material acceptance checks pass, stop immediately.
 
 ### Route in this order
 
