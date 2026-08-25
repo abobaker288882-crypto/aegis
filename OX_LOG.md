@@ -89,3 +89,31 @@
    /aegis-site; secret-scanned before publish; first stranger-clone attempt
    exposed uncommitted Phase 2 files — committed, retagged, re-cloned, and
    re-ran the full journey successfully.
+
+## 2026-08-25 — Phase 3: the Mission Engine
+
+1. Built aegis-engine/: stdlib-only persistent execution layer — versioned
+   state (atomic+ .bak), execution-captured evidence (UNVERIFIED for manual
+   claims), git-aware staleness with --files scoping, derived release gates
+   that refuse unevidenced completion, checksummed self-contained
+   checkpoints, one-command resume, deterministic next-action, blocker
+   classes, regression/decision memory, deploy tracking, doctor --repair.
+   24 tests (corruption, tamper, concurrency, unicode/spaces, symlinks,
+   detached HEAD, migrations, refusals).
+2. Bugs found by my own tests and fixed: checksum computed before payload
+   complete; mkstemp outside try; argparse subparser default clobbering
+   --project; manual evidence failing validation; duplicate shadowing test
+   class silently skipping 4 tests; shlex quoting for evidence commands.
+3. Dogfooded on Aegis itself: mission m-20260825-121648, 4 criteria,
+   evidence refreshed through real commits (staleness demonstrated live),
+   2 regressions + 1 decision recorded, 7 checkpoints, COMPLETE with all
+   gates fresh. Engine refused completion twice until evidence was real.
+4. Benchmark harness: deterministic 5-defect fixture + objective scorer +
+   A/B protocol. Self-run with interruption mid-mission: engine caught my
+   own weak security evidence (rejected buggy C4 command), final engine
+   gates 5/5 == independent scorer 5/5.
+5. Site updated honestly (engine + benchmarks cards, execution loop),
+   deployed, live-verified (zero console errors). Fresh-clone public
+   journey PASS incl. state-loss restore, engine upgrade/uninstall.
+6. Released v2.0.0 on both repos. Scorecard: PHASE3_SCORECARD.md (18
+   categories at 9, two honest 8s with documented reasons).
