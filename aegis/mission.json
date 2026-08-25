@@ -28,6 +28,13 @@
       "file": "checkpoints/checkpoint-0004-2026-08-25T125158Z.json",
       "n": 4,
       "note": "v2.0.0 RC: engine 24/24, benchmarks validated, docs complete"
+    },
+    {
+      "commit": "5894853a7738ff9ca3100b7cb5bd05999d9ea455",
+      "created_at": "2026-08-25T12:53:06Z",
+      "file": "checkpoints/checkpoint-0005-2026-08-25T125306Z.json",
+      "n": 5,
+      "note": "all gates fresh at release commit"
     }
   ],
   "criteria": [

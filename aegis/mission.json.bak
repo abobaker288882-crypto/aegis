@@ -69,7 +69,8 @@
       "blocked_reason": null,
       "evidence": [
         "E4",
-        "E8"
+        "E8",
+        "E13"
       ],
       "id": "C4",
       "required": true,
@@ -259,6 +260,19 @@
       "kind": "test",
       "output": "..........\n----------------------------------------------------------------------\nRan 10 tests in 0.520s\n\nOK\n",
       "summary": "----------------------------------------------------------------------; Ran 10 tests in 0.520s; OK",
+      "verified": true
+    },
+    {
+      "captured_at": "2026-08-25T12:53:03Z",
+      "command": "sh -c 'T=$(mktemp -d); HOME=$T/h ./install.sh --target $T/h/skills >/dev/null 2>&1 && test -f $T/h/skills/aegis-ceo-skills/SKILL.md && rm -rf $T'",
+      "commit": "9c6e144d641ce9afddec0ceecab1b12388f46d1f",
+      "criterion": "C4",
+      "exit": 0,
+      "files": [],
+      "id": "E13",
+      "kind": "test",
+      "output": "",
+      "summary": "(no output)",
       "verified": true
     }
   ],
