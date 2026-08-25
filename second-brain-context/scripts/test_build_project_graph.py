@@ -57,22 +57,26 @@ class DiscoverProjectsTests(unittest.TestCase):
 
 
 class InspectProjectTests(unittest.TestCase):
-    def test_reports_git_state_and_sanitises_remote_credentials(self) -> None:
+    def _git_repo(self, tmp: str, remote_url: str):
         import subprocess
 
+        repo = Path(tmp) / "repo"
+        repo.mkdir()
+        run = lambda *args: subprocess.run(
+            ["git", "-C", str(repo), *args], check=True, capture_output=True
+        )
+        run("init", "-q")
+        run("config", "user.email", "t@example.com")
+        run("config", "user.name", "t")
+        (repo / "package.json").write_text('{"dependencies": {"next": "1"}}')
+        run("add", ".")
+        run("commit", "-qm", "init")
+        run("remote", "add", "origin", remote_url)
+        return repo, run
+
+    def test_reports_git_state_and_sanitises_remote_credentials(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
-            repo = Path(tmp) / "repo"
-            repo.mkdir()
-            run = lambda *args: subprocess.run(
-                ["git", "-C", str(repo), *args], check=True, capture_output=True
-            )
-            run("init", "-q")
-            run("config", "user.email", "t@example.com")
-            run("config", "user.name", "t")
-            (repo / "package.json").write_text('{"dependencies": {"next": "1"}}')
-            run("add", ".")
-            run("commit", "-qm", "init")
-            run("remote", "add", "origin", "https://user:secret@example.com/x.git")
+            repo, run = self._git_repo(tmp, "https://user:secret@example.com/x.git")
 
             info = inspect_project(repo)
 
@@ -83,6 +87,24 @@ class InspectProjectTests(unittest.TestCase):
             self.assertIn("example.com/x.git", info["remote"])
             self.assertIn("Next.js", info["technologies"])
             self.assertIn("package.json", info["manifests"])
+
+    def test_sanitises_query_string_tokens_in_remotes(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            repo, _ = self._git_repo(tmp, "https://example.com/x.git?token=ghp_abc123")
+            info = inspect_project(repo)
+            self.assertEqual(info["remote"], "https://example.com/x.git")
+
+    def test_sanitises_fragment_leaks_in_remotes(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            repo, _ = self._git_repo(tmp, "https://example.com/x.git#secretfrag")
+            info = inspect_project(repo)
+            self.assertEqual(info["remote"], "https://example.com/x.git")
+
+    def test_non_http_remote_is_kept_intact(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            repo, _ = self._git_repo(tmp, "git@example.com:x/y.git")
+            info = inspect_project(repo)
+            self.assertEqual(info["remote"], "git@example.com:x/y.git")
 
 
 class WriteIfChangedTests(unittest.TestCase):

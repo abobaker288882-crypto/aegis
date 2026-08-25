@@ -153,8 +153,12 @@ def inspect_project(project: Path) -> dict:
         technologies.update({"iOS", "Xcode"})
 
     remote = run_git(project, "remote", "get-url", "origin")
-    if remote and re.search(r"https?://[^/]+@", remote):
-        remote = re.sub(r"(https?://)[^/]+@", r"\1", remote)
+    if remote:
+        # Strip embedded credentials and any query/fragment, which some hosts
+        # use for delegated tokens. Never write them into the vault.
+        remote = re.sub(r"(https?://)[^/@]+@", r"\1", remote)
+        remote = re.sub(r"(https?://[^?\s#]+)[?#].*$", r"\1", remote)
+        remote = remote.strip()
     return {
         "branch": run_git(project, "branch", "--show-current"),
         "commit": run_git(project, "log", "-1", "--format=%h %s"),

@@ -17,24 +17,31 @@ explicit rules against faking any step.
 
 ## Installing the skills
 
-Copy the skill folders into your agent host's skills directory (the examples
-below assume `~/.agents/skills/`; adjust to your host's convention):
-
 ```sh
-cp -R aegis-ceo-skills usage-optimizer second-brain-context five-year-old ~/.agents/skills/
+git clone https://github.com/abobaker288882-crypto/aegis.git
+cd aegis
+./install.sh
 ```
 
+Safe and reversible by design: idempotent, backs up existing copies before
+any upgrade (`--keep` skips instead), refuses to touch non-directory
+obstructions, and ends with a live smoke check of the installed router.
+`./install.sh --uninstall` removes the skills (keeping timestamped backups).
+`--target DIR` or `AEGIS_SKILLS_DIR` chooses another skills directory
+(default `~/.agents/skills`; use your host's equivalent).
+
 Skills are plain Markdown plus optional scripts — no daemon, no account, no
-telemetry.
+telemetry. New here? Follow `QUICKSTART.md` for a five-minute verified first
+success.
 
 ## Verifying
 
-From the repository root:
-
 ```sh
-python3 -m unittest discover usage-optimizer/scripts -p "test_*.py"
-python3 -m unittest discover second-brain-context/scripts -p "test_*.py"
+./verify.sh
 ```
+
+Runs both Python test suites (30 tests), an installer smoke test in a clean
+temp directory, and — when Node is available — the site checks below.
 
 Site checks (requires Node 22+ and pnpm):
 
@@ -53,6 +60,14 @@ accurate when you change the product.
 
 ## Repository notes
 
-- The main repo has no configured remote; `aegis-ceo-office-site/` is a
-  separate nested git repository with its own history.
+- Suite source: https://github.com/abobaker288882-crypto/aegis
+- Site source: https://github.com/abobaker288882-crypto/aegis-site
+- Live site: https://abobaker288882-crypto.github.io/
+- `aegis-ceo-office-site/` is a separate nested git repository with its own
+  history and remote.
 - Python helpers target the Python 3.9+ standard library only.
+
+## License
+
+MIT — see `LICENSE`. Security concerns: `SECURITY.md`. Contributions:
+`CONTRIBUTING.md`.

@@ -60,3 +60,65 @@ class RouteTaskTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class BoundaryTests(unittest.TestCase):
+    def test_empty_task_rejected(self) -> None:
+        result = run_cli("--json", '{"task": ""}')
+        self.assertEqual(result.returncode, 2)
+        self.assertEqual(json.loads(result.stderr)["error"], "task must be a non-empty string")
+
+    def test_whitespace_task_rejected(self) -> None:
+        result = run_cli("--task", "   ")
+        self.assertEqual(result.returncode, 2)
+
+    def test_non_string_task_rejected(self) -> None:
+        result = run_cli("--json", '{"task": 42}')
+        self.assertEqual(result.returncode, 2)
+        self.assertEqual(json.loads(result.stderr)["error"], "task must be a non-empty string")
+
+    def test_unicode_task_routes_normally(self) -> None:
+        result = run_cli("--task", "résumer le document — 总结文件", "--kind", "research")
+        self.assertEqual(result.returncode, 0)
+        self.assertEqual(json.loads(result.stdout)["route"], "chatgpt")
+
+    def test_long_formatting_task_not_low_complexity(self) -> None:
+        result = run_cli("--task", "format " + "x" * 120, "--kind", "formatting")
+        self.assertEqual(result.returncode, 0)
+        self.assertEqual(json.loads(result.stdout)["route"], "terra")
+
+    def test_json_and_flags_are_mutually_exclusive(self) -> None:
+        result = run_cli("--json", '{"task": "x"}', "--task", "y")
+        self.assertEqual(result.returncode, 2)
+        self.assertEqual(json.loads(result.stderr)["error"], "use --json or task flags, not both")
+
+    def test_invalid_kind_rejected(self) -> None:
+        result = run_cli("--task", "x", "--kind", "quantum")
+        self.assertEqual(result.returncode, 2)
+
+    def test_invalid_complexity_rejected(self) -> None:
+        result = run_cli("--task", "x", "--complexity", "extreme")
+        self.assertEqual(result.returncode, 2)
+
+    def test_non_bool_sensitive_rejected(self) -> None:
+        result = run_cli("--json", '{"task": "x", "sensitive": "yes"}')
+        self.assertEqual(result.returncode, 2)
+        self.assertEqual(json.loads(result.stderr)["error"], "sensitive must be a boolean")
+
+    def test_auth_keyword_infers_security(self) -> None:
+        result = run_cli("--task", "fix authentication bug")
+        self.assertEqual(json.loads(result.stdout)["route"], "sol")
+
+    def test_consequential_overrides_everything(self) -> None:
+        result = run_cli("--task", "format a README", "--kind", "formatting",
+                         "--complexity", "low", "--risk", "low", "--consequential")
+        self.assertEqual(json.loads(result.stdout)["route"], "sol")
+
+    def test_network_research_stays_internal(self) -> None:
+        result = run_cli("--task", "compare APIs live", "--kind", "research", "--requires-network")
+        self.assertEqual(json.loads(result.stdout)["route"], "terra")
+
+    def test_malformed_json_reports_position(self) -> None:
+        result = run_cli("--json", '{"task": ')
+        self.assertEqual(result.returncode, 2)
+        self.assertTrue(json.loads(result.stderr)["error"].startswith("invalid JSON:"))
