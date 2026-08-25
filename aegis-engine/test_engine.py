@@ -324,6 +324,10 @@ class BreakItTests(unittest.TestCase):
     def tearDown(self) -> None:
         self._tmp.cleanup()
 
+    def commit_all(self, message: str = "work") -> None:
+        git(self.project, "add", "-A")
+        git(self.project, "commit", "-q", "--allow-empty", "-m", message)
+
     def test_empty_goal_refused_cleanly(self) -> None:
         r = run("init", "--goal", "  ", cwd=self.project)
         self.assertEqual(r.returncode, 2)
@@ -370,6 +374,24 @@ class BreakItTests(unittest.TestCase):
         r = run("status", cwd=self.project)
         self.assertEqual(r.returncode, 0, r.stderr)
 
+    def test_scoped_evidence_survives_unrelated_commits(self) -> None:
+        (self.project / "engine.py").write_text("x = 1\n")
+        (self.project / "prose.md").write_text("doc\n")
+        self.commit_all()
+        run("init", "--goal", "g", "--criterion", "engine ok", cwd=self.project)
+        r = run("evidence", "add", "-c", "C1", "--run",
+                sys.executable + " -c \"print('ok')\"", "--files", "engine.py",
+                cwd=self.project)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        (self.project / "prose.md").write_text("doc2\n")
+        self.commit_all("docs only")
+        r = run("verify", cwd=self.project)
+        self.assertIn("[pass   ] C1", r.stdout)
+        (self.project / "engine.py").write_text("x = 2\n")
+        self.commit_all("engine change")
+        r = run("verify", cwd=self.project)
+        self.assertIn("[stale  ] C1", r.stdout)
+
     def test_project_flag_with_spaces(self) -> None:
         nested = self._tmp.name + "/some dir/nest"
         os.makedirs(nested, exist_ok=True)
@@ -379,8 +401,6 @@ class BreakItTests(unittest.TestCase):
         self.assertEqual(r.returncode, 0, r.stderr)
 
 
-
-class BreakItTests(unittest.TestCase):
     def setUp(self) -> None:
         self._tmp = tempfile.TemporaryDirectory(prefix="aegis-break ")
         self.project = Path(self._tmp.name) / "p"
@@ -389,6 +409,10 @@ class BreakItTests(unittest.TestCase):
 
     def tearDown(self) -> None:
         self._tmp.cleanup()
+
+    def commit_all(self, message: str = "work") -> None:
+        git(self.project, "add", "-A")
+        git(self.project, "commit", "-q", "--allow-empty", "-m", message)
 
     def test_empty_goal_refused_cleanly(self) -> None:
         r = run("init", "--goal", "  ", cwd=self.project)

@@ -142,6 +142,8 @@ def cmd_evidence(args, project: Path) -> int:
             project, st, args.criterion, args.kind,
             command=args.run, manual_note=args.manual,
         )
+        if args.files and entry["kind"] != "manual":
+            entry["files"] = [f.strip() for f in args.files.split(",") if f.strip()]
     except ValueError as exc:
         return _fail(str(exc))
     state_mod.save(project, st)
@@ -441,6 +443,8 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("-c", "--criterion", required=True)
     sp.add_argument("-k", "--kind", default="test",
                     choices=["test", "build", "manual", "deploy", "http", "security", "migration"])
+    sp.add_argument("--files", help="comma-separated paths this evidence guards "
+                                    "(default: repo-wide; any later commit stales it)")
     sp.set_defaults(func=cmd_evidence)
 
     sp = sub.add_parser("criteria", parents=[parent], help="add or block release criteria")

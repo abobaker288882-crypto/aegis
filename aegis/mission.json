@@ -21,6 +21,13 @@
       "file": "checkpoints/checkpoint-0003-2026-08-25T124450Z.json",
       "n": 3,
       "note": "v2.0.0 release candidate: engine + benchmarks + docs"
+    },
+    {
+      "commit": "0832e6b5091895d234f6ad89c2aa9855d3b83735",
+      "created_at": "2026-08-25T12:51:58Z",
+      "file": "checkpoints/checkpoint-0004-2026-08-25T125158Z.json",
+      "n": 4,
+      "note": "v2.0.0 RC: engine 24/24, benchmarks validated, docs complete"
     }
   ],
   "criteria": [
@@ -29,7 +36,8 @@
       "evidence": [
         "E1",
         "E5",
-        "E9"
+        "E9",
+        "E10"
       ],
       "id": "C1",
       "required": true,
@@ -39,7 +47,8 @@
       "blocked_reason": null,
       "evidence": [
         "E2",
-        "E6"
+        "E6",
+        "E11"
       ],
       "id": "C2",
       "required": true,
@@ -49,7 +58,8 @@
       "blocked_reason": null,
       "evidence": [
         "E3",
-        "E7"
+        "E7",
+        "E12"
       ],
       "id": "C3",
       "required": true,
@@ -83,10 +93,10 @@
   ],
   "defects": [],
   "deploy": {
-    "last_checked_at": "",
-    "state": "unknown",
-    "target": "",
-    "url": ""
+    "last_checked_at": "2026-08-25T12:51:58Z",
+    "state": "deployed",
+    "target": "GitHub Pages",
+    "url": "https://abobaker288882-crypto.github.io/"
   },
   "evidence": [
     {
@@ -205,6 +215,51 @@
       "output": ".......................\n----------------------------------------------------------------------\nRan 23 tests in 5.856s\n\nOK\n",
       "summary": "----------------------------------------------------------------------; Ran 23 tests in 5.856s; OK",
       "verified": true
+    },
+    {
+      "captured_at": "2026-08-25T12:51:56Z",
+      "command": "python3 -m unittest discover aegis-engine -p test_*.py",
+      "commit": "0832e6b5091895d234f6ad89c2aa9855d3b83735",
+      "criterion": "C1",
+      "exit": 0,
+      "files": [
+        "aegis-engine/"
+      ],
+      "id": "E10",
+      "kind": "test",
+      "output": "........................\n----------------------------------------------------------------------\nRan 24 tests in 6.680s\n\nOK\n",
+      "summary": "----------------------------------------------------------------------; Ran 24 tests in 6.680s; OK",
+      "verified": true
+    },
+    {
+      "captured_at": "2026-08-25T12:51:57Z",
+      "command": "python3 -m unittest discover usage-optimizer/scripts -p test_*.py",
+      "commit": "0832e6b5091895d234f6ad89c2aa9855d3b83735",
+      "criterion": "C2",
+      "exit": 0,
+      "files": [
+        "usage-optimizer/"
+      ],
+      "id": "E11",
+      "kind": "test",
+      "output": "....................\n----------------------------------------------------------------------\nRan 20 tests in 0.693s\n\nOK\n",
+      "summary": "----------------------------------------------------------------------; Ran 20 tests in 0.693s; OK",
+      "verified": true
+    },
+    {
+      "captured_at": "2026-08-25T12:51:57Z",
+      "command": "python3 -m unittest discover second-brain-context/scripts -p test_*.py",
+      "commit": "0832e6b5091895d234f6ad89c2aa9855d3b83735",
+      "criterion": "C3",
+      "exit": 0,
+      "files": [
+        "second-brain-context/"
+      ],
+      "id": "E12",
+      "kind": "test",
+      "output": "..........\n----------------------------------------------------------------------\nRan 10 tests in 0.520s\n\nOK\n",
+      "summary": "----------------------------------------------------------------------; Ran 10 tests in 0.520s; OK",
+      "verified": true
     }
   ],
   "mission": {
@@ -217,7 +272,7 @@
     "non_goals": [
       "No network access, no daemons"
     ],
-    "phase": "verify",
+    "phase": "ship",
     "release": "",
     "why": "Agents fail long missions by forgetting, drifting, and claiming false completion; Phase 3 turns Aegis into the execution layer that prevents this"
   },
