@@ -117,3 +117,26 @@
    journey PASS incl. state-loss restore, engine upgrade/uninstall.
 6. Released v2.0.0 on both repos. Scorecard: PHASE3_SCORECARD.md (18
    categories at 9, two honest 8s with documented reasons).
+
+## 2026-08-25 — Phase 4: proving ground
+
+1. Regression Memory V2: paths+keywords+area matching, explainable WHY,
+   auto-surfaced in status/next/resume, cap 5, redaction at write time.
+   Found+fixed my own design flaw during testing: keywords originally
+   matched record text (always true) instead of changed paths.
+2. False-completion hardening: verify --rerun (re-executes evidence,
+   integrity failures fail verification), doctor TRIVIAL_EVIDENCE warning,
+   aegis archive. Six scripted attacks all fail closed (tests).
+3. Benchmark v2: M2 taskapi (hidden regression, SQL injection, incomplete
+   feature, doc mismatch, distraction) + aggregate scorer + interruption
+   modifier. Attack-the-benchmark pass found and fixed: scorer DB
+   pollution across runs, stale create_task contract in scorer, fixture
+   3.10-only annotations, silent patch no-op. Determinism proven by
+   repeated identical runs; unsolved fixtures score 0.0.
+4. Dogfood: Phase 4 mission complete 4/4 fresh gates; deliberate
+   interruption + resume from durable state; engine refused wrong evidence
+   twice more (scored unsolved fixture; stale C4 after commit).
+5. Released v2.1.0 both repos; fresh-clone PASS (install, engine tests,
+   regressions-for from public clone); site claims updated + live-verified.
+   Comparative A/B remains honestly unexecuted (needs external agent);
+   harness + protocol are ready and reproducible.
