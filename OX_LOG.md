@@ -14,3 +14,25 @@
 5. Decision: rebuild `/` as a real self-contained product page rather than
    patching the stale wrapper; wrapper remains at its URL for host compat.
 6. Created MISSION.md, OX_STATE.md, OX_LOG.md.
+
+2. Rebuilt site home as real product page (page.tsx, layout.tsx, CopyButton,
+   globals.css design system, app/fonts.css + public/fonts/* self-hosted
+   Geist, new shield favicon). Removed stale-demo redirect. Verified: build/
+   lint/tsc clean; rendered HTML has zero external origins; visual inspection
+   at 1440 dark/light + 390 dark via Playwright screenshots; fixed copy-button
+   overlap found in review; copy interaction verified via clipboard read.
+3. Added README.md; added second-brain-context test suite (7 tests) — first
+   run exposed two wrong expectations in MY tests (nested git repos are
+   intentionally separate projects; slug behavior), fixed tests to encode
+   real behavior; 14/14 pass across both suites. chmod +x python entrypoints.
+4. Ran build_project_graph.py against the real vault (integration): 8
+   projects indexed, note contents verified.
+5. Commits: main repo fdd3798 (track usage-optimizer), 312ed90 (mission
+   files, README, tests); site repo a719159 (new site), 8d1fd82 (ignore
+   artifacts — also removed accidental tracking from a719159), 66c44fa
+   (footer honesty claim).
+6. Deployment attempt: wrangler not authenticated, no env tokens, no remote
+   → AC9 BLOCKED on user-held credentials. Recorded in OX_STATE.md.
+7. Adversarial pass findings fixed: overlapping copy button; overclaiming
+   footer. Deliberate non-changes documented: no CSP meta on hydrated page;
+   mandatory-worker philosophy of flagship skill left intact.
