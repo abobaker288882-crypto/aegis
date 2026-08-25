@@ -28,6 +28,20 @@
       "file": "checkpoints/checkpoint-0004-2026-08-25T125158Z.json",
       "n": 4,
       "note": "v2.0.0 RC: engine 24/24, benchmarks validated, docs complete"
+    },
+    {
+      "commit": "5894853a7738ff9ca3100b7cb5bd05999d9ea455",
+      "created_at": "2026-08-25T12:53:06Z",
+      "file": "checkpoints/checkpoint-0005-2026-08-25T125306Z.json",
+      "n": 5,
+      "note": "all gates fresh at release commit"
+    },
+    {
+      "commit": "1da8f3419eff1273beeaa96f20084e3b2a76bff3",
+      "created_at": "2026-08-25T13:01:54Z",
+      "file": "checkpoints/checkpoint-0006-2026-08-25T130154Z.json",
+      "n": 6,
+      "note": "mission complete"
     }
   ],
   "criteria": [
@@ -70,7 +84,8 @@
       "evidence": [
         "E4",
         "E8",
-        "E13"
+        "E13",
+        "E14"
       ],
       "id": "C4",
       "required": true,
@@ -274,6 +289,19 @@
       "output": "",
       "summary": "(no output)",
       "verified": true
+    },
+    {
+      "captured_at": "2026-08-25T13:01:53Z",
+      "command": "sh -c 'T=$(mktemp -d); HOME=$T/h ./install.sh --target $T/h/skills >/dev/null 2>&1 && test -f $T/h/skills/aegis-ceo-skills/SKILL.md && rm -rf $T'",
+      "commit": "1da8f3419eff1273beeaa96f20084e3b2a76bff3",
+      "criterion": "C4",
+      "exit": 0,
+      "files": [],
+      "id": "E14",
+      "kind": "test",
+      "output": "",
+      "summary": "(no output)",
+      "verified": true
     }
   ],
   "mission": {
@@ -286,7 +314,7 @@
     "non_goals": [
       "No network access, no daemons"
     ],
-    "phase": "ship",
+    "phase": "done",
     "release": "",
     "why": "Agents fail long missions by forgetting, drifting, and claiming false completion; Phase 3 turns Aegis into the execution layer that prevents this"
   },
