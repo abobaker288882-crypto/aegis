@@ -3,6 +3,29 @@
 All notable changes to Aegis. Format follows Keep a Changelog; versioning is
 semantic (MAJOR.MINOR.PATCH).
 
+## [2.0.0] — 2026-08-25
+
+### Added
+- **Aegis Mission Engine** (`aegis-engine/`): a persistent execution layer
+  for coding missions — versioned mission state (atomic + `.bak` recovery),
+  evidence ledger with git-aware staleness invalidation, derived release
+  gates that refuse unevidenced completion, self-contained checksummed
+  checkpoints (survive total state loss), one-command resume briefs,
+  deterministic next-action ranking, blocker classification, regression and
+  decision memory, deploy tracking, and a doctor with repair path.
+  23 tests including corruption, tamper, concurrency, unicode/space paths,
+  symlink attacks, and migration.
+- **Benchmark harness** (`benchmarks/`): deterministic broken-project
+  fixture (5 planted defects), objective scorer, and an A/B protocol for
+  measuring agent performance with vs without Aegis. Self-run validated:
+  engine gates and independent scorer agree 5/5.
+- Installer now ships the engine (`~/.agents/aegis`) with the same
+  backup/upgrade/uninstall guarantees.
+
+### Changed
+- `verify.sh` includes the engine test suite.
+- Site updated to describe the engine (claims match shipped behavior).
+
 ## [1.1.0] — 2026-08-25
 
 ### Added

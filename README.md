@@ -13,6 +13,8 @@ explicit rules against faking any step.
 | `usage-optimizer/` | Skill + `scripts/route_task.py`, a stdlib-only deterministic router that picks the cheapest capable route for a task. Ships with unit tests. |
 | `second-brain-context/` | Skill + `scripts/build_project_graph.py`, which indexes local projects into an Obsidian vault graph (paths and metadata only; sanitizes git credentials; never copies source into the vault). |
 | `five-year-old/` | Skill for plain-language end-to-end ownership: simple progress updates, complete delivery, honest final report. |
+| `aegis-engine/` | **Mission engine** (v2 core): persistent mission state, evidence gates that derive completion from executed commands, git-aware staleness, self-contained checkpoints, one-command resume, next-action ranking, doctor diagnostics. Stdlib-only CLI. |
+| `benchmarks/` | Deterministic benchmark harness: broken-project fixture generator + objective scorer + A/B protocol for measuring whether Aegis improves agent performance. |
 | `aegis-ceo-office-site/` | Public product site (Next.js 16 + vinext), live at `https://abobaker288882-crypto.github.io/` via GitHub Pages. Self-contained: self-hosted fonts, zero third-party scripts. See its `DEPLOY.md`. |
 
 ## Installing the skills
@@ -21,6 +23,15 @@ explicit rules against faking any step.
 git clone https://github.com/abobaker288882-crypto/aegis.git
 cd aegis
 ./install.sh
+```
+
+This installs the four skills **and** the mission engine. Start tracking any
+project immediately:
+
+```sh
+cd your-project
+python3 ~/.agents/aegis/aegis.py init --goal "Ship feature X" --criterion "Tests pass"
+python3 ~/.agents/aegis/aegis.py next      # highest-value action, with reasons
 ```
 
 Safe and reversible by design: idempotent, backs up existing copies before

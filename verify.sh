@@ -4,6 +4,9 @@ set -eu
 cd "$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
 fail=0
 
+echo "== python: mission engine =="
+python3 -m unittest discover aegis-engine -p "test_*.py" || fail=1
+
 echo "== python: usage-optimizer router =="
 python3 -m unittest discover usage-optimizer/scripts -p "test_*.py" || fail=1
 
