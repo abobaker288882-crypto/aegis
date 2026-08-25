@@ -168,7 +168,55 @@ def gate_status(project: Path, st: dict, criterion: dict) -> tuple[str, list[str
     return "failed", [f"last check exited {latest.get('exit')}: {latest.get('summary', '')[:120]}"]
 
 
-def verify_mission(project: Path, st: dict) -> dict:
+TRIVIAL_COMMANDS = {"true", ":"}
+
+
+def _is_trivial(command):
+    if not command:
+        return False
+    import shlex
+    try:
+        argv = shlex.split(command)
+    except ValueError:
+        return False
+    if not argv:
+        return True
+    if argv[0] in TRIVIAL_COMMANDS:
+        return True
+    return argv[0] == "echo" and len(argv) <= 3
+
+
+def rerun_evidence(project: Path, st: dict) -> list:
+    """Re-execute stored verified evidence commands; compare exits."""
+    disagreements = []
+    seen = set()
+    for ev in st["evidence"]:
+        if not ev.get("verified") or not ev.get("command"):
+            continue
+        key = (ev["id"], ev["command"], ev.get("exit"))
+        if key in seen:
+            continue
+        seen.add(key)
+        actual = run_command(project, ev["command"])
+        if actual["exit"] != ev.get("exit"):
+            disagreements.append({
+                "id": ev["id"], "criterion": ev["criterion"],
+                "recorded": ev.get("exit"), "actual": actual["exit"],
+                "command": ev["command"], "summary": actual["summary"][:200],
+            })
+    return disagreements
+
+
+def verify_mission(project: Path, st: dict, rerun: bool = False) -> dict:
+    rerun_disagreements = []
+    if rerun:
+        rerun_disagreements = rerun_evidence(project, st)
+        bad = {d["id"] for d in rerun_disagreements}
+        if bad:
+            for ev in st["evidence"]:
+                if ev["id"] in bad:
+                    ev["exit"] = next(d["actual"] for d in rerun_disagreements
+                                      if d["id"] == ev["id"])
     """Recompute every criterion's derived status. Returns a report dict."""
     rows = []
     for c in st["criteria"]:
@@ -183,6 +231,7 @@ def verify_mission(project: Path, st: dict) -> dict:
         "required_pass": sum(1 for r in required if r["status"] == "pass"),
         "can_complete": complete_ok,
         "phase": st["mission"]["phase"],
+        "rerun_disagreements": rerun_disagreements,
     }
 
 
@@ -384,7 +433,12 @@ def resume_brief(project: Path, st: dict) -> str:
     done = [w["id"] + " " + w["title"][:60] for w in st["workstreams"] if w.get("status") == "done"]
     if done:
         lines.append("DO NOT REPEAT (completed): " + "; ".join(done[:10]))
-    for r in st.get("regressions", [])[-5:]:
+    from . import regressions as reg
+    changed = gitinfo.dirty_files(project)
+    watch = reg.surface_block(str(project), st.get("regressions", []), changed)
+    if watch:
+        lines.append(watch)
+    for r in st.get("regressions", [])[-3:]:
         lines.append(f"REGRESSION MEMORY {r['id']}: {r['defect'][:80]} — guard: {r.get('test', 'n/a')}")
     deploy = st.get("deploy", {})
     lines.append(f"DEPLOY: {deploy.get('state', 'unknown')}"
@@ -444,6 +498,14 @@ def doctor(project: Path) -> dict:
     if failed_count:
         add("warn", "FAILED_GATES", f"{failed_count} criteria have failing evidence",
             "fix the underlying problem or mark the criterion blocked with a reason")
+    trivial = [e["id"] for e in st["evidence"]
+               if e.get("verified") and _is_trivial(e.get("command"))]
+    if trivial:
+        add("warn", "TRIVIAL_EVIDENCE",
+            f"evidence {', '.join(trivial[:8])} records trivial command(s) "
+            "(true/echo) that verify nothing",
+            "replace with a command that exercises real behavior; benchmark "
+            "scoring is outcome-based and will not credit these")
     unverified = [e["id"] for e in st["evidence"] if not e.get("verified")]
     if unverified:
         add("info", "UNVERIFIED_EVIDENCE",

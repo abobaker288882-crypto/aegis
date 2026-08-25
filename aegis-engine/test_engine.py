@@ -468,5 +468,182 @@ class BreakItTests(unittest.TestCase):
         self.assertEqual(r.returncode, 0, r.stderr)
 
 
+
+
+class RegressionV2Tests(unittest.TestCase):
+    def setUp(self) -> None:
+        self._tmp = tempfile.TemporaryDirectory(prefix="aegis-reg ")
+        self.project = Path(self._tmp.name) / "p"
+        self.project.mkdir()
+        git(self.project, "init", "-q")
+
+    def tearDown(self) -> None:
+        self._tmp.cleanup()
+
+    def commit_all(self, message: str = "work") -> None:
+        git(self.project, "add", "-A")
+        git(self.project, "commit", "-q", "--allow-empty", "-m", message)
+
+    def _seed(self) -> None:
+        run("init", "--goal", "g", cwd=self.project)
+        run("regression", "--add", "authorization bypass on stale session token",
+            "--area", "auth", "--paths", "auth/", "--keywords", "token,session",
+            "--cause", "cache not invalidated", "--fix", "versioned keys",
+            "--test", "python3 -m unittest test_auth", cwd=self.project)
+        run("regression", "--add", "css glitch on theme reload",
+            "--paths", "web/css", cwd=self.project)
+
+    def test_retrieval_precision_and_explainability(self) -> None:
+        self._seed()
+        r = run("regressions-for", "--files", "auth/login.py", cwd=self.project)
+        self.assertIn("R1", r.stdout)
+        self.assertIn("why:", r.stdout)
+        self.assertIn("guarded by path", r.stdout)
+        self.assertNotIn("css glitch", r.stdout)
+
+    def test_unrelated_changes_surface_nothing(self) -> None:
+        self._seed()
+        r = run("regressions-for", "--files", "docs/readme.md", cwd=self.project)
+        self.assertIn("no regressions relate", r.stdout)
+
+    def test_auto_surfacing_in_status_next_resume(self) -> None:
+        self._seed()
+        (self.project / "auth").mkdir(exist_ok=True)
+        (self.project / "auth/session.py").write_text("x = 1\n")
+        for cmd in ("status", "next", "resume"):
+            r = run(cmd, cwd=self.project)
+            self.assertIn("REGRESSION WATCH", r.stdout, cmd)
+            self.assertIn("R1", r.stdout)
+
+    def test_surface_cap_limits_noise(self) -> None:
+        self._seed()
+        for i in range(8):
+            run("regression", "--add", f"auth failure variant {i}",
+                "--paths", "auth/", cwd=self.project)
+        r = run("regressions-for", "--files", "auth/x.py", cwd=self.project)
+        self.assertEqual(r.stdout.count("(relevance "), 5)
+
+    def test_secret_like_regression_fields_are_redacted(self) -> None:
+        run("init", "--goal", "g", cwd=self.project)
+        r = run("regression", "--add", "leak via token=ghp_Abcdef1234567890abcdef",
+                cwd=self.project)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        raw = (self.project / "aegis/mission.json").read_text()
+        self.assertNotIn("ghp_", raw)
+        self.assertIn("[REDACTED]", raw)
+
+    def test_performance_2000_regressions_500_evidence(self) -> None:
+        import time
+        run("init", "--goal", "g", "--criterion", "c", cwd=self.project)
+        st, _ = state_mod.load(self.project)
+        for i in range(2000):
+            st["regressions"].append({
+                "id": f"R{i+1}", "defect": f"failure number {i} in module {i%37}",
+                "cause": "", "fix": "", "test": f"python3 -m unittest t{i%50}",
+                "area": f"mod{i%37}", "paths": [f"src/mod{i%37}/"],
+                "keywords": [f"kw{i}"]})
+        for i in range(500):
+            st["evidence"].append({
+                "id": f"E{i+1}", "criterion": "C1", "kind": "test",
+                "command": "true", "exit": 0, "summary": "s" * 100,
+                "output": "o" * 500, "commit": "", "files": [],
+                "captured_at": "2026-01-01T00:00:00Z", "verified": True})
+        state_mod.save(self.project, st)
+        start = time.perf_counter()
+        r = run("status", cwd=self.project)
+        status_t = time.perf_counter() - start
+        start = time.perf_counter()
+        r = run("regressions-for", "--files", "src/mod7/x.py", cwd=self.project)
+        lookup_t = time.perf_counter() - start
+        start = time.perf_counter()
+        r = run("resume", cwd=self.project)
+        resume_t = time.perf_counter() - start
+        self.assertEqual(r.returncode, 0, r.stderr)
+        print(f"\nperf: status={status_t:.2f}s lookup={lookup_t:.2f}s resume={resume_t:.2f}s")
+        self.assertLess(status_t, 2.0)
+        self.assertLess(lookup_t, 2.0)
+        self.assertLess(resume_t, 2.0)
+
+
+class FalseCompletionTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self._tmp = tempfile.TemporaryDirectory(prefix="aegis-fc ")
+        self.project = Path(self._tmp.name) / "p"
+        self.project.mkdir()
+        git(self.project, "init", "-q")
+        (self.project / "app.py").write_text("x = 1\n")
+        git(self.project, "add", "-A")
+        git(self.project, "commit", "-q", "--allow-empty", "-m", "w")
+        run("init", "--goal", "g", "--criterion", "real work verified", cwd=self.project)
+
+    def test_attack_trivial_evidence_flagged_by_doctor(self) -> None:
+        r = run("evidence", "add", "-c", "C1", "--run", "true", cwd=self.project)
+        self.assertEqual(r.returncode, 0)
+        r = run("doctor", cwd=self.project)
+        self.assertIn("TRIVIAL_EVIDENCE", r.stdout)
+
+    def test_attack_stale_evidence_fails_closed(self) -> None:
+        run("evidence", "add", "-c", "C1", "--run",
+            sys.executable + " -c \"print('ok')\"", "--files", "app.py",
+            cwd=self.project)
+        (self.project / "app.py").write_text("x = 2\n")
+        git(self.project, "add", "-A")
+        git(self.project, "commit", "-q", "-m", "change guarded file")
+        r = run("complete", cwd=self.project)
+        self.assertEqual(r.returncode, 1)
+        self.assertIn("stale", r.stderr)
+
+    def test_attack_unrelated_commit_stales_repo_wide_evidence(self) -> None:
+        run("evidence", "add", "-c", "C1", "--run",
+            sys.executable + " -c \"print('ok')\"", cwd=self.project)
+        (self.project / "app.py").write_text("x = 3\n")
+        git(self.project, "add", "-A")
+        git(self.project, "commit", "-q", "-m", "any change")
+        r = run("complete", cwd=self.project)
+        self.assertEqual(r.returncode, 1)
+
+    def test_attack_restore_old_checkpoint_cannot_revive_evidence(self) -> None:
+        run("evidence", "add", "-c", "C1", "--run",
+            sys.executable + " -c \"print('ok')\"", "--files", "app.py",
+            cwd=self.project)
+        run("checkpoint", "--note", "good state", cwd=self.project)
+        (self.project / "app.py").write_text("x = 99\n")
+        git(self.project, "add", "-A")
+        git(self.project, "commit", "-q", "-m", "break later")
+        r = run("restore", cwd=self.project)
+        self.assertEqual(r.returncode, 0)
+        r = run("complete", cwd=self.project)
+        self.assertEqual(r.returncode, 1)
+        self.assertIn("stale", r.stderr)
+
+    def test_attack_forged_evidence_detected_by_verify_rerun(self) -> None:
+        run("evidence", "add", "-c", "C1", "--run",
+            sys.executable + " -c \"print('ok')\"", "--files", "app.py",
+            cwd=self.project)
+        path = self.project / "aegis/mission.json"
+        st = json.loads(path.read_text())
+        st["evidence"].append({
+            "id": "E999", "criterion": "C1", "kind": "test",
+            "command": sys.executable + " -c \"import sys; sys.exit(7)\"",
+            "exit": 0, "summary": "forged", "output": "",
+            "commit": st["evidence"][0]["commit"], "files": ["app.py"],
+            "captured_at": "2026-01-01T00:00:00Z", "verified": True})
+        st["criteria"][0]["evidence"].append("E999")
+        path.write_text(json.dumps(st))
+        r = run("verify", "--rerun", cwd=self.project)
+        self.assertEqual(r.returncode, 1)
+        self.assertIn("E999", r.stdout)
+        self.assertIn("disagree", r.stdout.lower())
+
+    def test_attack_deleted_regression_metadata_is_advisory_only(self) -> None:
+        run("regression", "--add", "past failure", "--paths", "app.py", cwd=self.project)
+        st, _ = state_mod.load(self.project)
+        st["regressions"] = []
+        state_mod.save(self.project, st)
+        r = run("status", cwd=self.project)
+        self.assertEqual(r.returncode, 0)
+
+
 if __name__ == "__main__":
     unittest.main()
+

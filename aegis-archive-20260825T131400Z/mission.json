@@ -1,0 +1,349 @@
+{
+  "blockers": [],
+  "checkpoints": [
+    {
+      "commit": "c7d654f13a8610aa381c0b00b24b610a728353a5",
+      "created_at": "2026-08-25T12:17:58Z",
+      "file": "checkpoints/checkpoint-0001-2026-08-25T121758Z.json",
+      "n": 1,
+      "note": "Phase 3 engine complete: 23 engine tests + suites green"
+    },
+    {
+      "commit": "d23739f239113b80647c9da48b781cfb27f1d78d",
+      "created_at": "2026-08-25T12:20:41Z",
+      "file": "checkpoints/checkpoint-0002-2026-08-25T122041Z.json",
+      "n": 2,
+      "note": "evidence refreshed post-commit; change-awareness demonstrated on dogfood"
+    },
+    {
+      "commit": "d23739f239113b80647c9da48b781cfb27f1d78d",
+      "created_at": "2026-08-25T12:44:50Z",
+      "file": "checkpoints/checkpoint-0003-2026-08-25T124450Z.json",
+      "n": 3,
+      "note": "v2.0.0 release candidate: engine + benchmarks + docs"
+    },
+    {
+      "commit": "0832e6b5091895d234f6ad89c2aa9855d3b83735",
+      "created_at": "2026-08-25T12:51:58Z",
+      "file": "checkpoints/checkpoint-0004-2026-08-25T125158Z.json",
+      "n": 4,
+      "note": "v2.0.0 RC: engine 24/24, benchmarks validated, docs complete"
+    },
+    {
+      "commit": "5894853a7738ff9ca3100b7cb5bd05999d9ea455",
+      "created_at": "2026-08-25T12:53:06Z",
+      "file": "checkpoints/checkpoint-0005-2026-08-25T125306Z.json",
+      "n": 5,
+      "note": "all gates fresh at release commit"
+    },
+    {
+      "commit": "1da8f3419eff1273beeaa96f20084e3b2a76bff3",
+      "created_at": "2026-08-25T13:01:54Z",
+      "file": "checkpoints/checkpoint-0006-2026-08-25T130154Z.json",
+      "n": 6,
+      "note": "mission complete"
+    },
+    {
+      "commit": "1da8f3419eff1273beeaa96f20084e3b2a76bff3",
+      "created_at": "2026-08-25T13:01:55Z",
+      "file": "checkpoints/checkpoint-0007-2026-08-25T130155Z.json",
+      "n": 7,
+      "note": "Phase 3 complete: v2.0.0"
+    }
+  ],
+  "criteria": [
+    {
+      "blocked_reason": null,
+      "evidence": [
+        "E1",
+        "E5",
+        "E9",
+        "E10"
+      ],
+      "id": "C1",
+      "required": true,
+      "text": "Engine test suite passes"
+    },
+    {
+      "blocked_reason": null,
+      "evidence": [
+        "E2",
+        "E6",
+        "E11"
+      ],
+      "id": "C2",
+      "required": true,
+      "text": "Router suite passes"
+    },
+    {
+      "blocked_reason": null,
+      "evidence": [
+        "E3",
+        "E7",
+        "E12"
+      ],
+      "id": "C3",
+      "required": true,
+      "text": "Graph builder suite passes"
+    },
+    {
+      "blocked_reason": null,
+      "evidence": [
+        "E4",
+        "E8",
+        "E13",
+        "E14"
+      ],
+      "id": "C4",
+      "required": true,
+      "text": "Installer smoke passes"
+    }
+  ],
+  "decisions": [
+    {
+      "choice": "Python 3.9 stdlib",
+      "consequences": "No rich TUI; careful subprocess hygiene",
+      "context": "Phase 3 architecture",
+      "id": "DEC1",
+      "options": [
+        "Python stdlib",
+        "Node CLI",
+        "Go binary"
+      ],
+      "reason": "Zero-dependency matches product thesis; runs where agents run",
+      "revisit_when": "Users need parallel missions or a daemon"
+    }
+  ],
+  "defects": [],
+  "deploy": {
+    "last_checked_at": "2026-08-25T12:51:58Z",
+    "state": "deployed",
+    "target": "GitHub Pages",
+    "url": "https://abobaker288882-crypto.github.io/"
+  },
+  "evidence": [
+    {
+      "captured_at": "2026-08-25T12:17:05Z",
+      "command": "python3 -m unittest discover aegis-engine -p test_*.py",
+      "commit": "c7d654f13a8610aa381c0b00b24b610a728353a5",
+      "criterion": "C1",
+      "exit": 0,
+      "files": [],
+      "id": "E1",
+      "kind": "test",
+      "output": ".......................\n----------------------------------------------------------------------\nRan 23 tests in 16.445s\n\nOK\n",
+      "summary": "----------------------------------------------------------------------; Ran 23 tests in 16.445s; OK",
+      "verified": true
+    },
+    {
+      "captured_at": "2026-08-25T12:17:06Z",
+      "command": "python3 -m unittest discover usage-optimizer/scripts -p test_*.py",
+      "commit": "c7d654f13a8610aa381c0b00b24b610a728353a5",
+      "criterion": "C2",
+      "exit": 0,
+      "files": [],
+      "id": "E2",
+      "kind": "test",
+      "output": "....................\n----------------------------------------------------------------------\nRan 20 tests in 0.819s\n\nOK\n",
+      "summary": "----------------------------------------------------------------------; Ran 20 tests in 0.819s; OK",
+      "verified": true
+    },
+    {
+      "captured_at": "2026-08-25T12:17:07Z",
+      "command": "python3 -m unittest discover second-brain-context/scripts -p test_*.py",
+      "commit": "c7d654f13a8610aa381c0b00b24b610a728353a5",
+      "criterion": "C3",
+      "exit": 0,
+      "files": [],
+      "id": "E3",
+      "kind": "test",
+      "output": "..........\n----------------------------------------------------------------------\nRan 10 tests in 0.697s\n\nOK\n",
+      "summary": "----------------------------------------------------------------------; Ran 10 tests in 0.697s; OK",
+      "verified": true
+    },
+    {
+      "captured_at": "2026-08-25T12:17:58Z",
+      "command": "sh -c 'T=$(mktemp -d); HOME=$T/h ./install.sh --target $T/h/skills >/dev/null 2>&1 && test -f $T/h/skills/aegis-ceo-skills/SKILL.md && rm -rf $T'",
+      "commit": "c7d654f13a8610aa381c0b00b24b610a728353a5",
+      "criterion": "C4",
+      "exit": 0,
+      "files": [],
+      "id": "E4",
+      "kind": "test",
+      "output": "",
+      "summary": "(no output)",
+      "verified": true
+    },
+    {
+      "captured_at": "2026-08-25T12:22:21Z",
+      "command": "python3 -m unittest discover aegis-engine -p test_*.py",
+      "commit": "d23739f239113b80647c9da48b781cfb27f1d78d",
+      "criterion": "C1",
+      "exit": 0,
+      "files": [],
+      "id": "E5",
+      "kind": "test",
+      "output": ".......................\n----------------------------------------------------------------------\nRan 23 tests in 8.543s\n\nOK\n",
+      "summary": "----------------------------------------------------------------------; Ran 23 tests in 8.543s; OK",
+      "verified": true
+    },
+    {
+      "captured_at": "2026-08-25T12:22:22Z",
+      "command": "python3 -m unittest discover usage-optimizer/scripts -p test_*.py",
+      "commit": "d23739f239113b80647c9da48b781cfb27f1d78d",
+      "criterion": "C2",
+      "exit": 0,
+      "files": [],
+      "id": "E6",
+      "kind": "test",
+      "output": "....................\n----------------------------------------------------------------------\nRan 20 tests in 0.827s\n\nOK\n",
+      "summary": "----------------------------------------------------------------------; Ran 20 tests in 0.827s; OK",
+      "verified": true
+    },
+    {
+      "captured_at": "2026-08-25T12:22:22Z",
+      "command": "python3 -m unittest discover second-brain-context/scripts -p test_*.py",
+      "commit": "d23739f239113b80647c9da48b781cfb27f1d78d",
+      "criterion": "C3",
+      "exit": 0,
+      "files": [],
+      "id": "E7",
+      "kind": "test",
+      "output": "..........\n----------------------------------------------------------------------\nRan 10 tests in 0.477s\n\nOK\n",
+      "summary": "----------------------------------------------------------------------; Ran 10 tests in 0.477s; OK",
+      "verified": true
+    },
+    {
+      "captured_at": "2026-08-25T12:22:23Z",
+      "command": "sh -c 'T=$(mktemp -d); HOME=$T/h ./install.sh --target $T/h/skills >/dev/null 2>&1 && test -f $T/h/skills/aegis-ceo-skills/SKILL.md && rm -rf $T'",
+      "commit": "d23739f239113b80647c9da48b781cfb27f1d78d",
+      "criterion": "C4",
+      "exit": 0,
+      "files": [],
+      "id": "E8",
+      "kind": "test",
+      "output": "",
+      "summary": "(no output)",
+      "verified": true
+    },
+    {
+      "captured_at": "2026-08-25T12:44:50Z",
+      "command": "python3 -m unittest discover aegis-engine -p test_*.py",
+      "commit": "d23739f239113b80647c9da48b781cfb27f1d78d",
+      "criterion": "C1",
+      "exit": 0,
+      "files": [],
+      "id": "E9",
+      "kind": "test",
+      "output": ".......................\n----------------------------------------------------------------------\nRan 23 tests in 5.856s\n\nOK\n",
+      "summary": "----------------------------------------------------------------------; Ran 23 tests in 5.856s; OK",
+      "verified": true
+    },
+    {
+      "captured_at": "2026-08-25T12:51:56Z",
+      "command": "python3 -m unittest discover aegis-engine -p test_*.py",
+      "commit": "0832e6b5091895d234f6ad89c2aa9855d3b83735",
+      "criterion": "C1",
+      "exit": 0,
+      "files": [
+        "aegis-engine/"
+      ],
+      "id": "E10",
+      "kind": "test",
+      "output": "........................\n----------------------------------------------------------------------\nRan 24 tests in 6.680s\n\nOK\n",
+      "summary": "----------------------------------------------------------------------; Ran 24 tests in 6.680s; OK",
+      "verified": true
+    },
+    {
+      "captured_at": "2026-08-25T12:51:57Z",
+      "command": "python3 -m unittest discover usage-optimizer/scripts -p test_*.py",
+      "commit": "0832e6b5091895d234f6ad89c2aa9855d3b83735",
+      "criterion": "C2",
+      "exit": 0,
+      "files": [
+        "usage-optimizer/"
+      ],
+      "id": "E11",
+      "kind": "test",
+      "output": "....................\n----------------------------------------------------------------------\nRan 20 tests in 0.693s\n\nOK\n",
+      "summary": "----------------------------------------------------------------------; Ran 20 tests in 0.693s; OK",
+      "verified": true
+    },
+    {
+      "captured_at": "2026-08-25T12:51:57Z",
+      "command": "python3 -m unittest discover second-brain-context/scripts -p test_*.py",
+      "commit": "0832e6b5091895d234f6ad89c2aa9855d3b83735",
+      "criterion": "C3",
+      "exit": 0,
+      "files": [
+        "second-brain-context/"
+      ],
+      "id": "E12",
+      "kind": "test",
+      "output": "..........\n----------------------------------------------------------------------\nRan 10 tests in 0.520s\n\nOK\n",
+      "summary": "----------------------------------------------------------------------; Ran 10 tests in 0.520s; OK",
+      "verified": true
+    },
+    {
+      "captured_at": "2026-08-25T12:53:03Z",
+      "command": "sh -c 'T=$(mktemp -d); HOME=$T/h ./install.sh --target $T/h/skills >/dev/null 2>&1 && test -f $T/h/skills/aegis-ceo-skills/SKILL.md && rm -rf $T'",
+      "commit": "9c6e144d641ce9afddec0ceecab1b12388f46d1f",
+      "criterion": "C4",
+      "exit": 0,
+      "files": [],
+      "id": "E13",
+      "kind": "test",
+      "output": "",
+      "summary": "(no output)",
+      "verified": true
+    },
+    {
+      "captured_at": "2026-08-25T13:01:53Z",
+      "command": "sh -c 'T=$(mktemp -d); HOME=$T/h ./install.sh --target $T/h/skills >/dev/null 2>&1 && test -f $T/h/skills/aegis-ceo-skills/SKILL.md && rm -rf $T'",
+      "commit": "1da8f3419eff1273beeaa96f20084e3b2a76bff3",
+      "criterion": "C4",
+      "exit": 0,
+      "files": [],
+      "id": "E14",
+      "kind": "test",
+      "output": "",
+      "summary": "(no output)",
+      "verified": true
+    }
+  ],
+  "mission": {
+    "constraints": [
+      "Python 3.9 stdlib only"
+    ],
+    "created_at": "2026-08-25T12:16:48Z",
+    "goal": "Make Aegis agents materially better on long missions: persistent state, evidence-gated completion, resumability",
+    "id": "m-20260825-121648",
+    "non_goals": [
+      "No network access, no daemons"
+    ],
+    "phase": "done",
+    "release": "",
+    "why": "Agents fail long missions by forgetting, drifting, and claiming false completion; Phase 3 turns Aegis into the execution layer that prevents this"
+  },
+  "next_hint": "",
+  "regressions": [
+    {
+      "area": "engine/checkpoints",
+      "cause": "checksum computed before file field added to payload",
+      "defect": "Checkpoint checksum mismatch after restore",
+      "fix": "compute checksum after payload complete",
+      "id": "R1",
+      "test": "test_state_loss_recovered_from_checkpoint_snapshot"
+    },
+    {
+      "area": "engine/state",
+      "cause": "validator required integer exit",
+      "defect": "Manual evidence saved with exit None failed validation",
+      "fix": "",
+      "id": "R2",
+      "test": "test_manual_evidence_never_satisfies_gates"
+    }
+  ],
+  "schema": 1,
+  "workstreams": []
+}

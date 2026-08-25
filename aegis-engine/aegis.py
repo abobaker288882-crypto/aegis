@@ -16,6 +16,14 @@ from engine import core, gitinfo
 from engine import state as state_mod
 
 
+def _regression_watch(project: Path, st: dict) -> str:
+    from engine import regressions as reg
+    files = gitinfo.dirty_files(project)
+    if not files:
+        return ""
+    return reg.surface_block(str(project), st.get("regressions", []), files)
+
+
 def _fail(message: str, code: int = 2) -> int:
     print(f"error: {message}", file=sys.stderr)
     return code
@@ -30,6 +38,19 @@ def _load_or_fail(project: Path) -> dict:
     except state_mod.StateError as exc:
         print(f"error: {exc}", file=sys.stderr)
         raise SystemExit(2)
+
+
+def cmd_archive(args, project: Path) -> int:
+    """Move the current aegis/ dir to aegis-archive-<ts>/ (state preserved)."""
+    src = state_mod.state_dir(project)
+    if not src.exists():
+        return _fail("nothing to archive")
+    ts = state_mod.now_iso().replace(":", "").replace("-", "")
+    dst = project / f"aegis-archive-{ts}"
+    src.rename(dst)
+    print(f"archived {src} -> {dst}")
+    print("start a new mission with 'aegis init'")
+    return 0
 
 
 def cmd_init(args, project: Path) -> int:
@@ -83,6 +104,9 @@ def cmd_status(args, project: Path) -> int:
     dirty = gitinfo.dirty_files(project)
     if dirty:
         print(f"git       {len(dirty)} uncommitted change(s); HEAD {gitinfo.head_commit(project)[:10]}")
+    watch = _regression_watch(project, st)
+    if watch:
+        print(watch)
     return 0
 
 
@@ -92,6 +116,9 @@ def cmd_next(args, project: Path) -> int:
     rec = na["recommendation"]
     g = na["gates"]
     print(f"gates: {g['required_pass']}/{g['required_total']} required pass")
+    watch = _regression_watch(project, st)
+    if watch:
+        print(watch.strip())
     if rec is None:
         print(g["can_complete"] and "next: run 'aegis complete'" or
               "nothing recorded as actionable — add workstreams, defects, or criteria")
@@ -126,12 +153,19 @@ def cmd_resume(args, project: Path) -> int:
 
 def cmd_verify(args, project: Path) -> int:
     st = _load_or_fail(project)
-    report = core.verify_mission(project, st)
+    report = core.verify_mission(project, st, rerun=bool(args.rerun))
+    for d in report.get("rerun_disagreements", []):
+        print(f"[RERUN DISAGREES] {d['id']} ({d['criterion']}): recorded exit "
+              f"{d['recorded']}, actual {d['actual']} — {d['summary'][:120]}")
     for row in report["criteria"]:
         reasons = ("; ".join(row["reasons"])) if row["reasons"] else ""
         line = f"[{row['status']:7}] {row['id']} {'REQ' if row['required'] else 'opt'} {row['text'][:90]}"
         print(line + ((" — " + reasons) if reasons else ""))
     print(f"{report['required_pass']}/{report['required_total']} required criteria pass")
+    if report.get("rerun_disagreements"):
+        print("integrity: re-executed evidence disagrees with recorded exits; "
+              "treat affected gates as unverified")
+        return 1
     return 0 if report["can_complete"] else 1
 
 
@@ -241,17 +275,41 @@ def cmd_blocker(args, project: Path) -> int:
 def cmd_regression(args, project: Path) -> int:
     st = _load_or_fail(project)
     if args.add:
-        r = {"id": state_mod.new_id("R", st["regressions"]), "defect": args.add,
-             "cause": args.cause or "", "fix": args.fix or "",
-             "test": args.test or "", "area": args.area or ""}
+        from engine.core import clip
+        r = {"id": state_mod.new_id("R", st["regressions"]), "defect": clip(args.add, 300),
+             "cause": clip(args.cause or "", 300), "fix": clip(args.fix or "", 300),
+             "test": clip(args.test or "", 300), "area": clip(args.area or "", 100),
+             "paths": [x.strip() for x in (args.paths or "").split(",") if x.strip()],
+             "keywords": [x.strip().lower() for x in (args.keywords or "").split(",") if x.strip()]}
         st["regressions"].append(r)
         state_mod.save(project, st)
-        print(f"regression memory added: {r['id']} — future resumes will surface it")
+        print(f"regression memory added: {r['id']} — auto-surfaced when guarded paths change")
     elif args.list:
         for r in st["regressions"]:
             print(f"{r['id']} [{r.get('area', '')}] {r['defect'][:90]}")
             if r.get("test"):
                 print(f"    guard: {r['test']}")
+    return 0
+
+
+def cmd_regressions_for(args, project: Path) -> int:
+    st = _load_or_fail(project)
+    from engine import regressions as reg
+    files = ([f.strip() for f in args.files.split(",") if f.strip()]
+             if args.files else gitinfo.dirty_files(project))
+    if not files:
+        print("no changed files supplied and working tree is clean")
+        return 0
+    matches = reg.relevant_regressions(st.get("regressions", []), files)
+    if not matches:
+        print(f"no regressions relate to: {', '.join(files[:6])}")
+        return 0
+    print(f"{len(matches)} relevant regression(s) for {', '.join(files[:6])}:")
+    for m in matches:
+        r = m["record"]
+        print(f"  {r['id']} (relevance {m['score']}): {r['defect'][:88]}")
+        print(f"      why: {'; '.join(m['why'][:2])}"
+              + (f" — rerun guard: {r['test']}" if r.get("test") else ""))
     return 0
 
 
@@ -399,6 +457,9 @@ def build_parser() -> argparse.ArgumentParser:
                         help="project directory (default: current directory)")
     sub = p.add_subparsers(dest="cmd", required=True)
 
+    sp = sub.add_parser("archive", parents=[parent], help="archive the finished mission directory")
+    sp.set_defaults(func=cmd_archive)
+
     sp = sub.add_parser("init", parents=[parent], help="create mission state in ./aegis/")
     sp.add_argument("--goal", required=True)
     sp.add_argument("--why", default="")
@@ -415,6 +476,8 @@ def build_parser() -> argparse.ArgumentParser:
     sp.set_defaults(func=cmd_next)
 
     sp = sub.add_parser("verify", parents=[parent], help="recompute all gate statuses and staleness")
+    sp.add_argument("--rerun", action="store_true",
+                    help="re-execute stored evidence commands and compare exits")
     sp.set_defaults(func=cmd_verify)
 
     sp = sub.add_parser("resume", parents=[parent], help="minimum context brief to continue any session")
@@ -483,8 +546,15 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("--fix")
     sp.add_argument("--test", help="test/command that now guards against it")
     sp.add_argument("--area")
+    sp.add_argument("--paths", help="comma-separated guarded file/dir prefixes")
+    sp.add_argument("--keywords", help="comma-separated relevance keywords")
     sp.add_argument("--list", action="store_true")
     sp.set_defaults(func=cmd_regression)
+
+    sp = sub.add_parser("regressions-for", parents=[parent],
+                        help="surface regressions relevant to given (or dirty) files")
+    sp.add_argument("--files", help="comma-separated changed paths (default: git dirty files)")
+    sp.set_defaults(func=cmd_regressions_for)
 
     sp = sub.add_parser("decision", parents=[parent], help="record architectural/product decisions")
     sp.add_argument("--add", help="short name of the decision")

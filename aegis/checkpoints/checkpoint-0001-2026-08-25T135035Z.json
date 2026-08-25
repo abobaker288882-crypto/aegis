@@ -1,0 +1,132 @@
+{
+  "schema": 1,
+  "mission_id": "m-20260825-131400",
+  "n": 1,
+  "created_at": "2026-08-25T13:50:35Z",
+  "note": "Phase 4 mid-mission: regression v2 + attacks + M1/M2 harness done; DELIBERATE INTERRUPTION BEFORE docs/release",
+  "git": {
+    "commit": "b71cdab400043fcb24d4926da5ab443567771d77",
+    "branch": "main",
+    "dirty_files": [
+      "aegis-engine/aegis.py",
+      "aegis-engine/engine/core.py",
+      "aegis-engine/test_engine.py",
+      "aegis/checkpoints/checkpoint-0001-2026-08-25T121758Z.json",
+      "aegis/checkpoints/checkpoint-0002-2026-08-25T122041Z.json",
+      "aegis/checkpoints/checkpoint-0003-2026-08-25T124450Z.json",
+      "aegis/checkpoints/checkpoint-0004-2026-08-25T125158Z.json",
+      "aegis/checkpoints/checkpoint-0005-2026-08-25T125306Z.json",
+      "aegis/checkpoints/checkpoint-0006-2026-08-25T130154Z.json",
+      "aegis/checkpoints/checkpoint-0007-2026-08-25T130155Z.json",
+      "aegis/mission.json",
+      "aegis/mission.json.bak",
+      "benchmarks/PROTOCOL.md",
+      "aegis-archive-20260825T131400Z/",
+      "aegis-engine/engine/regressions.py",
+      "benchmarks/generate_m2.py",
+      "benchmarks/score_all.py",
+      "benchmarks/score_m2.py"
+    ]
+  },
+  "tests": {
+    "command": "python3 -m unittest discover aegis-engine -p test_*.py",
+    "exit": 0,
+    "summary": "----------------------------------------------------------------------; Ran 36 tests in 10.573s; OK"
+  },
+  "next_recommended": null,
+  "state_snapshot": {
+    "blockers": [],
+    "checkpoints": [],
+    "criteria": [
+      {
+        "blocked_reason": null,
+        "evidence": [
+          "E1",
+          "E2"
+        ],
+        "id": "C1",
+        "required": true,
+        "text": "Benchmark v2 deterministic: scorer agreement across repeated runs and missions"
+      },
+      {
+        "blocked_reason": null,
+        "evidence": [],
+        "id": "C2",
+        "required": true,
+        "text": "Regression v2: path/keyword matching with explainability, auto-surfaced in status/next/resume"
+      },
+      {
+        "blocked_reason": null,
+        "evidence": [],
+        "id": "C3",
+        "required": true,
+        "text": "False-completion attacks fail closed (scripted scenarios)"
+      },
+      {
+        "blocked_reason": null,
+        "evidence": [],
+        "id": "C4",
+        "required": true,
+        "text": "Performance: 2000 regressions + 500 evidence -> status/resume/lookup under 2s"
+      }
+    ],
+    "decisions": [],
+    "defects": [],
+    "deploy": {
+      "last_checked_at": "",
+      "state": "unknown",
+      "target": "",
+      "url": ""
+    },
+    "evidence": [
+      {
+        "captured_at": "2026-08-25T13:49:15Z",
+        "command": "python3 benchmarks/score_m2.py /var/folders/yz/wdhnj83x5x5cdr_zdxp7ctq00000gn/T/opencode/m2-b",
+        "commit": "b71cdab400043fcb24d4926da5ab443567771d77",
+        "criterion": "C1",
+        "exit": 1,
+        "files": [
+          "benchmarks/"
+        ],
+        "id": "E1",
+        "kind": "test",
+        "output": "{\"D1\":false,\"D2\":false,\"D3\":false,\"D4\":false,\"D5\":false,\"tests_pass\":false,\"fixed\":0,\"total\":5,\"score\":0.0}\n",
+        "summary": "{\"D1\":false,\"D2\":false,\"D3\":false,\"D4\":false,\"D5\":false,\"tests_pass\":false,\"fixed\":0,\"total\":5,\"score\":0.0}",
+        "verified": true
+      },
+      {
+        "captured_at": "2026-08-25T13:50:35Z",
+        "command": "sh -c 'python3 benchmarks/score_m2.py /var/folders/yz/wdhnj83x5x5cdr_zdxp7ctq00000gn/T/opencode/m2-a > /tmp/s1.json; python3 benchmarks/score_m2.py /var/folders/yz/wdhnj83x5x5cdr_zdxp7ctq00000gn/T/opencode/m2-a > /tmp/s2.json; diff /tmp/s1.json /tmp/s2.json && grep -q \"\\\"score\\\":1.0\" /tmp/s1.json && echo DETERMINISTIC'",
+        "commit": "b71cdab400043fcb24d4926da5ab443567771d77",
+        "criterion": "C1",
+        "exit": 0,
+        "files": [],
+        "id": "E2",
+        "kind": "test",
+        "output": "DETERMINISTIC\n",
+        "summary": "DETERMINISTIC",
+        "verified": true
+      }
+    ],
+    "mission": {
+      "constraints": [
+        "stdlib only; scorer is ground truth for benchmarks"
+      ],
+      "created_at": "2026-08-25T13:14:00Z",
+      "goal": "Prove whether Aegis makes long-horizon agents measurably better: fair A/B benchmark v2, regression memory v2, false-completion hardening",
+      "id": "m-20260825-131400",
+      "non_goals": [
+        "No website polish beyond claim accuracy"
+      ],
+      "phase": "discover",
+      "release": "",
+      "why": "Phase 3 left comparative evidence and regression intelligence weak; Phase 4 closes or honestly blocks them"
+    },
+    "next_hint": "",
+    "regressions": [],
+    "schema": 1,
+    "workstreams": []
+  },
+  "checksum": "8bac29a5203291a7ce0c572155b89236b995b1083f0a8489443441d79e746df8",
+  "file": "checkpoints/checkpoint-0001-2026-08-25T135035Z.json"
+}

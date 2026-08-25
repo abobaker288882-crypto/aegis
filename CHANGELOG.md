@@ -3,6 +3,35 @@
 All notable changes to Aegis. Format follows Keep a Changelog; versioning is
 semantic (MAJOR.MINOR.PATCH).
 
+## [2.1.0] — 2026-08-25
+
+### Added
+- **Regression Memory V2**: records carry guarded paths and keywords;
+  `aegis regressions-for --files …` returns ranked, explainable matches
+  (path-prefix > area > keyword), and `status` / `next` / `resume`
+  auto-surface relevant past failures with rerun-guard hints. Capped at 5
+  to prevent noise. Secret-redacted at write time.
+- **`aegis verify --rerun`**: re-executes stored evidence commands and
+  flags any disagreement with recorded exits — deterministic defense
+  against forged or wrong recorded results (integrity failures fail
+  verification).
+- **`aegis archive`**: preserve a finished mission directory and start a
+  new one.
+- **Doctor** now flags trivial evidence commands (`true`/`echo`) that
+  verify nothing.
+- **Benchmark v2**: second mission (M2 "taskapi": failing test, incomplete
+  feature, hidden regression, SQL injection, doc/impl mismatch, unscored
+  distraction), aggregate scorer (`score_all.py`), interruption modifier,
+  and validated determinism (repeated scorer runs identical; unsolved
+  fixtures score 0.0).
+
+### Fixed
+- Engine: checkpoint checksum covered the payload before the file field
+  existed (restore mismatch); `--project` flag clobbered by subparser
+  defaults; read-only state dirs crashed instead of reporting; manual
+  evidence with null exit failed validation; keyword matching used record
+  text instead of changed paths (false positives).
+
 ## [2.0.0] — 2026-08-25
 
 ### Added

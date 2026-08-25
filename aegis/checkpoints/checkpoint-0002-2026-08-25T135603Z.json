@@ -1,0 +1,208 @@
+{
+  "schema": 1,
+  "mission_id": "m-20260825-131400",
+  "n": 2,
+  "created_at": "2026-08-25T13:56:03Z",
+  "note": "mission complete",
+  "git": {
+    "commit": "b71cdab400043fcb24d4926da5ab443567771d77",
+    "branch": "main",
+    "dirty_files": [
+      "CHANGELOG.md",
+      "README.md",
+      "SECURITY.md",
+      "aegis-engine/aegis.py",
+      "aegis-engine/engine/core.py",
+      "aegis-engine/test_engine.py",
+      "aegis/checkpoints/checkpoint-0001-2026-08-25T121758Z.json",
+      "aegis/checkpoints/checkpoint-0002-2026-08-25T122041Z.json",
+      "aegis/checkpoints/checkpoint-0003-2026-08-25T124450Z.json",
+      "aegis/checkpoints/checkpoint-0004-2026-08-25T125158Z.json",
+      "aegis/checkpoints/checkpoint-0005-2026-08-25T125306Z.json",
+      "aegis/checkpoints/checkpoint-0006-2026-08-25T130154Z.json",
+      "aegis/checkpoints/checkpoint-0007-2026-08-25T130155Z.json",
+      "aegis/mission.json",
+      "aegis/mission.json.bak",
+      "benchmarks/PROTOCOL.md",
+      "PHASE4_SCORECARD.md",
+      "aegis-archive-20260825T131400Z/",
+      "aegis-engine/engine/regressions.py",
+      "aegis/checkpoints/checkpoint-0001-2026-08-25T135035Z.json",
+      "benchmarks/generate_m2.py",
+      "benchmarks/score_all.py",
+      "benchmarks/score_m2.py"
+    ]
+  },
+  "tests": null,
+  "next_recommended": null,
+  "state_snapshot": {
+    "blockers": [],
+    "checkpoints": [
+      {
+        "commit": "b71cdab400043fcb24d4926da5ab443567771d77",
+        "created_at": "2026-08-25T13:50:35Z",
+        "file": "checkpoints/checkpoint-0001-2026-08-25T135035Z.json",
+        "n": 1,
+        "note": "Phase 4 mid-mission: regression v2 + attacks + M1/M2 harness done; DELIBERATE INTERRUPTION BEFORE docs/release"
+      }
+    ],
+    "criteria": [
+      {
+        "blocked_reason": null,
+        "evidence": [
+          "E1",
+          "E2"
+        ],
+        "id": "C1",
+        "required": true,
+        "text": "Benchmark v2 deterministic: scorer agreement across repeated runs and missions"
+      },
+      {
+        "blocked_reason": null,
+        "evidence": [
+          "E3"
+        ],
+        "id": "C2",
+        "required": true,
+        "text": "Regression v2: path/keyword matching with explainability, auto-surfaced in status/next/resume"
+      },
+      {
+        "blocked_reason": null,
+        "evidence": [
+          "E4"
+        ],
+        "id": "C3",
+        "required": true,
+        "text": "False-completion attacks fail closed (scripted scenarios)"
+      },
+      {
+        "blocked_reason": null,
+        "evidence": [
+          "E5",
+          "E6"
+        ],
+        "id": "C4",
+        "required": true,
+        "text": "Performance: 2000 regressions + 500 evidence -> status/resume/lookup under 2s"
+      }
+    ],
+    "decisions": [],
+    "defects": [],
+    "deploy": {
+      "last_checked_at": "",
+      "state": "unknown",
+      "target": "",
+      "url": ""
+    },
+    "evidence": [
+      {
+        "captured_at": "2026-08-25T13:49:15Z",
+        "command": "python3 benchmarks/score_m2.py /var/folders/yz/wdhnj83x5x5cdr_zdxp7ctq00000gn/T/opencode/m2-b",
+        "commit": "b71cdab400043fcb24d4926da5ab443567771d77",
+        "criterion": "C1",
+        "exit": 1,
+        "files": [
+          "benchmarks/"
+        ],
+        "id": "E1",
+        "kind": "test",
+        "output": "{\"D1\":false,\"D2\":false,\"D3\":false,\"D4\":false,\"D5\":false,\"tests_pass\":false,\"fixed\":0,\"total\":5,\"score\":0.0}\n",
+        "summary": "{\"D1\":false,\"D2\":false,\"D3\":false,\"D4\":false,\"D5\":false,\"tests_pass\":false,\"fixed\":0,\"total\":5,\"score\":0.0}",
+        "verified": true
+      },
+      {
+        "captured_at": "2026-08-25T13:50:35Z",
+        "command": "sh -c 'python3 benchmarks/score_m2.py /var/folders/yz/wdhnj83x5x5cdr_zdxp7ctq00000gn/T/opencode/m2-a > /tmp/s1.json; python3 benchmarks/score_m2.py /var/folders/yz/wdhnj83x5x5cdr_zdxp7ctq00000gn/T/opencode/m2-a > /tmp/s2.json; diff /tmp/s1.json /tmp/s2.json && grep -q \"\\\"score\\\":1.0\" /tmp/s1.json && echo DETERMINISTIC'",
+        "commit": "b71cdab400043fcb24d4926da5ab443567771d77",
+        "criterion": "C1",
+        "exit": 0,
+        "files": [],
+        "id": "E2",
+        "kind": "test",
+        "output": "DETERMINISTIC\n",
+        "summary": "DETERMINISTIC",
+        "verified": true
+      },
+      {
+        "captured_at": "2026-08-25T13:54:54Z",
+        "command": "python3 -m unittest discover aegis-engine -p test_*.py",
+        "commit": "b71cdab400043fcb24d4926da5ab443567771d77",
+        "criterion": "C2",
+        "exit": 0,
+        "files": [
+          "aegis-engine/"
+        ],
+        "id": "E3",
+        "kind": "test",
+        "output": "\nperf: status=0.16s lookup=0.12s resume=0.19s\n........................./Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/tempfile.py:817: ResourceWarning: Implicitly cleaning up <TemporaryDirectory '/var/folders/yz/wdhnj83x5x5cdr_zdxp7ctq00000gn/T/aegis-fc tlmn01oo'>\n  _warnings.warn(warn_message, ResourceWarning)\n./Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/tempfile.py:817: ResourceWarning: Implicitly cleaning up <TemporaryDirectory '/var/folders/yz/wdhnj83x5x5cdr_zdxp7ctq00000gn/T/aegis-fc txzimbfj'>\n  _warnings.warn(warn_message, ResourceWarning)\n./Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/tempfile.py:817: ResourceWarning: Implicitly cleaning up <TemporaryDirectory '/var/folders/yz/wdhnj83x5x5cdr_zdxp7ctq00000gn/T/aegis-fc mzc5oloc'>\n  _warnings.warn(warn_message, ResourceWarning)\n./Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/tempfile.py:817: ResourceWarning: Implicitly cleaning up <TemporaryDirectory '/var/folders/yz/wdhnj83x5x5cdr_zdxp7ctq00000gn/T/aegis-fc lt6ahgf3'>\n  _warnings.warn(warn_message, ResourceWarning)\n./Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/tempfile.py:817: ResourceWarning: Implicitly cleaning up <TemporaryDirectory '/var/folders/yz/wdhnj83x5x5cdr_zdxp7ctq00000gn/T/aegis-fc zsy_4ud_'>\n  _warnings.warn(warn_message, ResourceWarning)\n./Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/tempfile.py:817: ResourceWarning: Implicitly cleaning up <TemporaryDirectory '/var/folders/yz/wdhnj83x5x5cdr_zdxp7ctq00000gn/T/aegis-fc f18rufwd'>\n  _warnings.warn(warn_message, ResourceWarning)\n......\n----------------------------------------------------------------------\nRan 36 tests in 12.511s\n\nOK\n",
+        "summary": "----------------------------------------------------------------------; Ran 36 tests in 12.511s; OK",
+        "verified": true
+      },
+      {
+        "captured_at": "2026-08-25T13:55:11Z",
+        "command": "python3 -m unittest discover aegis-engine -p test_*.py",
+        "commit": "b71cdab400043fcb24d4926da5ab443567771d77",
+        "criterion": "C3",
+        "exit": 0,
+        "files": [
+          "aegis-engine/"
+        ],
+        "id": "E4",
+        "kind": "test",
+        "output": "\nperf: status=0.09s lookup=0.07s resume=0.09s\n........................./Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/tempfile.py:817: ResourceWarning: Implicitly cleaning up <TemporaryDirectory '/var/folders/yz/wdhnj83x5x5cdr_zdxp7ctq00000gn/T/aegis-fc a2z1gxvu'>\n  _warnings.warn(warn_message, ResourceWarning)\n./Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/tempfile.py:817: ResourceWarning: Implicitly cleaning up <TemporaryDirectory '/var/folders/yz/wdhnj83x5x5cdr_zdxp7ctq00000gn/T/aegis-fc rcp4ahvl'>\n  _warnings.warn(warn_message, ResourceWarning)\n./Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/tempfile.py:817: ResourceWarning: Implicitly cleaning up <TemporaryDirectory '/var/folders/yz/wdhnj83x5x5cdr_zdxp7ctq00000gn/T/aegis-fc bv0qzy7k'>\n  _warnings.warn(warn_message, ResourceWarning)\n./Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/tempfile.py:817: ResourceWarning: Implicitly cleaning up <TemporaryDirectory '/var/folders/yz/wdhnj83x5x5cdr_zdxp7ctq00000gn/T/aegis-fc t9dzpz3k'>\n  _warnings.warn(warn_message, ResourceWarning)\n./Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/tempfile.py:817: ResourceWarning: Implicitly cleaning up <TemporaryDirectory '/var/folders/yz/wdhnj83x5x5cdr_zdxp7ctq00000gn/T/aegis-fc 6l13dnlz'>\n  _warnings.warn(warn_message, ResourceWarning)\n./Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/tempfile.py:817: ResourceWarning: Implicitly cleaning up <TemporaryDirectory '/var/folders/yz/wdhnj83x5x5cdr_zdxp7ctq00000gn/T/aegis-fc _f0tth85'>\n  _warnings.warn(warn_message, ResourceWarning)\n......\n----------------------------------------------------------------------\nRan 36 tests in 16.322s\n\nOK\n",
+        "summary": "----------------------------------------------------------------------; Ran 36 tests in 16.322s; OK",
+        "verified": true
+      },
+      {
+        "captured_at": "2026-08-25T13:55:11Z",
+        "command": "python3 -m unittest test_engine.RegressionV2Tests.test_performance_2000_regressions_500_evidence",
+        "commit": "b71cdab400043fcb24d4926da5ab443567771d77",
+        "criterion": "C4",
+        "exit": 1,
+        "files": [
+          "aegis-engine/"
+        ],
+        "id": "E5",
+        "kind": "test",
+        "output": "E\n======================================================================\nERROR: test_engine (unittest.loader._FailedTest)\n----------------------------------------------------------------------\nImportError: Failed to import test module: test_engine\nTraceback (most recent call last):\n  File \"/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/loader.py\", line 154, in loadTestsFromName\n    module = __import__(module_name)\nModuleNotFoundError: No module named 'test_engine'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "summary": "----------------------------------------------------------------------; Ran 1 test in 0.000s; FAILED (errors=1)",
+        "verified": true
+      },
+      {
+        "captured_at": "2026-08-25T13:56:02Z",
+        "command": "python3 -m unittest discover aegis-engine -p test_*.py -k performance",
+        "commit": "b71cdab400043fcb24d4926da5ab443567771d77",
+        "criterion": "C4",
+        "exit": 0,
+        "files": [
+          "aegis-engine/"
+        ],
+        "id": "E6",
+        "kind": "test",
+        "output": "\nperf: status=0.12s lookup=0.10s resume=0.14s\n.\n----------------------------------------------------------------------\nRan 1 test in 0.463s\n\nOK\n",
+        "summary": "----------------------------------------------------------------------; Ran 1 test in 0.463s; OK",
+        "verified": true
+      }
+    ],
+    "mission": {
+      "constraints": [
+        "stdlib only; scorer is ground truth for benchmarks"
+      ],
+      "created_at": "2026-08-25T13:14:00Z",
+      "goal": "Prove whether Aegis makes long-horizon agents measurably better: fair A/B benchmark v2, regression memory v2, false-completion hardening",
+      "id": "m-20260825-131400",
+      "non_goals": [
+        "No website polish beyond claim accuracy"
+      ],
+      "phase": "done",
+      "release": "",
+      "why": "Phase 3 left comparative evidence and regression intelligence weak; Phase 4 closes or honestly blocks them"
+    },
+    "next_hint": "",
+    "regressions": [],
+    "schema": 1,
+    "workstreams": []
+  },
+  "checksum": "fdea7eaceafb1477e841cb966c1a7327543243f832b9d30b9c81be055e223ce3",
+  "file": "checkpoints/checkpoint-0002-2026-08-25T135603Z.json"
+}

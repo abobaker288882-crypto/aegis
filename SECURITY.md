@@ -24,6 +24,8 @@ and affected paths. Do not open public issues for exploitable behavior.
 | Filesystem walked by `build_project_graph.py` | Semi-trusted (your machine) | Excluded dirs (caches, node_modules, dist…), depth cap, 100k file cap, 4s git subprocess timeout, list-argv subprocess only (no shell), symlink traversal off by default |
 | Git remote URLs | Hostile (may embed credentials) | Credential stripping plus query/fragment stripping before anything is written to the vault (regression-tested) |
 | Vault writes | Your data | Writes only generated-type-marked notes inside vault folders; `write_if_changed` is idempotent; never copies source files, secrets, `.env`, keys, or build output into the vault |
+| Recorded evidence commands | Semi-trusted | Commands are re-executable via `aegis verify --rerun`, which compares actual exits to recorded ones; trivial commands (true/echo) are flagged by `doctor`. The engine cannot judge whether a command is *meaningful* — benchmark scoring is outcome-based by design |
+| Regression records | User input | Redacted (secret patterns, ANSI) and clipped at write time; matching is read-only over recorded paths/keywords |
 | Site (GitHub Pages) | Public, static | Zero third-party script/font origins, no forms, no user input, no cookies; HSTS enforced by the platform |
 | Installer | Local only | Never follows symlinks into overwrites, refuses non-directory obstructions, backs up before any replacement, no network access |
 
