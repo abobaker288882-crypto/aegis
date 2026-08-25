@@ -1,0 +1,153 @@
+{
+  "blockers": [],
+  "checkpoints": [],
+  "criteria": [
+    {
+      "blocked_reason": null,
+      "evidence": [
+        "E1"
+      ],
+      "id": "C1",
+      "required": true,
+      "text": "Engine test suite passes"
+    },
+    {
+      "blocked_reason": null,
+      "evidence": [
+        "E2"
+      ],
+      "id": "C2",
+      "required": true,
+      "text": "Router suite passes"
+    },
+    {
+      "blocked_reason": null,
+      "evidence": [
+        "E3"
+      ],
+      "id": "C3",
+      "required": true,
+      "text": "Graph builder suite passes"
+    },
+    {
+      "blocked_reason": null,
+      "evidence": [
+        "E4"
+      ],
+      "id": "C4",
+      "required": true,
+      "text": "Installer smoke passes"
+    }
+  ],
+  "decisions": [
+    {
+      "choice": "Python 3.9 stdlib",
+      "consequences": "No rich TUI; careful subprocess hygiene",
+      "context": "Phase 3 architecture",
+      "id": "DEC1",
+      "options": [
+        "Python stdlib",
+        "Node CLI",
+        "Go binary"
+      ],
+      "reason": "Zero-dependency matches product thesis; runs where agents run",
+      "revisit_when": "Users need parallel missions or a daemon"
+    }
+  ],
+  "defects": [],
+  "deploy": {
+    "last_checked_at": "",
+    "state": "unknown",
+    "target": "",
+    "url": ""
+  },
+  "evidence": [
+    {
+      "captured_at": "2026-08-25T12:17:05Z",
+      "command": "python3 -m unittest discover aegis-engine -p test_*.py",
+      "commit": "c7d654f13a8610aa381c0b00b24b610a728353a5",
+      "criterion": "C1",
+      "exit": 0,
+      "files": [],
+      "id": "E1",
+      "kind": "test",
+      "output": ".......................\n----------------------------------------------------------------------\nRan 23 tests in 16.445s\n\nOK\n",
+      "summary": "----------------------------------------------------------------------; Ran 23 tests in 16.445s; OK",
+      "verified": true
+    },
+    {
+      "captured_at": "2026-08-25T12:17:06Z",
+      "command": "python3 -m unittest discover usage-optimizer/scripts -p test_*.py",
+      "commit": "c7d654f13a8610aa381c0b00b24b610a728353a5",
+      "criterion": "C2",
+      "exit": 0,
+      "files": [],
+      "id": "E2",
+      "kind": "test",
+      "output": "....................\n----------------------------------------------------------------------\nRan 20 tests in 0.819s\n\nOK\n",
+      "summary": "----------------------------------------------------------------------; Ran 20 tests in 0.819s; OK",
+      "verified": true
+    },
+    {
+      "captured_at": "2026-08-25T12:17:07Z",
+      "command": "python3 -m unittest discover second-brain-context/scripts -p test_*.py",
+      "commit": "c7d654f13a8610aa381c0b00b24b610a728353a5",
+      "criterion": "C3",
+      "exit": 0,
+      "files": [],
+      "id": "E3",
+      "kind": "test",
+      "output": "..........\n----------------------------------------------------------------------\nRan 10 tests in 0.697s\n\nOK\n",
+      "summary": "----------------------------------------------------------------------; Ran 10 tests in 0.697s; OK",
+      "verified": true
+    },
+    {
+      "captured_at": "2026-08-25T12:17:58Z",
+      "command": "sh -c 'T=$(mktemp -d); HOME=$T/h ./install.sh --target $T/h/skills >/dev/null 2>&1 && test -f $T/h/skills/aegis-ceo-skills/SKILL.md && rm -rf $T'",
+      "commit": "c7d654f13a8610aa381c0b00b24b610a728353a5",
+      "criterion": "C4",
+      "exit": 0,
+      "files": [],
+      "id": "E4",
+      "kind": "test",
+      "output": "",
+      "summary": "(no output)",
+      "verified": true
+    }
+  ],
+  "mission": {
+    "constraints": [
+      "Python 3.9 stdlib only"
+    ],
+    "created_at": "2026-08-25T12:16:48Z",
+    "goal": "Make Aegis agents materially better on long missions: persistent state, evidence-gated completion, resumability",
+    "id": "m-20260825-121648",
+    "non_goals": [
+      "No network access, no daemons"
+    ],
+    "phase": "discover",
+    "release": "",
+    "why": "Agents fail long missions by forgetting, drifting, and claiming false completion; Phase 3 turns Aegis into the execution layer that prevents this"
+  },
+  "next_hint": "",
+  "regressions": [
+    {
+      "area": "engine/checkpoints",
+      "cause": "checksum computed before file field added to payload",
+      "defect": "Checkpoint checksum mismatch after restore",
+      "fix": "compute checksum after payload complete",
+      "id": "R1",
+      "test": "test_state_loss_recovered_from_checkpoint_snapshot"
+    },
+    {
+      "area": "engine/state",
+      "cause": "validator required integer exit",
+      "defect": "Manual evidence saved with exit None failed validation",
+      "fix": "",
+      "id": "R2",
+      "test": "test_manual_evidence_never_satisfies_gates"
+    }
+  ],
+  "schema": 1,
+  "workstreams": []
+}

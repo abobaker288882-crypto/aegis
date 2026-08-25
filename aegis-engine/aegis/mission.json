@@ -1,0 +1,28 @@
+{
+  "blockers": [],
+  "checkpoints": [],
+  "criteria": [],
+  "decisions": [],
+  "defects": [],
+  "deploy": {
+    "last_checked_at": "",
+    "state": "unknown",
+    "target": "",
+    "url": ""
+  },
+  "evidence": [],
+  "mission": {
+    "constraints": [],
+    "created_at": "2026-08-25T12:09:06Z",
+    "goal": "g",
+    "id": "m-20260825-120906",
+    "non_goals": [],
+    "phase": "discover",
+    "release": "",
+    "why": ""
+  },
+  "next_hint": "",
+  "regressions": [],
+  "schema": 1,
+  "workstreams": []
+}

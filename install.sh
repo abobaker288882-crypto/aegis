@@ -6,6 +6,8 @@ set -eu
 SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 ALL_SKILLS="aegis-ceo-skills usage-optimizer second-brain-context five-year-old"
 SKILLS="$ALL_SKILLS"
+ENGINE_SRC="$SCRIPT_DIR/aegis-engine"
+ENGINE_TARGET="${AEGIS_ENGINE_DIR:-$HOME/.agents/aegis}"
 TARGET="${AEGIS_SKILLS_DIR:-$HOME/.agents/skills}"
 MODE="install"
 KEEP=0
@@ -59,7 +61,14 @@ case "$MODE" in
         removed=$((removed + 1))
       fi
     done
-    if [ "$removed" -eq 0 ]; then
+    engine_removed=0
+    if [ -d "$ENGINE_TARGET" ]; then
+      engine_backup="$ENGINE_TARGET.backup-$(date +%Y%m%d-%H%M%S)"
+      mv "$ENGINE_TARGET" "$engine_backup"
+      echo "removed $ENGINE_TARGET (backup: $engine_backup)"
+      engine_removed=1
+    fi
+    if [ "$removed" -eq 0 ] && [ "$engine_removed" -eq 0 ]; then
       echo "nothing to uninstall in $TARGET"
     else
       echo "uninstalled $removed skill(s). Restore any backup by renaming it back."
@@ -110,6 +119,27 @@ for skill in $SKILLS; do
     installed=$((installed + 1))
   fi
 done
+
+# Mission engine (used per-project; not an agent skill folder)
+if [ -d "$ENGINE_SRC" ]; then
+  if [ -d "$ENGINE_TARGET" ]; then
+    if diff -rq "$ENGINE_SRC" "$ENGINE_TARGET" >/dev/null 2>&1; then
+      echo "engine already installed: $ENGINE_TARGET"
+    elif [ "$KEEP" -eq 1 ]; then
+      echo "kept existing engine: $ENGINE_TARGET"
+    else
+      engine_backup="$ENGINE_TARGET.backup-$(date +%Y%m%d-%H%M%S)"
+      mv "$ENGINE_TARGET" "$engine_backup"
+      cp -R "$ENGINE_SRC" "$ENGINE_TARGET"
+      echo "upgraded engine $ENGINE_TARGET (previous: $engine_backup)"
+    fi
+  else
+    mkdir -p "$(dirname "$ENGINE_TARGET")"
+    cp -R "$ENGINE_SRC" "$ENGINE_TARGET"
+    echo "installed mission engine: $ENGINE_TARGET"
+  fi
+  echo "engine usage: python3 \"$ENGINE_TARGET/aegis.py\" init --goal \"...\"   (run inside any project)"
+fi
 
 echo "done: $installed installed, $upgraded upgraded, $skipped unchanged (target: $TARGET)"
 
