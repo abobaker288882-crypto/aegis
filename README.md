@@ -13,7 +13,7 @@ explicit rules against faking any step.
 | `usage-optimizer/` | Skill + `scripts/route_task.py`, a stdlib-only deterministic router that picks the cheapest capable route for a task. Ships with unit tests. |
 | `second-brain-context/` | Skill + `scripts/build_project_graph.py`, which indexes local projects into an Obsidian vault graph (paths and metadata only; sanitizes git credentials; never copies source into the vault). |
 | `five-year-old/` | Skill for plain-language end-to-end ownership: simple progress updates, complete delivery, honest final report. |
-| `aegis-ceo-office-site/` | Public product site (Next.js 16 + vinext, Cloudflare Workers target). Self-contained: self-hosted fonts, zero third-party scripts. |
+| `aegis-ceo-office-site/` | Public product site (Next.js 16 + vinext), live at `https://abobaker288882-crypto.github.io/` via GitHub Pages. Self-contained: self-hosted fonts, zero third-party scripts. See its `DEPLOY.md`. |
 
 ## Installing the skills
 

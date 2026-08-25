@@ -1,11 +1,13 @@
-# OX_STATE — final verified mission state
+# OX_STATE — current verified mission state
 
-Updated: 2026-08-25 (session 1 complete; deployment blocked on credentials)
+Updated: 2026-08-25 (session 2: LIVE IN PRODUCTION, all gates pass)
 
 ## Phase
 
-SHIP-pending-deployment. All code work, verification, and commits are done.
-The only open item is publishing, which requires access only the user holds.
+LIVE. The site is deployed and production-verified at
+**https://abobaker288882-crypto.github.io/** (GitHub Pages, user site).
+Rollback: `git revert <sha> && git push` in the Pages repo (runbook in
+`aegis-ceo-office-site/DEPLOY.md`).
 
 ## Acceptance criteria status
 
@@ -19,7 +21,7 @@ The only open item is publishing, which requires access only the user holds.
 | AC6 | Test suites pass | PASS | usage-optimizer 7/7 OK; second-brain-context 7/7 OK (new suite covers discovery exclusions, slug/label behavior, git-remote credential sanitization, idempotent writes, stale-note removal) |
 | AC7 | Mission files accurate | PASS | This file + MISSION.md + OX_LOG.md updated at close |
 | AC8 | Coherent commits, clean tree | PASS | Main repo: fdd3798, 312ed90, tree clean. Site repo: a719159, 8d1fd82, 66c44fa, tree clean |
-| AC9 | Deployment attempted; outcome recorded | BLOCKED (user-only) | `npx wrangler whoami` → "You are not authenticated"; no CLOUDFLARE_*/sites credentials in env; site repo has no remote; `.openai/hosting.json` pipeline belongs to the user's Codex environment. Nothing was deployed; the previously published stale demo remains live wherever hosted |
+| AC9 | Deployment through existing authorized infra | PASS | GitHub Pages live (gh CLI was the access granted this session). Evidence: `/`→200; live HTML byte-equal to verified build; `_next` CSS/JS 200 after `.nojekyll` fix; custom 404 live; og.png 200; http→https 301 + HSTS; Playwright live journey ×3 viewports: hydration/copy/anchor/fonts all pass, zero console errors, zero failed requests |
 
 ## Verified interactions
 
@@ -41,17 +43,21 @@ The only open item is publishing, which requires access only the user holds.
 
 ## Known limitations
 
-1. Publishing requires the user to run their existing Codex "sites" publish
-   (or `wrangler login` + deploy) for `aegis-ceo-office-site/`. Built output
-   is current in `dist/`.
-2. `a719159` briefly tracked shots/tsconfig.tsbuildinfo before 8d1fd82
+1. GitHub Pages exposes no server-side logs; production health is verified via
+   status codes, response headers, and client-side telemetry (console/network)
+   on every deploy. Recorded honestly in lieu of server logs.
+2. `vinext` beta does not support `basePath` (verified broken), so the site
+   must live at a domain root — it does (user site). Do not add path-prefix
+   hosting without fixing vinext first.
+3. `public/aegis-ceo-office.html` (Codex-host wrapper with frozen demo)
+   remains in the site repo for host compatibility but is excluded from the
+   public deploy; live URL returns 404 for it.
+4. `a719159` briefly tracked shots/tsconfig.tsbuildinfo before 8d1fd82
    removed them; local-only history, no remote, left as-is intentionally.
-3. Python entrypoints are executable now; hosts that copy skill folders
-   preserve modes.
 
 ## Continuation instructions (next session)
 
-1. Publish the site through the user's authorized pipeline; then curl the
-   live URL, re-screenshot, and confirm fonts/content (AC1–AC4 on live).
-2. Optional polish backlog: site README, common host-dir hints on install
-   section. Nothing here blocks production use.
+1. Follow `aegis-ceo-office-site/DEPLOY.md` for any site change; always
+   re-run the live journey checks listed there.
+2. Remaining polish candidates (non-blocking): host-dir hints in the install
+   section; per-skill CHANGELOGs.

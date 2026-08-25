@@ -36,3 +36,27 @@
 7. Adversarial pass findings fixed: overlapping copy button; overclaiming
    footer. Deliberate non-changes documented: no CSP meta on hydrated page;
    mandatory-worker philosophy of flagship skill left intact.
+
+## 2026-08-25 — Session 2: production deploy and verification
+
+1. Probed access: wrangler unauthenticated, no CF tokens, no sites CLI; gh CLI
+   authenticated (repo scope) → GitHub Pages chosen as the hosting pipeline.
+2. vinext basePath/assetPrefix tested and REJECTED (CSS prefixed, JS chunks
+   not; server 404s prefixed assets) → deployed at domain root via user-site
+   repo abobaker288882-crypto.github.io.
+3. Static-publish pipeline: SSR-rendered index.html + dist/client assets,
+   minus _headers (CF-only) and aegis-ceo-office.html (host-only wrapper with
+   frozen demo payload — kept in site repo, removed from public deploy).
+4. Defect found and fixed live: first deploy 404'd all _next assets (Jekyll
+   underscore-dir rule). Fixed with .nojekyll; verified CSS/JS 200.
+5. Defect found and fixed live: page claimed "served from Cloudflare Workers"
+   — false on Pages. Copy corrected, redeployed, verified stale claim gone.
+6. Additions: branded 404 (public/404.html), OG/Twitter share image + metadata
+   (public/og.png, layout metadata), DEPLOY.md runbook with rollback path.
+7. Live evidence: / 200; og.png 200; unknown path → custom 404 "This route
+   never shipped."; wrapper → 404; live HTML byte-equal to verified build
+   (pre-copy-fix); Playwright on live ×3 viewports + mid-scroll: hydration
+   copy→clipboard exact, anchor nav works, Geist/Geist Mono load, zero console
+   errors, zero failed requests; HSTS + HTTPS-enforce (301 http→https).
+   Logs: Pages exposes no server logs — verified via status codes, headers,
+   and client telemetry instead (recorded honestly).
