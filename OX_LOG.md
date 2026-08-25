@@ -65,3 +65,27 @@
    404 visually confirmed live. Live journey re-run: zero console errors,
    zero unexpected failed requests. Both repos committed clean
    (site 17c6644, main fd67a73+). Mission state: LIVE, all gates pass.
+
+## 2026-08-25 — Phase 2: product system hardening
+
+1. Graded 15 categories honestly (initial: install 4, first-use 4,
+   distribution 3, security 6 with a found leak path).
+2. install.sh: safe idempotent installer (backup-before-upgrade, --keep,
+   --only, --uninstall, obstruction refusal, router smoke check). 11
+   scenarios tested incl. spaces-in-path; stranger journey from public
+   clone executed completely.
+3. Security: CONFIRMED leak — git remote tokens in query strings/fragments
+   reached vault output; fixed sanitizer + 3 regression tests. 13 new
+   boundary/adversarial router tests (30 total, all green).
+4. Trust set: MIT LICENSE, SECURITY.md threat model, CONTRIBUTING.md,
+   CHANGELOG v1.0.0/v1.1.0, git tags v1.1.0 (both repos).
+5. QUICKSTART.md + verify.sh (single-command full check incl. installer
+   smoke); QUICKSTART executed verbatim.
+6. Site: installer-led install section with clone step, tablet layout fixes
+   (stacked panel <940px, static copy buttons), removed stale hero command,
+   keyboard/reduced-motion/contrast verified (all AA, dark AAA). Deployed
+   and live-verified after each batch; zero console errors.
+7. Distribution: published public repos abobaker288882-crypto/aegis and
+   /aegis-site; secret-scanned before publish; first stranger-clone attempt
+   exposed uncommitted Phase 2 files — committed, retagged, re-cloned, and
+   re-ran the full journey successfully.
