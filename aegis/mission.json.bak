@@ -21,6 +21,13 @@
       "file": "checkpoints/checkpoint-0003-2026-08-25T124450Z.json",
       "n": 3,
       "note": "v2.0.0 release candidate: engine + benchmarks + docs"
+    },
+    {
+      "commit": "0832e6b5091895d234f6ad89c2aa9855d3b83735",
+      "created_at": "2026-08-25T12:51:58Z",
+      "file": "checkpoints/checkpoint-0004-2026-08-25T125158Z.json",
+      "n": 4,
+      "note": "v2.0.0 RC: engine 24/24, benchmarks validated, docs complete"
     }
   ],
   "criteria": [
@@ -265,7 +272,7 @@
     "non_goals": [
       "No network access, no daemons"
     ],
-    "phase": "verify",
+    "phase": "ship",
     "release": "",
     "why": "Agents fail long missions by forgetting, drifting, and claiming false completion; Phase 3 turns Aegis into the execution layer that prevents this"
   },
