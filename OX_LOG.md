@@ -60,3 +60,8 @@
    errors, zero failed requests; HSTS + HTTPS-enforce (301 http→https).
    Logs: Pages exposes no server logs — verified via status codes, headers,
    and client telemetry instead (recorded honestly).
+8. Final polish deployed and live-verified: host-directory install hints
+   (lint caught unescaped apostrophe pre-ship — fixed), site README, branded
+   404 visually confirmed live. Live journey re-run: zero console errors,
+   zero unexpected failed requests. Both repos committed clean
+   (site 17c6644, main fd67a73+). Mission state: LIVE, all gates pass.
